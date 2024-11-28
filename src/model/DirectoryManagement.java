@@ -33,6 +33,16 @@ public class DirectoryManagement {
         }
     }
 
+    public void moveToParentDirectory() {
+        File current = new File(currentDirectory);
+        if (current.getParent() != null) {
+            updateDirectory(current.getParent());
+        } else {
+            currentDirectory = "Root";
+            updateDirectory();
+        }
+    }
+
     public File[] updateDirectory(String newDirectory) {
         if (isRootDirectory(newDirectory)) {
            return getInitialDirectories();
