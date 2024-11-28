@@ -3,19 +3,43 @@ package src.model;
 import src.view.View;
 
 import java.io.File;
+import java.util.Stack;
 
 public class DirectoryManagement {
     private View explorerView;
     private String currentDirectory = "Root";
+    private Stack<String> undoStack;
+    private Stack<String> redoStack;
 
     public DirectoryManagement(View explorerView) {
         this.explorerView = explorerView;
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+    }
+
+    public void undo() {
+        if (!undoStack.isEmpty()) {
+            redoStack.push(currentDirectory);
+            currentDirectory = undoStack.pop();
+            updateDirectory();
+        }
+    }
+
+    public void redo() {
+        if (!redoStack.isEmpty()) {
+            undoStack.push(currentDirectory);
+            currentDirectory = redoStack.pop();
+            updateDirectory();
+        }
     }
 
     public File[] updateDirectory(String newDirectory) {
         if (isRootDirectory(newDirectory)) {
            return getInitialDirectories();
         } else {
+            if (!currentDirectory.equals(newDirectory)) {
+                undoStack.push(currentDirectory);
+            }
             currentDirectory = newDirectory;
             return listDirectoryContent(new File(newDirectory));
         }
