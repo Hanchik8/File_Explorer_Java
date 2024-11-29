@@ -5,10 +5,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 public class TopPanel {
 
     private JPanel topMenuComponent;
+
     private JButton backBtn;
     private JButton forwardBtn;
     private JButton upperBtn;
@@ -16,16 +18,22 @@ public class TopPanel {
 
     private JTextField directoryField;
 
+    private JTextField searchField;
+
+
     public TopPanel() {
         topMenuComponent = new JPanel(new BorderLayout());
 
         topMenuComponent.add(createBtnPanel(), BorderLayout.WEST);
         topMenuComponent.add(createDirectoryField(), BorderLayout.CENTER);
+        topMenuComponent.add(createSearchField(), BorderLayout.EAST);
     }
 
     /*
      * creating components of TopPanel
      */
+
+    // creating ButtonPanel
     private JPanel createBtnPanel() {
         JPanel btnPanel = new JPanel();
 
@@ -41,24 +49,33 @@ public class TopPanel {
         button = new JButton(name);
         button.setFocusable(false);
         button.setEnabled(false);
+
         return button;
     }
 
+    // creating Directory Field
     private JTextField createDirectoryField() {
         directoryField = new JTextField();
         directoryField.setEditable(false);
+
         return directoryField;
     }
 
-    /*
-     * work with paths
-     */
     public String getCurrentPath() {
         return directoryField.getText();
     }
 
     public void setCurrentPath(String path) {
         directoryField.setText(path);
+    }
+
+    // Creating Search Field
+    private JTextField createSearchField() {
+        searchField = new JTextField(25);
+        searchField.setText("Search...");
+        searchField.setForeground(Color.GRAY);
+
+        return searchField;
     }
 
     /*
@@ -84,7 +101,7 @@ public class TopPanel {
         return topMenuComponent;
     }
 
-    public JTextField getDirecField() {
+    public JTextField getDirectoryField() {
         return directoryField;
     }
 

@@ -4,6 +4,6 @@ package src.controller;
 // Его лучше в наш обычный Controller (можно переименовать его как Main)
 // Это название лучше подходит
 
-public class ButtonConroller {
+public class ButtonController {
    
 }
