@@ -6,15 +6,13 @@ import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.HashMap;
 
 public class TopPanel {
 
     private JPanel topMenuComponent;
 
-    private JButton backBtn;
-    private JButton forwardBtn;
-    private JButton upperBtn;
-    private JButton refreshBtn;
+    private HashMap<String, JButton> topMenuButtons;
 
     private JTextField directoryField;
 
@@ -33,20 +31,29 @@ public class TopPanel {
      * creating components of TopPanel
      */
 
+    // creating Back, Forward, Up, Refresh buttons
+    private void createButtons() {
+        topMenuButtons = new HashMap<>();
+        topMenuButtons.put("Back", createButton("Back"));
+        topMenuButtons.put("Forward", createButton("Forward"));
+        topMenuButtons.put("Up", createButton("Up"));
+        topMenuButtons.put("Refresh", createButton("Refresh"));
+    }
+    
     // creating ButtonPanel
     private JPanel createBtnPanel() {
         JPanel btnPanel = new JPanel();
 
-        btnPanel.add(createButton(backBtn, "Back"));
-        btnPanel.add(createButton(forwardBtn, "Forward"));
-        btnPanel.add(createButton(upperBtn, "Up"));
-        btnPanel.add(createButton(refreshBtn, "Refresh"));
+        createButtons();
+        for (JButton button : topMenuButtons.values()) {
+            btnPanel.add(button);
+        }
 
         return btnPanel;
     }
 
-    private JButton createButton(JButton button, String name) {
-        button = new JButton(name);
+    private JButton createButton(String name) {
+        JButton button = new JButton(name);
         button.setFocusable(false);
         button.setEnabled(false);
 
@@ -82,19 +89,19 @@ public class TopPanel {
      * getters
      */
     public JButton getBacButton() {
-        return backBtn;
+        return topMenuButtons.get("Back");
     }
 
     public JButton getForwardBtn() {
-        return forwardBtn;
+        return topMenuButtons.get("Forward");
     }
 
     public JButton getUpperBtn() {
-        return upperBtn;
+        return topMenuButtons.get("Up"); 
     }
 
     public JButton getRefreshBtn() {
-        return refreshBtn;
+        return topMenuButtons.get("Refresh");
     }
 
     public JPanel getTopMenuComponent() {

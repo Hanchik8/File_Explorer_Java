@@ -1,6 +1,7 @@
 package src.view;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -11,11 +12,7 @@ public class EditPanel {
 
     private JPanel editPanel;
 
-    private JButton cutBtn;
-    private JButton copyBtn;
-    private JButton pasteBtn;
-    private JButton deleteBtn;
-    private JButton renameBtn;
+    private HashMap<String, JButton> editWestPartButtons;
 
     private JCheckBox detailsCheckBox;
 
@@ -33,22 +30,30 @@ public class EditPanel {
      */
 
     // creating Cut, Copy, Paste, Delete, Rename buttons
+    private void createButtons() {
+        editWestPartButtons = new HashMap<>();
+        editWestPartButtons.put("Cut", createButton("Cut"));
+        editWestPartButtons.put("Copy", createButton("Copy"));
+        editWestPartButtons.put("Paste", createButton("Paste"));
+        editWestPartButtons.put("Rename", createButton("Rename"));
+        editWestPartButtons.put("Delete", createButton("Delete"));
+    }
+    // creating editWestPart
     private JPanel createEditWestPart() {
         JPanel editWestPart = new JPanel();
-
+        
         editWestPart.add(createNewComboBox());
 
-        editWestPart.add(createButton(cutBtn, "Cut"));
-        editWestPart.add(createButton(copyBtn, "Copy"));
-        editWestPart.add(createButton(pasteBtn, "Paste"));
-        editWestPart.add(createButton(renameBtn, "Rename"));
-        editWestPart.add(createButton(deleteBtn, "Delete"));
+        createButtons();
+        for (JButton button : editWestPartButtons.values()) {
+            editWestPart.add(button);
+        }
 
         return editWestPart;
     }
 
-    private JButton createButton(JButton button, String name) {
-        button = new JButton(name);
+    private JButton createButton(String name) {
+        JButton button = new JButton(name);
         button.setFocusable(false);
         button.setEnabled(false);
 
@@ -81,23 +86,23 @@ public class EditPanel {
     }
 
     public JButton getCutBtn() {
-        return cutBtn;
+        return editWestPartButtons.get("Cut");
     }
 
     public JButton getCopyBtn() {
-        return copyBtn;
+        return editWestPartButtons.get("Copy");
     }
 
     public JButton getPasteBtn() {
-        return pasteBtn;
+        return editWestPartButtons.get("Paste");
     }
 
     public JButton getDeleteBtn() {
-        return deleteBtn;
+        return editWestPartButtons.get("Delete");
     }
 
     public JButton getRenameBtn() {
-        return renameBtn;
+        return editWestPartButtons.get("Rename");
     }
 
     public JCheckBox getDetailsCheckBox() {
