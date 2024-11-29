@@ -40,6 +40,26 @@ public class FileManipulationModel {
       }
    }
 
+   /**
+    * Creates a new file or directory.
+    * @param parentDirectory the directory in which the file or directory should be created
+    * @param fileName the name of the file or directory to be created
+    */
+   public void createFile(File parentDirectory, String fileName) {
+      File newFile = new File(parentDirectory, fileName);
+      try {
+         if (newFile.getName().contains("Directory")) {
+            newFile = ensureUniqueFileName(newFile);
+            newFile.mkdir();
+         } else {
+            newFile = ensureUniqueFileName(newFile);
+            newFile.createNewFile();
+         }
+      } catch (IOException e) {
+         System.err.println("Error! Unable to create file or directory. " + e.getMessage());
+      }
+   }
+
    // ======== COPY FILE ========
    public void copyFile(File file) {
       copiedFile = file;
