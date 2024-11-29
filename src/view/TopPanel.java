@@ -2,6 +2,8 @@ package src.view;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 
 public class TopPanel {
@@ -12,12 +14,18 @@ public class TopPanel {
     private JButton upperBtn;
     private JButton refreshBtn;
 
+    private JTextField directoryField;
+
     public TopPanel() {
         topMenuComponent = new JPanel(new BorderLayout());
 
         topMenuComponent.add(createBtnPanel(), BorderLayout.WEST);
+        topMenuComponent.add(createDirectoryField(), BorderLayout.CENTER);
     }
 
+    /*
+     * creating components of TopPanel
+     */
     private JPanel createBtnPanel() {
         JPanel btnPanel = new JPanel();
 
@@ -36,6 +44,22 @@ public class TopPanel {
         return button;
     }
 
+    private JTextField createDirectoryField() {
+        directoryField = new JTextField();
+        directoryField.setEditable(false);
+        return directoryField;
+    }
+
+    /*
+     * work with paths
+     */
+    public String getCurrentPath() {
+        return directoryField.getText();
+    }
+
+    public void setCurrentPath(String path) {
+        directoryField.setText(path);
+    }
 
     /*
      * getters
@@ -43,7 +67,7 @@ public class TopPanel {
     public JButton getBacButton() {
         return backBtn;
     }
-    
+
     public JButton getForwardBtn() {
         return forwardBtn;
     }
@@ -59,6 +83,9 @@ public class TopPanel {
     public JPanel getTopMenuComponent() {
         return topMenuComponent;
     }
-    
-}
 
+    public JTextField getDirecField() {
+        return directoryField;
+    }
+
+}
