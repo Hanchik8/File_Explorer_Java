@@ -3,6 +3,7 @@ package src.model;
 import src.view.View;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -72,7 +73,7 @@ public class DirectoryManagement {
                 undoStack.push(currentDirectory);
             }
             currentDirectory = newDirectory;
-            return listDirectoryContent(new File(newDirectory));
+            return filterFiles(listDirectoryContent(new File(newDirectory)));
         }
     }
 
@@ -84,8 +85,34 @@ public class DirectoryManagement {
         if (isRootDirectory(currentDirectory)) {
             return getInitialDirectories();
         } else {
-            return listDirectoryContent(new File(currentDirectory));
+            return filterFiles(listDirectoryContent(new File(currentDirectory)));
         }
+    }
+
+    private File[] filterFiles(File[] fileList) {
+        String[] listOfFormats = {"txt", "png", "jpg", "jpeg", "ppt", "docx", "doc", "xls", "xlsx"};
+        ArrayList<File> acceptableFiles = new ArrayList<>();
+        for (File file : fileList) {
+            if (!file.isHidden()) {
+                if (file.isDirectory()) {
+                    acceptableFiles.add(file);
+                } else {
+                    String fileExtension = getFileExtension(file.getName());
+                    for (String format : listOfFormats) {
+                        if (fileExtension.equals(format)) {
+                            acceptableFiles.add(file);
+                        }
+                    }
+                }
+            }
+        }
+
+        File[] filteredFiles = new File[acceptableFiles.size()];
+        for (int i = 0; i < filteredFiles.length; i++) {
+            filteredFiles[i] = acceptableFiles.get(i);
+        }
+
+        return filteredFiles;
     }
 
     /**
@@ -136,6 +163,14 @@ public class DirectoryManagement {
             return linuxDisks;
         }
         return new File[0];
+    }
+
+    public String getFileExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+            return fileName.substring(lastDotIndex + 1);
+        }
+        return null;
     }
 
     /**
