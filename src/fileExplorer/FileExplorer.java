@@ -1,6 +1,6 @@
-package src;
+package src.fileExplorer;
 
-import src.view.MainView;
+import src.fileExplorer.view.MainView;
 
 public class FileExplorer {
     public static void main(String[] args) {

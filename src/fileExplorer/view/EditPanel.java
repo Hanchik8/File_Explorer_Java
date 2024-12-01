@@ -1,12 +1,9 @@
-package src.view;
+package src.fileExplorer.view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class EditPanel {
 
@@ -32,11 +29,11 @@ public class EditPanel {
     // creating Cut, Copy, Paste, Delete, Rename buttons
     private void createButtons() {
         editWestPartButtons = new HashMap<>();
-        editWestPartButtons.put("Cut", createButton("Cut"));
-        editWestPartButtons.put("Copy", createButton("Copy"));
-        editWestPartButtons.put("Paste", createButton("Paste"));
-        editWestPartButtons.put("Rename", createButton("Rename"));
-        editWestPartButtons.put("Delete", createButton("Delete"));
+        editWestPartButtons.put("Cut", createButton("src/imageIcon/cutIcon.png"));
+        editWestPartButtons.put("Copy", createButton("src/imageIcon/copyIcon.png"));
+        editWestPartButtons.put("Paste", createButton("src/imageIcon/pasteIcon.png"));
+        editWestPartButtons.put("Rename", createButton("src/imageIcon/renameIcon.png"));
+        editWestPartButtons.put("Delete", createButton("src/imageIcon/deleteIcon.png"));
     }
     // creating editWestPart
     private JPanel createEditWestPart() {
@@ -52,12 +49,17 @@ public class EditPanel {
         return editWestPart;
     }
 
-    private JButton createButton(String name) {
-        JButton button = new JButton(name);
+    private JButton createButton(String iconPath) {
+        JButton button = new JButton(scaleImageIcon(iconPath));
         button.setFocusable(false);
         button.setEnabled(false);
 
         return button;
+    }
+
+    private ImageIcon scaleImageIcon(String iconPath) {
+        Image scaledImage = new ImageIcon(iconPath).getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
     }
 
     // creating detailsCheckBox

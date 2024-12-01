@@ -1,6 +1,6 @@
-package src.view;
+package src.fileExplorer.view;
 
-import src.controller.MainController;
+import src.fileExplorer.controller.MainController;
 
 import javax.swing.*;
 import java.awt.*;

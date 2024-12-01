@@ -1,6 +1,6 @@
-package src.model;
+package src.fileExplorer.model;
 
-import src.view.MainView;
+import src.fileExplorer.view.MainView;
 
 import java.io.File;
 import java.util.ArrayList;

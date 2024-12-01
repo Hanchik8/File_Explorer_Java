@@ -1,4 +1,4 @@
-package src.view;
+package src.fileExplorer.view;
 
 import javax.swing.*;
 import java.awt.*;
