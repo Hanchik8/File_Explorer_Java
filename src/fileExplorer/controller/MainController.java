@@ -1,14 +1,19 @@
 package src.fileExplorer.controller;
 
-import src.fileExplorer.model.DirectoryManagementModel;
-import src.fileExplorer.model.FileManipulationModel;
-import src.fileExplorer.view.MainView;
-
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+
+import javax.swing.JTextField;
+
+import src.fileExplorer.model.DirectoryManagementModel;
+import src.fileExplorer.model.FileManipulationModel;
+import src.fileExplorer.view.MainView;
 
 public class MainController {
     private MainView mainView;
@@ -28,6 +33,7 @@ public class MainController {
         // Устанавливаем обработчики событий
         setupDirectoryFieldListener();
         setupNavigationButtonListeners();
+        setupSearchFieldListeners();
     }
 
     // Обработчик для текстового поля с путем
@@ -80,6 +86,35 @@ public class MainController {
         @Override
         public void mouseClicked(MouseEvent e) {
             directoryModel.updateDirectory();
+        }
+    }
+
+    // Обработчик для текстового поля поиска
+    private void setupSearchFieldListeners() {
+        mainView.getTopMenu().getSearchField().addFocusListener(new SearchFieldListener());
+    }
+
+    private class SearchFieldListener implements FocusListener {
+        private final String placeholderText = "Search...";
+        private final Color placeholderColor = Color.GRAY;
+        private final Color normalColor = Color.BLACK;
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            JTextField field = (JTextField) e.getSource();
+            if (field.getText().equals(placeholderText)) {
+                field.setText("");
+                field.setForeground(normalColor);
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            JTextField field = (JTextField) e.getSource();
+            if (field.getText().isEmpty()) {
+                field.setText(placeholderText);
+                field.setForeground(placeholderColor);
+            }
         }
     }
 }

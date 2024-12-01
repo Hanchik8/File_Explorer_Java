@@ -15,7 +15,6 @@ public class TopPanel {
 
     private JTextField searchField;
 
-
     public TopPanel() {
         topMenuComponent = new JPanel(new BorderLayout());
 
@@ -36,7 +35,7 @@ public class TopPanel {
         topMenuButtons.put("Up", createButton("src/imageIcon/upperBtnIcon.png"));
         topMenuButtons.put("Refresh", createButton("src/imageIcon/refreshBtnIcon.png"));
     }
-    
+
     // creating ButtonPanel
     private JPanel createBtnPanel() {
         JPanel btnPanel = new JPanel();
@@ -100,7 +99,7 @@ public class TopPanel {
     }
 
     public JButton getUpperBtn() {
-        return topMenuButtons.get("Up"); 
+        return topMenuButtons.get("Up");
     }
 
     public JButton getRefreshBtn() {
@@ -113,6 +112,10 @@ public class TopPanel {
 
     public JTextField getDirectoryField() {
         return directoryField;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
     }
 
 }
