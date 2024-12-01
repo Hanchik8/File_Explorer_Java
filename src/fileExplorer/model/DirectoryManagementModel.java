@@ -14,6 +14,7 @@ public class DirectoryManagementModel {
     private String currentDirectory = "Root"; // // Tracks the current directory
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
+    private boolean isUndoOrRedoPressed = false;
 
     /**
      * Constructor initializes the view and stacks for undo/redo functionality.
@@ -32,6 +33,7 @@ public class DirectoryManagementModel {
         if (!undoStack.isEmpty()) {
             redoStack.push(currentDirectory);
             currentDirectory = undoStack.pop();
+            isUndoOrRedoPressed = true;
             updateDirectory();
         }
     }
@@ -43,6 +45,7 @@ public class DirectoryManagementModel {
         if (!redoStack.isEmpty()) {
             undoStack.push(currentDirectory);
             currentDirectory = redoStack.pop();
+            isUndoOrRedoPressed = true;
             updateDirectory();
         }
     }
@@ -66,6 +69,7 @@ public class DirectoryManagementModel {
      * @return an array of files/directories in the new directory
      */
     public void updateDirectory(String newDirectory) {
+        redoStack.clear();
         File[] listOfFiles;
         if (isRootDirectory(newDirectory)) {
             listOfFiles = getInitialDirectories();
