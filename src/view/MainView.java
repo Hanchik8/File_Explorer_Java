@@ -1,15 +1,18 @@
 package src.view;
 
+import src.controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
-public class View extends JFrame {
+public class MainView extends JFrame {
     private TopPanel topMenu;
     private CenterPanel centerPanel;
     private FileDetailsPanel fileDetailsPanel;
     private EditPanel editPanel;
 
-    public View() {
+    public MainView() {
         setTitle("Paint");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
@@ -36,7 +39,24 @@ public class View extends JFrame {
         add(explorerPanel);
 
         // Инициализируем контроллер
-//        new ExplorerController(this);
+        new MainController(this);
+    }
+
+    public void updateView(String[] fileNames, String currentPath) {
+        centerPanel.updateFileListModel(fileNames);
+        topMenu.setCurrentPath(currentPath);
+        updateBtnState(false);
+    }
+
+    public void updateBtnState(boolean isBtnActive) {
+        editPanel.getCutBtn().setEnabled(isBtnActive);
+        editPanel.getCopyBtn().setEnabled(isBtnActive);
+        editPanel.getDeleteBtn().setEnabled(isBtnActive);
+        editPanel.getRenameBtn().setEnabled(isBtnActive);
+    }
+
+    public void updateFileDetails(File selectedFile, String fileExtension) {
+        fileDetailsPanel.updateFileDetailsPanel(selectedFile, fileExtension);
     }
 
     // ======== Геттеры для доступа к компонентам ========

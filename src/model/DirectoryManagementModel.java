@@ -1,6 +1,6 @@
 package src.model;
 
-import src.view.View;
+import src.view.MainView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import java.util.Stack;
 /**
  * This class manages directory navigation and undo/redo/moveToParent operations for a file explorer.
  */
-public class DirectoryManagement {
-    private View explorerView; // Reference to the view component for updating view
+public class DirectoryManagementModel {
+    private MainView mainView; // Reference to the view component for updating view
     private String currentDirectory = "Root"; // // Tracks the current directory
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
@@ -19,8 +19,8 @@ public class DirectoryManagement {
      * Constructor initializes the view and stacks for undo/redo functionality.
      * @param explorerView the view component for updating the view
      */
-    public DirectoryManagement(View explorerView) {
-        this.explorerView = explorerView;
+    public DirectoryManagementModel(MainView explorerView) {
+        this.mainView = explorerView;
         undoStack = new Stack<>();
         redoStack = new Stack<>();
     }
@@ -65,32 +65,36 @@ public class DirectoryManagement {
      * @param newDirectory the directory to move to
      * @return an array of files/directories in the new directory
      */
-    public File[] updateDirectory(String newDirectory) {
+    public void updateDirectory(String newDirectory) {
+        File[] listOfFiles;
         if (isRootDirectory(newDirectory)) {
-           return getInitialDirectories();
+            listOfFiles = getInitialDirectories();
         } else {
             if (!currentDirectory.equals(newDirectory)) {
                 undoStack.push(currentDirectory);
             }
             currentDirectory = newDirectory;
-            return filterFiles(listDirectoryContent(new File(newDirectory)));
+            listOfFiles = filterFiles(listDirectoryContent(new File(newDirectory)));
         }
+        updateView(listOfFiles, currentDirectory);
     }
 
     /**
      * Refreshes the current directory and retrieves its contents.
      * @return an array of files/directories in the current directory
      */
-    public File[] updateDirectory() {
+    public void updateDirectory() {
+        File[] listOfFiles;
         if (isRootDirectory(currentDirectory)) {
-            return getInitialDirectories();
+            listOfFiles = getInitialDirectories();
         } else {
-            return filterFiles(listDirectoryContent(new File(currentDirectory)));
+            listOfFiles = filterFiles(listDirectoryContent(new File(currentDirectory)));
         }
+        updateView(listOfFiles, currentDirectory);
     }
 
     private File[] filterFiles(File[] fileList) {
-        String[] listOfFormats = {"txt", "png", "jpg", "jpeg", "ppt", "docx", "doc", "xls", "xlsx"};
+        String[] listOfFormats = {"txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx"};
         ArrayList<File> acceptableFiles = new ArrayList<>();
         for (File file : fileList) {
             if (!file.isHidden()) {
@@ -99,7 +103,7 @@ public class DirectoryManagement {
                 } else {
                     String fileExtension = getFileExtension(file.getName());
                     for (String format : listOfFormats) {
-                        if (fileExtension.equals(format)) {
+                        if (fileExtension != null && fileExtension.equals(format)) {
                             acceptableFiles.add(file);
                         }
                     }
@@ -180,5 +184,31 @@ public class DirectoryManagement {
      */
     private boolean isRootDirectory(String directory) {
         return directory == null || directory.equals("Root");
+    }
+
+    public void updateView(File[] files, String newPath) {
+        if (files != null) {
+            String[] fileNames = new String[files.length];
+            if ("Root".equals(newPath)) {
+                for (int i = 0; i < files.length; i++) {
+                    fileNames[i] = files[i].getAbsolutePath();
+                }
+                mainView.getTopMenu().getUpperBtn().setEnabled(false);
+            } else {
+                for (int i = 0; i < files.length; i++) {
+                    fileNames[i] = files[i].getName();
+                }
+                mainView.getTopMenu().getUpperBtn().setEnabled(true);
+            }
+            mainView.updateView(fileNames, currentDirectory);
+
+            updateNavigationButtonsState();
+        }
+    }
+
+    // Обновление состояния кнопок навигации
+    private void updateNavigationButtonsState() {
+        mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
+        mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
     }
 }

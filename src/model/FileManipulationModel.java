@@ -1,6 +1,6 @@
 package src.model;
 
-import src.view.View;
+import src.view.MainView;
 
 import java.awt.Toolkit;
 import java.awt.Desktop;
@@ -19,12 +19,12 @@ import java.util.Scanner;
 
 public class FileManipulationModel {
 
-   private View View;
+   private MainView mainView;
    private File copiedFile; // локальная копия файла, если вставляем из контекста
    private boolean cutPressed = false; // режим вырезания
 
-   public FileManipulationModel(View View) {
-      this.View = View;
+   public FileManipulationModel(MainView mainView) {
+      this.mainView = mainView;
    }
 
    // ======== OPEN FILE ========
@@ -66,12 +66,16 @@ public class FileManipulationModel {
       cutPressed = false;
       FileTransferable transferable = new FileTransferable(file);
       Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
+      mainView.updateBtnState(false);
+      mainView.getEditPanel().getPasteBtn().setEnabled(true);
    }
 
    // ======== CUT FILE ========
    public void cutFile(File file) {
       copyFile(file);
       cutPressed = true;
+      mainView.updateBtnState(false);
+      mainView.getEditPanel().getPasteBtn().setEnabled(true);
    }
 
    // ======== PASTE FILE ========
@@ -92,6 +96,7 @@ public class FileManipulationModel {
                   // Перемещение файла при режиме вырезания
                   Files.move(file.toPath(), targetFile.toPath());
                   cutPressed = false;
+                  mainView.getEditPanel().getPasteBtn().setEnabled(false);
                } else {
                   // Копирование файла
                   copyFileContent(file, targetFile);
@@ -123,6 +128,9 @@ public class FileManipulationModel {
             out.write(buffer, 0, length);
          }
       }
+      mainView.updateBtnState(false);
+      mainView.getEditPanel().getPasteBtn().setEnabled(true);
+
    }
 
    // ======== DELETE FILE OR DIRECTORY ========
@@ -135,6 +143,7 @@ public class FileManipulationModel {
       if (!fileOrDir.delete()) {
          System.err.println("Failed to delete: " + fileOrDir.getAbsolutePath());
       }
+      mainView.updateBtnState(false);
    }
 
    // ======== RENAME FILE ========
@@ -181,7 +190,7 @@ public class FileManipulationModel {
    }
 
    // ======== GET FILE NAME AND EXTENSION ========
-   public static String[] getFileNameAndExtension(String fileName) {
+   public String[] getFileNameAndExtension(String fileName) {
       int lastDotIndex = fileName.lastIndexOf(".");
       if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
          String fileNameWithoutExtension = fileName.substring(0, lastDotIndex);
@@ -199,24 +208,6 @@ public class FileManipulationModel {
       }
       return null;
    }
-
-   // КАК БУДТО ЭТИ МЕТОДЫ (ниже) ЗДЕСЬ ТОЛЬКО ДЛЯ ТОГО ЧТОБЫ РАБОТАЛ ИМПОРТ View
-   // ВЕДЬ ОНИ НИКАК НЕ ОТВЕЧАЮТ ЗА ГЛАВНУЮ (БИЗНЕС) ЛОГИКУ ПРОВОДНИКА
-   // Сомнительно, завтра уточню у учителя стоит ли придерживаться тех
-   // примеров что дали нам менторы (ведь они кринж)
-
-   // public void updateFileDetails(File selectedFile) {
-   // View.getFileDetailsPanel().updateFileDetailsPanel(selectedFile,
-   // getFileExtension(selectedFile.getName()));
-   // updateBtnState(true);
-   // }
-
-   // public void updateBtnState(boolean isBtnActive) {
-   // View.getEditPanel().getCutBtn().setEnabled(isBtnActive);
-   // View.getEditPanel().getCopyBtn().setEnabled(isBtnActive);
-   // View.getEditPanel().getDeleteBtn().setEnabled(isBtnActive);
-   // View.getEditPanel().getRenameBtn().setEnabled(isBtnActive);
-   // }
 
    // Хотел перенести в отдельный класс, но тогда весь проект будет выглядеть
    // слишком

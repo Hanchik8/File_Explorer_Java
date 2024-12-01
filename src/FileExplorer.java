@@ -1,9 +1,10 @@
 package src;
 
-import src.view.View;
+import src.view.MainView;
 
 public class FileExplorer {
     public static void main(String[] args) {
-        View explorerView = new View();
+        MainView explorerView = new MainView();
+        explorerView.setVisible(true);
     }
 }

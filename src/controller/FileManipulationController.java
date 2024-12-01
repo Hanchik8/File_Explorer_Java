@@ -1,7 +1,9 @@
 package src.controller;
 
-// import src.model.DirectoryManagement;
-import src.view.View;
+//import src.model.DirectoryManagement;
+
+import src.model.DirectoryManagementModel;
+import src.view.MainView;
 
 import src.model.FileManipulationModel;
 
@@ -14,66 +16,71 @@ import java.io.File;
 // УБРАТЬ ВСЕ КОММЕНТАРИИ В МЕТОДАХ ПОСЛЕ СОЗДАНИЯ View и DirectoryManagement
 
 public class FileManipulationController {
-    // private final View View;
-    // private final DirectoryManagement directoryManagement;
-    private final FileManipulationModel fileManipulation;
+    private final MainView mainView;
+    private final DirectoryManagementModel directoryModel;
+    private final FileManipulationModel fileModel;
 
     public FileManipulationController(
-            // View View,
-            // DirectoryManagement directoryManagement,
-            FileManipulationModel fileManipulation) {
-        // this.View = View;
-        // this.directoryManagement = directoryManagement;
-        this.fileManipulation = fileManipulation;
+            MainView mainView,
+            DirectoryManagementModel directoryModel,
+            FileManipulationModel fileModel) {
+        this.mainView = mainView;
+        this.directoryModel = directoryModel;
+        this.fileModel = fileModel;
 
-        // setupFileActions();
+         setupFileActions();
     }
 
-  //private void setupFileActions() {
-    //  View.getMainPanel().getFileList().addMouseListener(new FileListMouseAdapter());
-    //  View.getEditPanel().getNewComboBox().addActionListener(new NewFileComboBoxListener());
-    //  View.getEditPanel().getCopyBtn().addMouseListener(new CopyButtonListener());
-    //  View.getEditPanel().getPasteBtn().addMouseListener(new PasteButtonListener());
-    //  View.getEditPanel().getCutBtn().addMouseListener(new CutButtonListener());
-    //  View.getEditPanel().getDeleteBtn().addMouseListener(new DeleteButtonListener());
-    //  View.getEditPanel().getDetailsCheckBox().addActionListener(new DetailCheckBoxListener());
-  //}
+    private void setupFileActions() {
+      mainView.getCenterPanel().getFileList().addMouseListener(new FileListMouseAdapter());
+      mainView.getEditPanel().getNewComboBox().addActionListener(new NewFileComboBoxListener());
+      mainView.getEditPanel().getCopyBtn().addMouseListener(new CopyButtonListener());
+      mainView.getEditPanel().getPasteBtn().addMouseListener(new PasteButtonListener());
+      mainView.getEditPanel().getCutBtn().addMouseListener(new CutButtonListener());
+      mainView.getEditPanel().getDeleteBtn().addMouseListener(new DeleteButtonListener());
+      mainView.getEditPanel().getDetailsCheckBox().addActionListener(new DetailCheckBoxListener());
+    }
 
     private File getSelectedFile() {
-        String selectedName = View.getMainPanel().getFileList().getSelectedValue();
-        String currentPath = View.getTopMenu().getCurrentPath();
-        return new File(currentPath, selectedName);
+        String selectedName = mainView.getCenterPanel().getFileList().getSelectedValue();
+        String currentPath = mainView.getTopMenu().getCurrentPath();
+        File selectedFile;
+        if ("Root".equals(currentPath)) {
+            selectedFile = new File(selectedName);
+        } else {
+            selectedFile = new File(currentPath, selectedName);
+        }
+        return selectedFile;
     }
 
     private void refreshDirectory() {
-        directoryManagement.updateDirectory();
-        View.getTopMenu().getForwardBtn().setEnabled(false);
+        directoryModel.updateDirectory();
+        mainView.getTopMenu().getForwardBtn().setEnabled(false);
     }
 
     private class FileListMouseAdapter extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
+            File selectedFile = getSelectedFile();
+            mainView.updateBtnState(true);
             if (e.getClickCount() == 2) {
-                File selectedFile = getSelectedFile();
                 if (selectedFile.isDirectory()) {
-                    directoryManagement.updateDirectory(selectedFile.getAbsolutePath());
+                    directoryModel.updateDirectory(selectedFile.getAbsolutePath());
                 } else {
-                    fileManipulation.openFile(selectedFile);
+                    fileModel.openFile(selectedFile);
                 }
             }
-            fileManipulation.updateFileDetails(getSelectedFile());
+            mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile.getName()));
         }
     }
 
     private class NewFileComboBoxListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String newFileType = (String) View.getEditPanel().getNewComboBox().getSelectedItem();
-            File parentDirectory = new File(View.getTopMenu().getCurrentPath());
-            // Ниже вызов метода которого не сущетвует, не забудь ипользовать те же данные
-            // и название для создания его в будущем
-            fileManipulation.createFile(parentDirectory, newFileType);
-            View.getEditPanel().getNewComboBox().setSelectedIndex(0); // Сбрасываем выбор
+            String newFileType = (String) mainView.getEditPanel().getNewComboBox().getSelectedItem();
+            File parentDirectory = new File(mainView.getTopMenu().getCurrentPath());
+            fileModel.createFile(parentDirectory, newFileType);
+            mainView.getEditPanel().getNewComboBox().setSelectedIndex(0); // Сбрасываем выбор
             refreshDirectory();
         }
     }
@@ -81,15 +88,15 @@ public class FileManipulationController {
     private class CopyButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            fileManipulation.copyFile(getSelectedFile());
+            fileModel.copyFile(getSelectedFile());
         }
     }
 
     private class PasteButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            File targetDirectory = new File(View.getTopMenu().getCurrentPath());
-            fileManipulation.pasteFile(targetDirectory);
+            File targetDirectory = new File(mainView.getTopMenu().getCurrentPath());
+            fileModel.pasteFile(targetDirectory);
             refreshDirectory();
         }
     }
@@ -97,14 +104,14 @@ public class FileManipulationController {
     private class CutButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            fileManipulation.cutFile(getSelectedFile());
+            fileModel.cutFile(getSelectedFile());
         }
     }
 
     private class DeleteButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            fileManipulation.deleteFile(getSelectedFile());
+            fileModel.deleteFile(getSelectedFile());
             refreshDirectory();
         }
     }
@@ -112,8 +119,8 @@ public class FileManipulationController {
     private class DetailCheckBoxListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            boolean isSelected = View.getEditPanel().getDetailsCheckBox().isSelected();
-            View.getFileDetailsPanel().getFileDetailsPanel().setVisible(isSelected);
+            boolean isSelected = mainView.getEditPanel().getDetailsCheckBox().isSelected();
+            mainView.getFileDetailsPanel().getFileDetailsPanel().setVisible(isSelected);
         }
     }
 }

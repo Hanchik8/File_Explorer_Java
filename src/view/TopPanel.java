@@ -7,12 +7,13 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class TopPanel {
 
     private JPanel topMenuComponent;
 
-    private HashMap<String, JButton> topMenuButtons;
+    private LinkedHashMap<String, JButton> topMenuButtons;
 
     private JTextField directoryField;
 
@@ -33,7 +34,7 @@ public class TopPanel {
 
     // creating Back, Forward, Up, Refresh buttons
     private void createButtons() {
-        topMenuButtons = new HashMap<>();
+        topMenuButtons = new LinkedHashMap<>();
         topMenuButtons.put("Back", createButton("Back"));
         topMenuButtons.put("Forward", createButton("Forward"));
         topMenuButtons.put("Up", createButton("Up"));
@@ -55,8 +56,9 @@ public class TopPanel {
     private JButton createButton(String name) {
         JButton button = new JButton(name);
         button.setFocusable(false);
-        button.setEnabled(false);
-
+        if (!name.equals("Refresh")) {
+            button.setEnabled(false);
+        }
         return button;
     }
 
@@ -88,7 +90,7 @@ public class TopPanel {
     /*
      * getters
      */
-    public JButton getBacButton() {
+    public JButton getBackBtn() {
         return topMenuButtons.get("Back");
     }
 
