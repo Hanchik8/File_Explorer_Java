@@ -1,4 +1,4 @@
-package src.fileExplorer.controller;
+package fileExplorer.controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -11,9 +11,9 @@ import java.io.File;
 
 import javax.swing.JTextField;
 
-import src.fileExplorer.model.DirectoryManagementModel;
-import src.fileExplorer.model.FileManipulationModel;
-import src.fileExplorer.view.MainView;
+import fileExplorer.model.DirectoryManagementModel;
+import fileExplorer.model.FileManipulationModel;
+import fileExplorer.view.MainView;
 
 public class MainController {
     private MainView mainView;

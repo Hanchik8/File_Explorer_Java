@@ -1,9 +1,11 @@
-package src.fileExplorer.view;
+package fileExplorer.view;
 
-import src.fileExplorer.controller.MainController;
+import fileExplorer.controller.MainController;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.io.File;
 
 public class MainView extends JFrame {

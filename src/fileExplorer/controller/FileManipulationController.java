@@ -1,11 +1,9 @@
-package src.fileExplorer.controller;
+package fileExplorer.controller;
 
-//import src.fileExplorer.model.DirectoryManagement;
+import fileExplorer.model.DirectoryManagementModel;
+import fileExplorer.view.MainView;
 
-import src.fileExplorer.model.DirectoryManagementModel;
-import src.fileExplorer.view.MainView;
-
-import src.fileExplorer.model.FileManipulationModel;
+import fileExplorer.model.FileManipulationModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,7 +1,14 @@
-package src.fileExplorer.view;
+package fileExplorer.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;

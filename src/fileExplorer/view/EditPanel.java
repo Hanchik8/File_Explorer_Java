@@ -1,9 +1,14 @@
-package src.fileExplorer.view;
+package fileExplorer.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Image;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 
 public class EditPanel {
 

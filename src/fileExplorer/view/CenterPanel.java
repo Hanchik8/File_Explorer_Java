@@ -1,7 +1,11 @@
-package src.fileExplorer.view;
+package fileExplorer.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+
+import java.awt.BorderLayout;
 
 /**
  * Центральная панель для отображения списка файлов.

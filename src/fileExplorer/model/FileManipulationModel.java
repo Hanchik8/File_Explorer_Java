@@ -1,10 +1,13 @@
-package src.fileExplorer.model;
+package fileExplorer.model;
 
-import src.fileExplorer.view.MainView;
+import fileExplorer.view.MainView;
 
 import java.awt.Toolkit;
 import java.awt.Desktop;
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 
 import java.io.File;
 import java.io.InputStream;

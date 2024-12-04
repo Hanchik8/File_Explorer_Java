@@ -1,8 +1,14 @@
-package src.fileExplorer.view;
+package fileExplorer.view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Color;
+
 import java.util.LinkedHashMap;
 
 public class TopPanel {
