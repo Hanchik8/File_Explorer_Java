@@ -16,6 +16,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -45,8 +47,10 @@ public class FileManipulationModel {
 
    /**
     * Creates a new file or directory.
-    * @param parentDirectory the directory in which the file or directory should be created
-    * @param fileName the name of the file or directory to be created
+    * 
+    * @param parentDirectory the directory in which the file or directory should be
+    *                        created
+    * @param fileName        the name of the file or directory to be created
     */
    public void createFile(File parentDirectory, String fileName) {
       File newFile = new File(parentDirectory, fileName);
@@ -168,6 +172,27 @@ public class FileManipulationModel {
    public List<File> sortFilesByDate(List<File> files) {
       files.sort(Comparator.comparingLong(File::lastModified)); // Сортировка по дате последнего изменения
       return files;
+   }
+
+   public static void sortFilesByDate(File[] files) {
+      Arrays.sort(files, new Comparator<File>() {
+         public int compare(File f1, File f2) {
+            long l1 = getFileCreationEpoch(f1);
+            long l2 = getFileCreationEpoch(f2);
+            return Long.valueOf(l1).compareTo(l2);
+         }
+      });
+   }
+
+   public static long getFileCreationEpoch(File file) {
+      try {
+         BasicFileAttributes attr = Files.readAttributes(file.toPath(),
+               BasicFileAttributes.class);
+         return attr.creationTime()
+               .toInstant().toEpochMilli();
+      } catch (IOException e) {
+         throw new RuntimeException(file.getAbsolutePath(), e);
+      }
    }
 
    // ======== SORTING BY SIZE ========

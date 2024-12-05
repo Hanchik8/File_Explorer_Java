@@ -18,6 +18,8 @@ public class EditPanel {
 
     private JCheckBox detailsCheckBox;
 
+    public JComboBox<String> sortComboBox;
+
     private JComboBox<String> newComboBox;
 
     public EditPanel() {
@@ -40,16 +42,19 @@ public class EditPanel {
         editWestPartButtons.put("Rename", createButton("src/imageIcon/renameIcon.png"));
         editWestPartButtons.put("Delete", createButton("src/imageIcon/deleteIcon.png"));
     }
+
     // creating editWestPart
     private JPanel createEditWestPart() {
         JPanel editWestPart = new JPanel();
-        
+
         editWestPart.add(createNewComboBox());
 
         createButtons();
         for (JButton button : editWestPartButtons.values()) {
             editWestPart.add(button);
         }
+
+        editWestPart.add(createSortComboBox());
 
         return editWestPart;
     }
@@ -77,12 +82,20 @@ public class EditPanel {
 
     // creating newComboBox
     private JComboBox<String> createNewComboBox() {
-        String[] newListChoice = {"Create", "Directory", "Microsoft Word.docx", "Microsoft PowerPoint.pptx",
-        "Note.txt", "Microsoft Excel.xlsx"};
+        String[] newListChoice = { "Create", "Directory", "Microsoft Word.docx", "Microsoft PowerPoint.pptx",
+                "Note.txt", "Microsoft Excel.xlsx" };
         newComboBox = new JComboBox<>(newListChoice);
         newComboBox.setSelectedItem("Create");
 
         return newComboBox;
+    }
+
+    // creating sortComboBox
+    private JComboBox<String> createSortComboBox() {
+        String[] sortOptions = { "Name", "Date", "Size" };
+        sortComboBox = new JComboBox<>(sortOptions);
+        sortComboBox.setSelectedItem("Name");
+        return sortComboBox;
     }
 
     /*
@@ -118,5 +131,9 @@ public class EditPanel {
 
     public JComboBox<String> getNewComboBox() {
         return newComboBox;
+    }
+
+    public String getSortCriteria() {
+        return (String) sortComboBox.getSelectedItem();
     }
 }
