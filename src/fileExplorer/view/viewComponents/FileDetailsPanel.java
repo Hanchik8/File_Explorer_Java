@@ -1,13 +1,11 @@
-package fileExplorer.view;
+package fileExplorer.view.viewComponents;
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import fileExplorer.utils.ImageUtils;
+
+import javax.swing.*;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,19 +36,21 @@ public class FileDetailsPanel {
      */
     private void createImageLabel(String imagePath, String extension) {
         JLabel imageLabel = new JLabel();
+        int panelWidth = fileDetailsPanel.getWidth();
 
         if (extension == null) {
-            imageLabel.setIcon(scaleImage("src/imageIcon/fileIcons/folderIcon.png"));
+            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/folderIcon.png", panelWidth));
         } else if (extension.equals("xlsx")) {
-            imageLabel.setIcon(scaleImage("src/imageIcon/fileIcons/exelIcon.png"));
+            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/exelIcon.png", panelWidth));
         } else if (extension.equals("txt")) {
-            imageLabel.setIcon(scaleImage("src/imageIcon/fileIcons/noteIcon.png"));
+            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/noteIcon.png", panelWidth));
         } else if (extension.equals("pptx")) {
-            imageLabel.setIcon(scaleImage("src/imageIcon/fileIcons/pptIcon.png"));
+            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/pptIcon.png", panelWidth));
         } else if (extension.equals("docx")) {
-            imageLabel.setIcon(scaleImage("src/imageIcon/fileIcons/docIcon.png"));
+            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/docIcon.png", panelWidth));
         } else {
-            imageLabel.setIcon(scaleImage(imagePath));
+            ImageIcon scaledImage = ImageUtils.scaleImage(new ImageIcon(imagePath), panelWidth, 350);
+            imageLabel.setIcon(scaledImage);
         }
 
         fileDetailsPanel.add(imageLabel);
@@ -66,19 +66,19 @@ public class FileDetailsPanel {
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         if (extension == null) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/folderIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/folderIcon.png", 25));
         } else if (extension.equals("xlsx")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/exelIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/exelIcon.png", 25));
         } else if (extension.equals("txt")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/noteIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/noteIcon.png", 25));
         } else if (extension.equals("pptx")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/pptIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pptIcon.png", 25));
         } else if (extension.equals("docx")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/docIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/docIcon.png", 25));
         } else if (extension.equals("png")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/pngIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pngIcon.png", 25));
         } else if (extension.equals("jpg") || extension.equals("jpeg")) {
-            nameLabel.setIcon(scaleImageIcon("src/imageIcon/fileIcons/pngIcon.png"));
+            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pngIcon.png", 25));
         }
 
 
@@ -150,36 +150,6 @@ public class FileDetailsPanel {
 
         fileDetailsPanel.revalidate();
         fileDetailsPanel.repaint();
-    }
-
-    /**
-     * Масштабирует изображение по заданному пути.
-     * @param iconPath Путь к изображению.
-     * @return Масштабированная иконка.
-     */
-    private ImageIcon scaleImage(String iconPath) {
-        ImageIcon imageIcon = new ImageIcon(iconPath);
-
-        double scaleX = (double) fileDetailsPanel.getWidth() / imageIcon.getIconWidth();
-        double scaleY = (double) 350 / imageIcon.getIconHeight();
-        double scale = Math.min(scaleX, scaleY) - 0.001;
-
-        int imageIconWidth = (int)(imageIcon.getIconWidth() * scale);
-        int imageIconHeight = (int)(imageIcon.getIconHeight() * scale);
-
-        Image scaledImage = imageIcon.getImage().getScaledInstance(imageIconWidth, imageIconHeight, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-    }
-
-    /**
-     * Масштабирует иконку для имени файла.
-     * @param iconPath Путь к иконке.
-     * @return Масштабированная иконка.
-     */
-    private ImageIcon scaleImageIcon(String iconPath) {
-        ImageIcon imageIcon = new ImageIcon(iconPath);
-        Image scaledImage = imageIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
     }
 
     public JPanel getFileDetailsPanel() {

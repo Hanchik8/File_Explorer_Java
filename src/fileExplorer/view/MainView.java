@@ -1,6 +1,10 @@
 package fileExplorer.view;
 
 import fileExplorer.controller.MainController;
+import fileExplorer.view.viewComponents.CenterPanel;
+import fileExplorer.view.viewComponents.EditPanel;
+import fileExplorer.view.viewComponents.FileDetailsPanel;
+import fileExplorer.view.viewComponents.TopPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

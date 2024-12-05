@@ -1,12 +1,12 @@
-package fileExplorer.view;
+package fileExplorer.view.viewComponents;
+
+import fileExplorer.utils.ImageUtils;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.Color;
 
 import java.util.LinkedHashMap;
@@ -36,10 +36,10 @@ public class TopPanel {
     // creating Back, Forward, Up, Refresh buttons
     private void createButtons() {
         topMenuButtons = new LinkedHashMap<>();
-        topMenuButtons.put("Back", createButton("src/imageIcon/backBtnIcon.png"));
-        topMenuButtons.put("Forward", createButton("src/imageIcon/forwardBtnIcon.png"));
-        topMenuButtons.put("Up", createButton("src/imageIcon/upperBtnIcon.png"));
-        topMenuButtons.put("Refresh", createButton("src/imageIcon/refreshBtnIcon.png"));
+        topMenuButtons.put("Back", createButton("images/btnIcons/backBtnIcon.png"));
+        topMenuButtons.put("Forward", createButton("images/btnIcons/forwardBtnIcon.png"));
+        topMenuButtons.put("Up", createButton("images/btnIcons/upperBtnIcon.png"));
+        topMenuButtons.put("Refresh", createButton("images/btnIcons/refreshBtnIcon.png"));
     }
 
     // creating ButtonPanel
@@ -55,7 +55,7 @@ public class TopPanel {
     }
 
     private JButton createButton(String iconPath) {
-        JButton button = new JButton(scaleImageIcon(iconPath));
+        JButton button = new JButton(ImageUtils.getImageIcon(iconPath));
         button.setFocusable(false);
         if (!iconPath.contains("refresh")) {
             button.setEnabled(false);
@@ -69,11 +69,6 @@ public class TopPanel {
         directoryField.setEditable(false);
 
         return directoryField;
-    }
-
-    private ImageIcon scaleImageIcon(String iconPath) {
-        Image scaledImage = new ImageIcon(iconPath).getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
     }
 
     public String getCurrentPath() {

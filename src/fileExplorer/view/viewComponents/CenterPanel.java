@@ -1,4 +1,4 @@
-package fileExplorer.view;
+package fileExplorer.view.viewComponents;
 
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
