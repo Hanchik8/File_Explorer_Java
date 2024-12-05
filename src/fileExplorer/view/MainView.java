@@ -19,9 +19,8 @@ public class MainView extends JFrame {
     private EditPanel editPanel;
 
     public MainView() {
-        setTitle("Paint");
+        setTitle("File Explorer Lunar Seekers");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
