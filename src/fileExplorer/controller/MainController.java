@@ -1,5 +1,11 @@
 package fileExplorer.controller;
 
+import fileExplorer.model.DirectoryManagementModel;
+import fileExplorer.model.FileManipulationModel;
+import fileExplorer.view.MainView;
+
+import javax.swing.JTextField;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,13 +13,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.io.File;
-
-import javax.swing.JTextField;
-
-import fileExplorer.model.DirectoryManagementModel;
-import fileExplorer.model.FileManipulationModel;
-import fileExplorer.view.MainView;
 
 public class MainController {
     private MainView mainView;

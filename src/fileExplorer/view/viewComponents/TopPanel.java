@@ -36,10 +36,10 @@ public class TopPanel {
     // creating Back, Forward, Up, Refresh buttons
     private void createButtons() {
         topMenuButtons = new LinkedHashMap<>();
-        topMenuButtons.put("Back", createButton("images/btnIcons/backBtnIcon.png"));
-        topMenuButtons.put("Forward", createButton("images/btnIcons/forwardBtnIcon.png"));
-        topMenuButtons.put("Up", createButton("images/btnIcons/upperBtnIcon.png"));
-        topMenuButtons.put("Refresh", createButton("images/btnIcons/refreshBtnIcon.png"));
+        topMenuButtons.put("Back", createButton("resources/images/btnIcons/backBtnIcon.png"));
+        topMenuButtons.put("Forward", createButton("resources/images/btnIcons/forwardBtnIcon.png"));
+        topMenuButtons.put("Up", createButton("resources/images/btnIcons/upperBtnIcon.png"));
+        topMenuButtons.put("Refresh", createButton("resources/images/btnIcons/refreshBtnIcon.png"));
     }
 
     // creating ButtonPanel

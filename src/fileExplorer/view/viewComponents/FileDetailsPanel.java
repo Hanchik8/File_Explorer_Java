@@ -2,28 +2,34 @@ package fileExplorer.view.viewComponents;
 
 import fileExplorer.utils.ImageUtils;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.BoxLayout;
 
 import java.awt.Dimension;
 import java.awt.Font;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Панель, отображающая подробности о файле: имя, размер, дата последнего изменения и иконки.
+ * Панель, отображающая подробности о файле: имя, размер, дата последнего
+ * изменения и иконки.
  */
 public class FileDetailsPanel {
     private JPanel fileDetailsPanel;
 
-    public FileDetailsPanel(){
+    public FileDetailsPanel() {
         fileDetailsPanel = new JPanel();
         fileDetailsPanel.setLayout(new BoxLayout(fileDetailsPanel, BoxLayout.Y_AXIS));
         fileDetailsPanel.setPreferredSize(new Dimension(400, fileDetailsPanel.getHeight()));
@@ -31,6 +37,7 @@ public class FileDetailsPanel {
 
     /**
      * Создаёт метку с иконкой в зависимости от расширения файла.
+     * 
      * @param imagePath Путь к изображению для отображения.
      * @param extension Расширение файла.
      */
@@ -39,15 +46,15 @@ public class FileDetailsPanel {
         int panelWidth = fileDetailsPanel.getWidth();
 
         if (extension == null) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/folderIcon.png", panelWidth));
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", panelWidth));
         } else if (extension.equals("xlsx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/exelIcon.png", panelWidth));
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/exelIcon.png", panelWidth));
         } else if (extension.equals("txt")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/noteIcon.png", panelWidth));
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/noteIcon.png", panelWidth));
         } else if (extension.equals("pptx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/pptIcon.png", panelWidth));
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pptIcon.png", panelWidth));
         } else if (extension.equals("docx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("images/fileIcons/docIcon.png", panelWidth));
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docIcon.png", panelWidth));
         } else {
             ImageIcon scaledImage = ImageUtils.scaleImage(new ImageIcon(imagePath), panelWidth, 350);
             imageLabel.setIcon(scaledImage);
@@ -58,7 +65,8 @@ public class FileDetailsPanel {
 
     /**
      * Создаёт метку с именем файла и иконкой.
-     * @param fileName Имя файла.
+     * 
+     * @param fileName  Имя файла.
      * @param extension Расширение файла.
      */
     private void createNameLabel(String fileName, String extension) {
@@ -66,27 +74,28 @@ public class FileDetailsPanel {
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         if (extension == null) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/folderIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/folderIcon.png", 25));
         } else if (extension.equals("xlsx")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/exelIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/exelIcon.png", 25));
         } else if (extension.equals("txt")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/noteIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/noteIcon.png", 25));
         } else if (extension.equals("pptx")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pptIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pptIcon.png", 25));
         } else if (extension.equals("docx")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/docIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docIcon.png", 25));
         } else if (extension.equals("png")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pngIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pngIcon.png", 25));
         } else if (extension.equals("jpg") || extension.equals("jpeg")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("images/fileIcons/pngIcon.png", 25));
+            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pngIcon.png", 25));
         }
-
 
         fileDetailsPanel.add(nameLabel);
     }
 
     /**
-     * Создаёт панель с дополнительной информацией о файле (путь, размер, дата последнего изменения).
+     * Создаёт панель с дополнительной информацией о файле (путь, размер, дата
+     * последнего изменения).
+     * 
      * @param currentFile Файл, о котором нужно вывести информацию.
      */
     private void createExtraDetailsPanel(File currentFile) {
@@ -96,8 +105,9 @@ public class FileDetailsPanel {
         extraDetailsPanel.add(new JLabel("Path: " + currentFile.getParent()));
 
         if (currentFile.isFile())
-            extraDetailsPanel.add(new JLabel("Size: " + (Math.round(currentFile.length() / 1024.0 * 100.0) / 100.0) + " KB"));
-//            calculateDirectorySize(currentFile.toPath());
+            extraDetailsPanel
+                    .add(new JLabel("Size: " + (Math.round(currentFile.length() / 1024.0 * 100.0) / 100.0) + " KB"));
+        // calculateDirectorySize(currentFile.toPath());
 
         Date lastModifiedDate = new Date(currentFile.lastModified());
         SimpleDateFormat formattedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -106,12 +116,12 @@ public class FileDetailsPanel {
         fileDetailsPanel.add(extraDetailsPanel);
     }
 
-    public static long calculateDirectorySize(Path path){
+    public static long calculateDirectorySize(Path path) {
         if (!Files.isDirectory(path)) {
             throw new IllegalArgumentException("Path must be a directory");
         }
 
-        final long[] size = {0};
+        final long[] size = { 0 };
 
         try {
             Files.walkFileTree(path, new SimpleFileVisitor<>() {
@@ -138,8 +148,9 @@ public class FileDetailsPanel {
 
     /**
      * Обновляет панель с деталями о файле.
+     * 
      * @param currentFile Файл, для которого обновляются детали.
-     * @param extension Расширение файла.
+     * @param extension   Расширение файла.
      */
     public void updateFileDetailsPanel(File currentFile, String extension) {
         fileDetailsPanel.removeAll();

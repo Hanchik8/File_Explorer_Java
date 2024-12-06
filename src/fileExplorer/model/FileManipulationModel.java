@@ -15,7 +15,9 @@ import java.io.OutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.nio.file.Files;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -45,8 +47,10 @@ public class FileManipulationModel {
 
    /**
     * Creates a new file or directory.
-    * @param parentDirectory the directory in which the file or directory should be created
-    * @param fileName the name of the file or directory to be created
+    * 
+    * @param parentDirectory the directory in which the file or directory should be
+    *                        created
+    * @param fileName        the name of the file or directory to be created
     */
    public void createFile(File parentDirectory, String fileName) {
       File newFile = new File(parentDirectory, fileName);

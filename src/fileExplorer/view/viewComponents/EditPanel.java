@@ -3,6 +3,7 @@ package fileExplorer.view.viewComponents;
 import fileExplorer.utils.ImageUtils;
 
 import java.awt.BorderLayout;
+
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -34,16 +35,17 @@ public class EditPanel {
     // creating Cut, Copy, Paste, Delete, Rename buttons
     private void createButtons() {
         editWestPartButtons = new HashMap<>();
-        editWestPartButtons.put("Cut", createButton("images/btnIcons/cutIcon.png"));
-        editWestPartButtons.put("Copy", createButton("images/btnIcons/copyIcon.png"));
-        editWestPartButtons.put("Paste", createButton("images/btnIcons/pasteIcon.png"));
-        editWestPartButtons.put("Rename", createButton("images/btnIcons/renameIcon.png"));
-        editWestPartButtons.put("Delete", createButton("images/btnIcons/deleteIcon.png"));
+        editWestPartButtons.put("Cut", createButton("resources/images/btnIcons/cutIcon.png"));
+        editWestPartButtons.put("Copy", createButton("resources/images/btnIcons/copyIcon.png"));
+        editWestPartButtons.put("Paste", createButton("resources/images/btnIcons/pasteIcon.png"));
+        editWestPartButtons.put("Rename", createButton("resources/images/btnIcons/renameIcon.png"));
+        editWestPartButtons.put("Delete", createButton("resources/images/btnIcons/deleteIcon.png"));
     }
+
     // creating editWestPart
     private JPanel createEditWestPart() {
         JPanel editWestPart = new JPanel();
-        
+
         editWestPart.add(createNewComboBox());
 
         createButtons();
@@ -72,8 +74,8 @@ public class EditPanel {
 
     // creating newComboBox
     private JComboBox<String> createNewComboBox() {
-        String[] newListChoice = {"Create", "Directory", "Microsoft Word.docx", "Microsoft PowerPoint.pptx",
-        "Note.txt", "Microsoft Excel.xlsx"};
+        String[] newListChoice = { "Create", "Directory", "Microsoft Word.docx", "Microsoft PowerPoint.pptx",
+                "Note.txt", "Microsoft Excel.xlsx" };
         newComboBox = new JComboBox<>(newListChoice);
         newComboBox.setSelectedItem("Create");
 

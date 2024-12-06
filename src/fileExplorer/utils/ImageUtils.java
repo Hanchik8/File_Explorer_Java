@@ -1,13 +1,16 @@
 package fileExplorer.utils;
 
 import javax.swing.ImageIcon;
+
 import java.awt.Image;
+
 import java.net.URL;
 
 public class ImageUtils {
     /**
      * Returns a scaled image based on the specified path and panel width.
-     * @param imagePath Path to the image.
+     * 
+     * @param imagePath  Path to the image.
      * @param panelWidth Width of the panel.
      * @return Scaled icon or null if the image is not found.
      */
@@ -22,6 +25,7 @@ public class ImageUtils {
 
     /**
      * Returns a scaled icon with fixed dimensions.
+     * 
      * @param imagePath Path to the image.
      * @param imageSize Size of the image (width and height).
      * @return Scaled icon or null if the image is not found.
@@ -37,6 +41,7 @@ public class ImageUtils {
 
     /**
      * Returns a scaled icon with fixed dimensions (default size is 15x15).
+     * 
      * @param imagePath Path to the image.
      * @return Scaled icon or null if the image is not found.
      */
@@ -46,8 +51,9 @@ public class ImageUtils {
 
     /**
      * Scales the image while maintaining its aspect ratio.
+     * 
      * @param imageIcon The original icon.
-     * @param maxWidth Maximum width of the resulting image.
+     * @param maxWidth  Maximum width of the resulting image.
      * @param maxHeight Maximum height of the resulting image.
      * @return Scaled icon.
      */
@@ -68,6 +74,7 @@ public class ImageUtils {
 
     /**
      * Retrieves a resource by its path.
+     * 
      * @param resourcePath Path to the resource.
      * @return URL of the resource or null if it is not found.
      */

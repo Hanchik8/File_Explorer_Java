@@ -4,12 +4,14 @@ import fileExplorer.controller.MainController;
 import fileExplorer.view.viewComponents.CenterPanel;
 import fileExplorer.view.viewComponents.EditPanel;
 import fileExplorer.view.viewComponents.FileDetailsPanel;
+import fileExplorer.view.viewComponents.SidebarPanel;
 import fileExplorer.view.viewComponents.TopPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+
 import java.io.File;
 
 public class MainView extends JFrame {
@@ -17,11 +19,11 @@ public class MainView extends JFrame {
     private CenterPanel centerPanel;
     private FileDetailsPanel fileDetailsPanel;
     private EditPanel editPanel;
+    private SidebarPanel sidebarPanel;
 
     public MainView() {
-        setTitle("Paint");
+        setTitle("File Explorer Lunar Seekers");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
@@ -35,6 +37,11 @@ public class MainView extends JFrame {
 
         // Основной explorerPanel, который будет включать остальные панели
         JPanel explorerPanel = new JPanel(new BorderLayout());
+
+        // Добавляем боковую панель (sidebar) в левую часть
+        sidebarPanel = new SidebarPanel(this);
+        explorerPanel.add(sidebarPanel, BorderLayout.WEST);
+
         explorerPanel.add(topPanelPart, BorderLayout.NORTH);
         centerPanel = new CenterPanel();
         explorerPanel.add(centerPanel.getMainPanel(), BorderLayout.CENTER);

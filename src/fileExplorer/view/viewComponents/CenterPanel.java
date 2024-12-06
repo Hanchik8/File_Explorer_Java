@@ -14,6 +14,7 @@ public class CenterPanel {
     private JPanel mainPanel; // Панель для всего содержимого
     private DefaultListModel<String> fileListModel; // Модель данных для списка файлов
     private JList<String> fileList; // Список файлов
+
     public CenterPanel() {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(new JScrollPane(createFileList()), BorderLayout.CENTER);
@@ -21,6 +22,7 @@ public class CenterPanel {
 
     /**
      * Создаёт JList для отображения файлов.
+     * 
      * @return JList для отображения списка файлов.
      */
     private JList<String> createFileList() {
@@ -31,6 +33,7 @@ public class CenterPanel {
 
     /**
      * Обновляет список файлов в модели с новыми данными.
+     * 
      * @param fileNamesList массив имен файлов для обновления.
      */
     public void updateFileListModel(String[] fileNamesList) {

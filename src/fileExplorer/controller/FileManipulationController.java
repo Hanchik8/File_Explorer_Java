@@ -1,17 +1,15 @@
 package fileExplorer.controller;
 
 import fileExplorer.model.DirectoryManagementModel;
-import fileExplorer.view.MainView;
-
 import fileExplorer.model.FileManipulationModel;
+import fileExplorer.view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 
-// УБРАТЬ ВСЕ КОММЕНТАРИИ В МЕТОДАХ ПОСЛЕ СОЗДАНИЯ View и DirectoryManagement
+import java.io.File;
 
 public class FileManipulationController {
     private final MainView mainView;
@@ -26,17 +24,17 @@ public class FileManipulationController {
         this.directoryModel = directoryModel;
         this.fileModel = fileModel;
 
-         setupFileActions();
+        setupFileActions();
     }
 
     private void setupFileActions() {
-      mainView.getCenterPanel().getFileList().addMouseListener(new FileListMouseAdapter());
-      mainView.getEditPanel().getNewComboBox().addActionListener(new NewFileComboBoxListener());
-      mainView.getEditPanel().getCopyBtn().addMouseListener(new CopyButtonListener());
-      mainView.getEditPanel().getPasteBtn().addMouseListener(new PasteButtonListener());
-      mainView.getEditPanel().getCutBtn().addMouseListener(new CutButtonListener());
-      mainView.getEditPanel().getDeleteBtn().addMouseListener(new DeleteButtonListener());
-      mainView.getEditPanel().getDetailsCheckBox().addActionListener(new DetailCheckBoxListener());
+        mainView.getCenterPanel().getFileList().addMouseListener(new FileListMouseAdapter());
+        mainView.getEditPanel().getNewComboBox().addActionListener(new NewFileComboBoxListener());
+        mainView.getEditPanel().getCopyBtn().addMouseListener(new CopyButtonListener());
+        mainView.getEditPanel().getPasteBtn().addMouseListener(new PasteButtonListener());
+        mainView.getEditPanel().getCutBtn().addMouseListener(new CutButtonListener());
+        mainView.getEditPanel().getDeleteBtn().addMouseListener(new DeleteButtonListener());
+        mainView.getEditPanel().getDetailsCheckBox().addActionListener(new DetailCheckBoxListener());
     }
 
     private File getSelectedFile() {
