@@ -19,6 +19,8 @@ public class EditPanel {
 
     private JCheckBox detailsCheckBox;
 
+    public JComboBox<String> sortComboBox;
+
     private JComboBox<String> newComboBox;
 
     public EditPanel() {
@@ -53,6 +55,8 @@ public class EditPanel {
             editWestPart.add(button);
         }
 
+        editWestPart.add(createSortComboBox());
+
         return editWestPart;
     }
 
@@ -80,6 +84,14 @@ public class EditPanel {
         newComboBox.setSelectedItem("Create");
 
         return newComboBox;
+    }
+
+    // creating sortComboBox
+    private JComboBox<String> createSortComboBox() {
+        String[] sortOptions = { "Name", "Date", "Size" };
+        sortComboBox = new JComboBox<>(sortOptions);
+        sortComboBox.setSelectedItem("Name");
+        return sortComboBox;
     }
 
     /*
@@ -115,5 +127,9 @@ public class EditPanel {
 
     public JComboBox<String> getNewComboBox() {
         return newComboBox;
+    }
+
+    public String getSortCriteria() {
+        return (String) sortComboBox.getSelectedItem();
     }
 }
