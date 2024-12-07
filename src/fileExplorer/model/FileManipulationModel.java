@@ -17,10 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Arrays;
 
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,6 +77,21 @@ public class FileManipulationModel {
       mainView.getEditPanel().getPasteBtn().setEnabled(true);
    }
 
+   // ======== COPY FILE CONTENT ========
+   private void copyFileContent(File source, File target) throws IOException {
+      try (InputStream in = new FileInputStream(source);
+            OutputStream out = new FileOutputStream(target)) {
+         byte[] buffer = new byte[1024];
+         int length;
+         while ((length = in.read(buffer)) > 0) {
+            out.write(buffer, 0, length);
+         }
+      }
+      mainView.updateBtnState(false);
+      mainView.getEditPanel().getPasteBtn().setEnabled(true);
+
+   }
+
    // ======== CUT FILE ========
    public void cutFile(File file) {
       copyFile(file);
@@ -127,21 +140,6 @@ public class FileManipulationModel {
       }
    }
 
-   // ======== COPY FILE CONTENT ========
-   private void copyFileContent(File source, File target) throws IOException {
-      try (InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(target)) {
-         byte[] buffer = new byte[1024];
-         int length;
-         while ((length = in.read(buffer)) > 0) {
-            out.write(buffer, 0, length);
-         }
-      }
-      mainView.updateBtnState(false);
-      mainView.getEditPanel().getPasteBtn().setEnabled(true);
-
-   }
-
    // ======== DELETE FILE OR DIRECTORY ========
    public void deleteFile(File fileOrDir) {
       if (fileOrDir.isDirectory()) {
@@ -170,37 +168,38 @@ public class FileManipulationModel {
       return file.renameTo(renamedFile); // Переименование файла
    }
 
-   // ======== SORTING BY DATE ========
-   public List<File> sortFilesByDate(List<File> files) {
-      files.sort(Comparator.comparingLong(File::lastModified)); // Сортировка по дате последнего изменения
-      return files;
+   public enum SortCriteria {
+      NAME, DATE, SIZE
    }
 
-   public static void sortFilesByDate(File[] files) {
-      Arrays.sort(files, new Comparator<File>() {
-         public int compare(File f1, File f2) {
-            long l1 = getFileCreationEpoch(f1);
-            long l2 = getFileCreationEpoch(f2);
-            return Long.valueOf(l1).compareTo(l2);
+   /**
+    * Обновляет и сортирует список файлов по выбранному критерию.
+    * 
+    * @param files    массив файлов для отображения.
+    * @param criteria критерий сортировки.
+    */
+
+   public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
+      // Фильтруем скрытые файлы
+      files = Arrays.stream(files)
+            .filter(file -> !file.isHidden()) // Исключаем скрытые файлы
+            .toArray(File[]::new);
+
+      // Сортируем файлы
+      Arrays.sort(files, (file1, file2) -> {
+         switch (criteria) {
+            case NAME:
+               return file1.getName().compareToIgnoreCase(file2.getName());
+            case SIZE:
+               return Long.compare(file1.length(), file2.length());
+            case DATE:
+               return Long.compare(file1.lastModified(), file2.lastModified());
+            default:
+               return 0;
          }
       });
-   }
 
-   public static long getFileCreationEpoch(File file) {
-      try {
-         BasicFileAttributes attr = Files.readAttributes(file.toPath(),
-               BasicFileAttributes.class);
-         return attr.creationTime()
-               .toInstant().toEpochMilli();
-      } catch (IOException e) {
-         throw new RuntimeException(file.getAbsolutePath(), e);
-      }
-   }
-
-   // ======== SORTING BY SIZE ========
-   public List<File> sortFilesBySize(List<File> files) {
-      files.sort(Comparator.comparingLong(File::length)); // Сортировка по размеру файла
-      return files;
+      return files; // Возвращаем отсортированный список без скрытых файлов
    }
 
    // ======== ENSURE UNIQUE FILE NAME ========

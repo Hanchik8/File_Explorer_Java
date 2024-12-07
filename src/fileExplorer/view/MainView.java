@@ -44,7 +44,7 @@ public class MainView extends JFrame {
 
         explorerPanel.add(topPanelPart, BorderLayout.NORTH);
         centerPanel = new CenterPanel();
-        explorerPanel.add(centerPanel.getMainPanel(), BorderLayout.CENTER);
+        explorerPanel.add(centerPanel.getCenterPanel(), BorderLayout.CENTER);
 
         fileDetailsPanel = new FileDetailsPanel();
         explorerPanel.add(fileDetailsPanel.getFileDetailsPanel(), BorderLayout.EAST);

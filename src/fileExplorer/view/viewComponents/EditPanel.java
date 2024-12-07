@@ -129,7 +129,7 @@ public class EditPanel {
         return newComboBox;
     }
 
-    public String getSortCriteria() {
-        return (String) sortComboBox.getSelectedItem();
+    public JComboBox<String> getSortComboBox() {
+        return sortComboBox;
     }
 }

@@ -11,6 +11,10 @@ import java.awt.event.MouseEvent;
 
 import java.io.File;
 
+import javax.swing.JComboBox;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+
 public class FileManipulationController {
     private final MainView mainView;
     private final DirectoryManagementModel directoryModel;
@@ -35,6 +39,7 @@ public class FileManipulationController {
         mainView.getEditPanel().getCutBtn().addMouseListener(new CutButtonListener());
         mainView.getEditPanel().getDeleteBtn().addMouseListener(new DeleteButtonListener());
         mainView.getEditPanel().getDetailsCheckBox().addActionListener(new DetailCheckBoxListener());
+        mainView.getEditPanel().getSortComboBox().addPopupMenuListener(new SortComboBoxListener());
     }
 
     private File getSelectedFile() {
@@ -78,6 +83,33 @@ public class FileManipulationController {
             fileModel.createFile(parentDirectory, newFileType);
             mainView.getEditPanel().getNewComboBox().setSelectedIndex(0); // Сбрасываем выбор
             refreshDirectory();
+        }
+    }
+
+    private class SortComboBoxListener implements PopupMenuListener {
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+            JComboBox<String> source = (JComboBox<String>) e.getSource();
+            String selectedCriteria = (String) source.getSelectedItem();
+            FileManipulationModel.SortCriteria criteria = FileManipulationModel.SortCriteria
+                    .valueOf(selectedCriteria.toUpperCase());
+
+            // Получаем текущую директорию из модели
+            String currentPath = directoryModel.getCurrentDirectory();
+            File[] files = new File(currentPath).listFiles();
+            if (files != null) {
+                // Сортируем и обновляем список
+                File[] sortedFiles = fileModel.updateAndSortFileList(files, criteria);
+                directoryModel.updateView(sortedFiles, currentPath); // Обновляем представление
+            }
+        }
+
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+        }
+
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent e) {
         }
     }
 

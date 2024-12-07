@@ -15,7 +15,7 @@ public class DirectoryManagementModel {
     private String currentDirectory = "Root"; // // Tracks the current directory
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
-    private boolean isUndoOrRedoPressed = false; // ЗАЧЕМ ЭТА ПЕРМЕННАЯ?
+    private boolean isUndoOrRedoPressed = false;
 
     /**
      * Constructor initializes the view and stacks for undo/redo functionality.
@@ -221,5 +221,9 @@ public class DirectoryManagementModel {
     private void updateNavigationButtonsState() {
         mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
+    }
+
+    public String getCurrentDirectory() {
+        return currentDirectory;
     }
 }

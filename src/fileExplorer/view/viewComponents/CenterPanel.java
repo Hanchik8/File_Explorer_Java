@@ -11,13 +11,13 @@ import java.awt.BorderLayout;
  * Центральная панель для отображения списка файлов.
  */
 public class CenterPanel {
-    private JPanel mainPanel; // Панель для всего содержимого
+    private JPanel centerPanel; // Панель для всего содержимого
     private DefaultListModel<String> fileListModel; // Модель данных для списка файлов
     private JList<String> fileList; // Список файлов
 
     public CenterPanel() {
-        mainPanel = new JPanel(new BorderLayout());
-        mainPanel.add(new JScrollPane(createFileList()), BorderLayout.CENTER);
+        centerPanel = new JPanel(new BorderLayout());
+        centerPanel.add(new JScrollPane(createFileList()), BorderLayout.CENTER);
     }
 
     /**
@@ -49,7 +49,7 @@ public class CenterPanel {
         return fileList;
     }
 
-    public JPanel getMainPanel() {
-        return mainPanel;
+    public JPanel getCenterPanel() {
+        return centerPanel;
     }
 }
