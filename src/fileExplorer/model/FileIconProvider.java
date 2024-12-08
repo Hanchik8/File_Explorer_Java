@@ -20,10 +20,6 @@ public class FileIconProvider {
 
         fileIcons.put("txt", ImageUtils.getImagePreview("resources/images/fileIcons/txtIcon.png", 25));
         fileIcons.put("jpg", ImageUtils.getImagePreview("resources/images/fileIcons/jpgIcon.png", 25));
-        fileIcons.put("png", ImageUtils.getImagePreview("resources/images/fileIcons/pngIcon.png", 25));
-        fileIcons.put("pdf", ImageUtils.getImagePreview("resources/images/fileIcons/pdfIcon.png", 25));
-        fileIcons.put("pptx", ImageUtils.getImagePreview("resources/images/fileIcons/pptxIcon.png", 25));
-        fileIcons.put("folder", ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png",25));
     }
 
     public Icon getIconForFile(String filename) {
