@@ -79,7 +79,7 @@ public class FileDetailsPanel {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/xlsxIcon.png", 40));
         } else if (extension.equals("txt")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/txtIcon.png", 40));
-        } else if (extension.equals("pptx")) {
+        } else if (extension.equals("pptx")  || extension.equals("ppt")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pptxIcon.png", 40));
         } else if (extension.equals("docx")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docxIcon.png", 40));
