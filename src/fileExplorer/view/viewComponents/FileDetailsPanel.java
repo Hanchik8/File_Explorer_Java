@@ -79,8 +79,6 @@ public class FileDetailsPanel {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/xlsxIcon.png", 40));
         } else if (extension.equals("txt")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/txtIcon.png", 40));
-        } else if (extension.equals("pptx")  || extension.equals("ppt")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pptxIcon.png", 40));
         } else if (extension.equals("docx")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docxIcon.png", 40));
         } else if (extension.equals("png")) {
@@ -91,34 +89,9 @@ public class FileDetailsPanel {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docIcon.png", 40));
         } else if (extension.equals("xls")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/xlsIcon.png", 40));
-        } else if (extension.equals("ai")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/aiIcon.png", 40));
-        } else if (extension.equals("avi")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/aviIcon.png", 40));
-        } else if (extension.equals("css")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/cssIcon.png", 40));
-        } else if (extension.equals("csv")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/csvIcon.png", 40));
-        } else if (extension.equals("exe")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/exeIcon.png", 40));
         } else if (extension.equals("gif")) {
             nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/gifIcon.png", 40));
-        } else if (extension.equals("java")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/javaIcon.png", 40));
-        } else if (extension.equals("js")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/jsIcon.png", 40));
-        } else if (extension.equals("mov")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/movIcon.png", 40));
-        } else if (extension.equals("mp3")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/mp3Icon.png", 40));
-        } else if (extension.equals("mp4")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/mp4Icon.png", 40));
-        } else if (extension.equals("sql")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/sqlIcon.png", 40));
-        } else if (extension.equals("zip")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/zipIcon.png", 40));
         }
-
 
         fileDetailsPanel.add(nameLabel);
     }
