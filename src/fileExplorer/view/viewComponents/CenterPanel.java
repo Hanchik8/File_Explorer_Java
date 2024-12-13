@@ -43,10 +43,14 @@ public class CenterPanel {
      * @param fileNamesList массив имен файлов для обновления.
      */
     public void updateFileListModel(String[] fileNamesList) {
-        fileListModel.clear();
+        fileListModel.clear();  // Очищаем старые данные
         for (String filename : fileNamesList) {
-            fileListModel.addElement(filename);
+            fileListModel.addElement(filename);  // Добавляем новые файлы
         }
+        
+        // После обновления данных обновляем отображение
+        fileList.revalidate();  // Обновление компонента
+        fileList.repaint();     // Перерисовка компонента
     }
 
     // ======== Геттеры для доступа к компонентам ========

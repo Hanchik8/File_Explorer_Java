@@ -3,6 +3,7 @@ package fileExplorer.model;
 import fileExplorer.view.MainView;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -12,14 +13,14 @@ import java.util.Stack;
  */
 public class DirectoryManagementModel {
     private MainView mainView; // Reference to the view component for updating view
-    private String currentDirectory = "Root"; // // Tracks the current directory
+    private String currentDirectory = "Root"; // Tracks the current directory
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
     private boolean isUndoOrRedoPressed = false;
 
     /**
      * Constructor initializes the view and stacks for undo/redo functionality.
-     * 
+     *
      * @param explorerView the view component for updating the view
      */
     public DirectoryManagementModel(MainView explorerView) {
@@ -67,7 +68,7 @@ public class DirectoryManagementModel {
 
     /**
      * Updates the current directory and retrieves its contents.
-     * 
+     *
      * @param newDirectory the directory to move to
      * @return an array of files/directories in the new directory
      */
@@ -88,7 +89,7 @@ public class DirectoryManagementModel {
 
     /**
      * Refreshes the current directory and retrieves its contents.
-     * 
+     *
      * @return an array of files/directories in the current directory
      */
     public void updateDirectory() {
@@ -101,6 +102,13 @@ public class DirectoryManagementModel {
         updateView(listOfFiles, currentDirectory);
     }
 
+    /**
+     * Filters the provided file list to include only acceptable files and
+     * directories.
+     *
+     * @param fileList array of files to filter
+     * @return filtered array of files
+     */
     private File[] filterFiles(File[] fileList) {
         String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx" };
         ArrayList<File> acceptableFiles = new ArrayList<>();
@@ -129,7 +137,7 @@ public class DirectoryManagementModel {
 
     /**
      * Lists the contents of a directory.
-     * 
+     *
      * @param directory the directory whose contents are to be listed
      * @return an array of files/directories in the directory
      */
@@ -143,7 +151,7 @@ public class DirectoryManagementModel {
 
     /**
      * Retrieves the initial set of directories based on the operating system.
-     * 
+     *
      * @return an array of files representing the root directories
      */
     public File[] getInitialDirectories() {
@@ -179,6 +187,12 @@ public class DirectoryManagementModel {
         return new File[0];
     }
 
+    /**
+     * Retrieves the file extension of the provided file name.
+     *
+     * @param fileName the name of the file
+     * @return the file extension as a string
+     */
     public String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf('.');
         if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
@@ -189,7 +203,7 @@ public class DirectoryManagementModel {
 
     /**
      * Checks if the given directory represents the root.
-     * 
+     *
      * @param directory the directory to check
      * @return true if the directory is the root, false otherwise
      */
@@ -197,6 +211,12 @@ public class DirectoryManagementModel {
         return directory == null || directory.equals("Root");
     }
 
+    /**
+     * Updates the view with the provided files and path.
+     *
+     * @param files   array of files to display
+     * @param newPath the new path for the directory
+     */
     public void updateView(File[] files, String newPath) {
         if (files != null) {
             String[] fileNames = new String[files.length];
@@ -217,12 +237,19 @@ public class DirectoryManagementModel {
         }
     }
 
-    // Обновление состояния кнопок навигации
+    /**
+     * Updates the state of navigation buttons based on undo/redo stacks.
+     */
     private void updateNavigationButtonsState() {
         mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
     }
 
+    /**
+     * Retrieves the current directory being viewed.
+     *
+     * @return the current directory as a string
+     */
     public String getCurrentDirectory() {
         return currentDirectory;
     }
