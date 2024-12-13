@@ -13,9 +13,9 @@ import javax.swing.JComboBox;
 
 public class ToolbarPanel {
 
-    private JPanel editPanel;
+    private final JPanel toolbarPanel;
 
-    private HashMap<String, JButton> editWestPartButtons;
+    private HashMap<String, JButton> toolbarWestPartButtons;
 
     private JCheckBox detailsCheckBox;
 
@@ -24,10 +24,10 @@ public class ToolbarPanel {
     private JComboBox<String> newComboBox;
 
     public ToolbarPanel() {
-        editPanel = new JPanel(new BorderLayout());
+        toolbarPanel = new JPanel(new BorderLayout());
 
-        editPanel.add(createEditWestPart(), BorderLayout.WEST);
-        editPanel.add(createDetailsCheckBox(), BorderLayout.EAST);
+        toolbarPanel.add(createToolbarWestPart(), BorderLayout.WEST);
+        toolbarPanel.add(createDetailsCheckBox(), BorderLayout.EAST);
     }
 
     /*
@@ -36,27 +36,27 @@ public class ToolbarPanel {
 
     // creating Cut, Copy, Paste, Delete, Rename buttons
     private void createButtons() {
-        editWestPartButtons = new HashMap<>();
-        editWestPartButtons.put("Cut", createButton("resources/images/btnIcons/cutIcon.png"));
-        editWestPartButtons.put("Copy", createButton("resources/images/btnIcons/copyIcon.png"));
-        editWestPartButtons.put("Paste", createButton("resources/images/btnIcons/pasteIcon.png"));
-        editWestPartButtons.put("Delete", createButton("resources/images/btnIcons/deleteIcon.png"));
+        toolbarWestPartButtons = new HashMap<>();
+        toolbarWestPartButtons.put("Cut", createButton("resources/images/btnIcons/cutIcon.png"));
+        toolbarWestPartButtons.put("Copy", createButton("resources/images/btnIcons/copyIcon.png"));
+        toolbarWestPartButtons.put("Paste", createButton("resources/images/btnIcons/pasteIcon.png"));
+        toolbarWestPartButtons.put("Delete", createButton("resources/images/btnIcons/deleteIcon.png"));
     }
 
     // creating editWestPart
-    private JPanel createEditWestPart() {
-        JPanel editWestPart = new JPanel();
+    private JPanel createToolbarWestPart() {
+        JPanel toolbarWestPart = new JPanel();
 
-        editWestPart.add(createNewComboBox());
+        toolbarWestPart.add(createNewComboBox());
 
         createButtons();
-        for (JButton button : editWestPartButtons.values()) {
-            editWestPart.add(button);
+        for (JButton button : toolbarWestPartButtons.values()) {
+            toolbarWestPart.add(button);
         }
 
-        editWestPart.add(createSortComboBox());
+        toolbarWestPart.add(createSortComboBox());
 
-        return editWestPart;
+        return toolbarWestPart;
     }
 
     private JButton createButton(String iconPath) {
@@ -97,23 +97,23 @@ public class ToolbarPanel {
      * getters
      */
     public JPanel getEditPanel() {
-        return editPanel;
+        return toolbarPanel;
     }
 
     public JButton getCutBtn() {
-        return editWestPartButtons.get("Cut");
+        return toolbarWestPartButtons.get("Cut");
     }
 
     public JButton getCopyBtn() {
-        return editWestPartButtons.get("Copy");
+        return toolbarWestPartButtons.get("Copy");
     }
 
     public JButton getPasteBtn() {
-        return editWestPartButtons.get("Paste");
+        return toolbarWestPartButtons.get("Paste");
     }
 
     public JButton getDeleteBtn() {
-        return editWestPartButtons.get("Delete");
+        return toolbarWestPartButtons.get("Delete");
     }
 
     public JCheckBox getDetailsCheckBox() {

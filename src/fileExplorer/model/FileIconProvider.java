@@ -9,7 +9,6 @@ import java.util.Map;
 public class FileIconProvider {
     private final Map<String, Icon> fileIcons;
     private final Icon defaultFolderIcon;
-    private Integer iconSize;
 
     public FileIconProvider() {
         fileIcons = new HashMap<>();

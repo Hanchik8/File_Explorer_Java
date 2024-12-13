@@ -1,10 +1,12 @@
 package fileExplorer.model;
 
+import fileExplorer.model.enums.SortCriteria;
 import fileExplorer.view.MainView;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -16,6 +18,7 @@ public class DirectoryManagementModel {
     private String currentDirectory = "Root"; // Tracks the current directory
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
+    private boolean isDirectoryChanged = false;
 
     /**
      * Constructor initializes the view and stacks for undo/redo functionality.
@@ -28,8 +31,37 @@ public class DirectoryManagementModel {
         redoStack = new Stack<>();
     }
 
+    /**
+     * Обновляет и сортирует список файлов по выбранному критерию.
+     *
+     * @param files    массив файлов для отображения.
+     * @param criteria критерий сортировки.
+     */
+    public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
+        // Фильтруем скрытые файлы
+        files = Arrays.stream(files)
+                .filter(file -> !file.isHidden()) // Исключаем скрытые файлы
+                .toArray(File[]::new);
+
+        // Сортируем файлы
+        Arrays.sort(files, (file1, file2) -> {
+            switch (criteria) {
+                case NAME:
+                    return file1.getName().compareToIgnoreCase(file2.getName());
+                case SIZE:
+                    return Long.compare(file1.length(), file2.length());
+                case DATE:
+                    return Long.compare(file1.lastModified(), file2.lastModified());
+                default:
+                    return 0;
+            }
+        });
+
+        return files; // Возвращаем отсортированный список без скрытых файлов
+    }
+
     public void searchFileByName(String directory, String fileName, ArrayList<File> searchedFiles) {
-        File[] fileList = filterFiles(listDirectoryContent(new File(directory)));
+        File[] fileList = listDirectoryContent(new File(directory));
         for (File file : fileList) {
             if (file.isDirectory()) {
                 if (file.getName().toLowerCase().contains(fileName.toLowerCase())) {
@@ -51,6 +83,8 @@ public class DirectoryManagementModel {
         if (!undoStack.isEmpty()) {
             redoStack.push(currentDirectory);
             currentDirectory = undoStack.pop();
+
+            isDirectoryChanged = true;
             updateDirectory();
         }
     }
@@ -62,6 +96,8 @@ public class DirectoryManagementModel {
         if (!redoStack.isEmpty()) {
             undoStack.push(currentDirectory);
             currentDirectory = redoStack.pop();
+
+            isDirectoryChanged = true;
             updateDirectory();
         }
     }
@@ -95,8 +131,9 @@ public class DirectoryManagementModel {
                 undoStack.push(currentDirectory);
             }
             currentDirectory = newDirectory;
-            listOfFiles = filterFiles(listDirectoryContent(new File(newDirectory)));
+            listOfFiles = listDirectoryContent(new File(newDirectory));
         }
+        isDirectoryChanged = true;
         updateView(listOfFiles, currentDirectory);
     }
 
@@ -113,6 +150,20 @@ public class DirectoryManagementModel {
             listOfFiles = filterFiles(listDirectoryContent(new File(currentDirectory)));
         }
         updateView(listOfFiles, currentDirectory);
+    }
+
+    /**
+     * Lists the contents of a directory.
+     *
+     * @param directory the directory whose contents are to be listed
+     * @return an array of files/directories in the directory
+     */
+    public File[] listDirectoryContent(File directory) {
+        File[] contents = directory.listFiles();
+        if (contents != null)
+            return filterFiles(contents);
+        else
+            return new File[0];
     }
 
     /**
@@ -139,27 +190,7 @@ public class DirectoryManagementModel {
                 }
             }
         }
-
-        File[] filteredFiles = new File[acceptableFiles.size()];
-        for (int i = 0; i < filteredFiles.length; i++) {
-            filteredFiles[i] = acceptableFiles.get(i);
-        }
-
-        return filteredFiles;
-    }
-
-    /**
-     * Lists the contents of a directory.
-     *
-     * @param directory the directory whose contents are to be listed
-     * @return an array of files/directories in the directory
-     */
-    private File[] listDirectoryContent(File directory) {
-        File[] contents = directory.listFiles();
-        if (contents != null)
-            return contents;
-        else
-            return new File[0];
+        return acceptableFiles.toArray(new File[0]);
     }
 
     /**
@@ -246,16 +277,22 @@ public class DirectoryManagementModel {
             }
             mainView.updateView(fileNames, currentDirectory);
 
-            updateNavigationButtonsState();
+            updateButtonsState();
         }
     }
 
     /**
      * Updates the state of navigation buttons based on undo/redo stacks.
      */
-    private void updateNavigationButtonsState() {
+    private void updateButtonsState() {
         mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
+        if (isDirectoryChanged) updateSortCriteria();
+    }
+
+    private void updateSortCriteria() {
+        mainView.getToolbarPanel().getSortComboBox().setSelectedItem("Name");
+        isDirectoryChanged = false;
     }
 
     /**

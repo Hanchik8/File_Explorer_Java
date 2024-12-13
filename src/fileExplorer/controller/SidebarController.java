@@ -2,11 +2,8 @@ package fileExplorer.controller;
 
 import fileExplorer.controller.listeners.SideBarSelectionListener;
 import fileExplorer.model.DirectoryManagementModel;
-import fileExplorer.view.MainView;
 import fileExplorer.view.viewComponents.SidebarPanel;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.io.File;
 
 public class SidebarController {

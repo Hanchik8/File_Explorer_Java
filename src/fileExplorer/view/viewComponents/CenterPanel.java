@@ -14,10 +14,10 @@ import java.awt.BorderLayout;
  * Центральная панель для отображения списка файлов.
  */
 public class CenterPanel {
-    private JPanel centerPanel; // Панель для всего содержимого
+    private final JPanel centerPanel; // Панель для всего содержимого
     private DefaultListModel<String> fileListModel; // Модель данных для списка файлов
     private JList<String> fileList; // Список файлов
-    private FileListRenderer fileListRenderer; // Кастомный рендерер для иконок
+    private final FileListRenderer fileListRenderer; // Кастомный рендерер для иконок
 
     public CenterPanel() {
         centerPanel = new JPanel(new BorderLayout());

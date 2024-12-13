@@ -15,11 +15,11 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 public class MainView extends JFrame {
-    private TopPanel topMenu;
-    private CenterPanel centerPanel;
-    private FileDetailsPanel fileDetailsPanel;
-    private ToolbarPanel toolbarPanel;
-    private SidebarPanel sidebarPanel;
+    private final TopPanel topMenu;
+    private final CenterPanel centerPanel;
+    private final FileDetailsPanel fileDetailsPanel;
+    private final ToolbarPanel toolbarPanel;
+    private final SidebarPanel sidebarPanel;
 
     public MainView() {
         setTitle("File Explorer Lunar Seekers");
@@ -85,7 +85,7 @@ public class MainView extends JFrame {
         return fileDetailsPanel;
     }
 
-    public ToolbarPanel getEditPanel() {
+    public ToolbarPanel getToolbarPanel() {
         return toolbarPanel;
     }
 

@@ -5,9 +5,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import fileExplorer.controller.SidebarController;
-import fileExplorer.view.MainView;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 

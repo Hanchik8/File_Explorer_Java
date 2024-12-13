@@ -1,11 +1,6 @@
 package fileExplorer.controller;
 
-import fileExplorer.controller.commands.Command;
-import fileExplorer.controller.commands.CopyFileCommand;
-import fileExplorer.controller.commands.PasteFileCommand;
-import fileExplorer.controller.commands.CutFileCommand;
-import fileExplorer.controller.commands.DeleteFileCommand;
-import fileExplorer.controller.commands.DetailCheckBoxCommand;
+import fileExplorer.controller.commands.*;
 
 import fileExplorer.controller.listeners.FileListMouseListener;
 import fileExplorer.controller.listeners.ViewActionListener;
@@ -37,6 +32,7 @@ public class FileManipulationController {
     // Инициализация обработчиков
     private void initialize() {
         setupFileListListener();
+        setupNewComboBoxListener();
         setupToolbarActions();
         setupDetailsCheckBox();
     }
@@ -47,15 +43,21 @@ public class FileManipulationController {
         );
     }
 
+    private void setupNewComboBoxListener() {
+        mainView.getToolbarPanel().getNewComboBox().addActionListener(
+                new ViewActionListener(new NewFileCommand(fileModel, mainView, this))
+        );
+    }
+
     private void setupToolbarActions() {
-        registerToolbarAction(mainView.getEditPanel().getCopyBtn(), new CopyFileCommand(fileModel, this));
-        registerToolbarAction(mainView.getEditPanel().getPasteBtn(), new PasteFileCommand(fileModel, this));
-        registerToolbarAction(mainView.getEditPanel().getCutBtn(), new CutFileCommand(fileModel, this));
-        registerToolbarAction(mainView.getEditPanel().getDeleteBtn(), new DeleteFileCommand(fileModel, this));
+        registerToolbarAction(mainView.getToolbarPanel().getCopyBtn(), new CopyFileCommand(fileModel, this));
+        registerToolbarAction(mainView.getToolbarPanel().getPasteBtn(), new PasteFileCommand(fileModel, this));
+        registerToolbarAction(mainView.getToolbarPanel().getCutBtn(), new CutFileCommand(fileModel, this));
+        registerToolbarAction(mainView.getToolbarPanel().getDeleteBtn(), new DeleteFileCommand(fileModel, this));
     }
 
     private void setupDetailsCheckBox() {
-        mainView.getEditPanel().getDetailsCheckBox().addActionListener(
+        mainView.getToolbarPanel().getDetailsCheckBox().addActionListener(
                 new ViewActionListener(new DetailCheckBoxCommand(mainView))
         );
     }
@@ -82,5 +84,6 @@ public class FileManipulationController {
 
     public void updateView() {
         directoryModel.updateDirectory();
+        mainView.getToolbarPanel().getSortComboBox().setSelectedItem("Name");
     }
 }

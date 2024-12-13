@@ -17,14 +17,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.nio.file.Files;
-
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class FileManipulationModel {
 
-   private MainView mainView;
+   private final MainView mainView;
    private File copiedFile; // локальная копия файла, если вставляем из контекста
    private boolean cutPressed = false; // режим вырезания
 
@@ -74,7 +71,7 @@ public class FileManipulationModel {
       FileTransferable transferable = new FileTransferable(file);
       Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
       mainView.updateBtnState(false);
-      mainView.getEditPanel().getPasteBtn().setEnabled(true);
+      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
    // ======== COPY FILE CONTENT ========
@@ -88,7 +85,7 @@ public class FileManipulationModel {
          }
       }
       mainView.updateBtnState(false);
-      mainView.getEditPanel().getPasteBtn().setEnabled(true);
+      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
 
    }
 
@@ -97,7 +94,7 @@ public class FileManipulationModel {
       copyFile(file);
       cutPressed = true;
       mainView.updateBtnState(false);
-      mainView.getEditPanel().getPasteBtn().setEnabled(true);
+      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
    // ======== PASTE FILE ========
@@ -118,7 +115,7 @@ public class FileManipulationModel {
                   // Перемещение файла при режиме вырезания
                   Files.move(file.toPath(), targetFile.toPath());
                   cutPressed = false;
-                  mainView.getEditPanel().getPasteBtn().setEnabled(false);
+                  mainView.getToolbarPanel().getPasteBtn().setEnabled(false);
                } else {
                   // Копирование файла
                   copyFileContent(file, targetFile);
@@ -153,40 +150,6 @@ public class FileManipulationModel {
       mainView.updateBtnState(false);
    }
 
-   public enum SortCriteria {
-      NAME, DATE, SIZE
-   }
-
-   /**
-    * Обновляет и сортирует список файлов по выбранному критерию.
-    * 
-    * @param files    массив файлов для отображения.
-    * @param criteria критерий сортировки.
-    */
-
-   public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
-      // Фильтруем скрытые файлы
-      files = Arrays.stream(files)
-            .filter(file -> !file.isHidden()) // Исключаем скрытые файлы
-            .toArray(File[]::new);
-
-      // Сортируем файлы
-      Arrays.sort(files, (file1, file2) -> {
-         switch (criteria) {
-            case NAME:
-               return file1.getName().compareToIgnoreCase(file2.getName());
-            case SIZE:
-               return Long.compare(file1.length(), file2.length());
-            case DATE:
-               return Long.compare(file1.lastModified(), file2.lastModified());
-            default:
-               return 0;
-         }
-      });
-
-      return files; // Возвращаем отсортированный список без скрытых файлов
-   }
-
    // ======== ENSURE UNIQUE FILE NAME ========
    private File ensureUniqueFileName(File file) {
       String name = file.getName();
@@ -201,17 +164,6 @@ public class FileManipulationModel {
       }
 
       return file;
-   }
-
-   // ======== GET FILE NAME AND EXTENSION ========
-   public String[] getFileNameAndExtension(String fileName) {
-      int lastDotIndex = fileName.lastIndexOf(".");
-      if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
-         String fileNameWithoutExtension = fileName.substring(0, lastDotIndex);
-         String fileExtension = "." + fileName.substring(lastDotIndex + 1);
-         return new String[] { fileNameWithoutExtension, fileExtension };
-      }
-      return null;
    }
 
    // ======== GET FILE EXTENSION ========
