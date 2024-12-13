@@ -1,5 +1,7 @@
 package fileExplorer.view.viewComponents;
 
+import fileExplorer.model.FileIconProvider;
+import fileExplorer.model.FileListRenderer;
 import fileExplorer.utils.ImageUtils;
 
 import javax.swing.JPanel;
@@ -28,11 +30,13 @@ import java.util.Date;
  */
 public class FileDetailsPanel {
     private JPanel fileDetailsPanel;
+    private FileIconProvider fileListRenderer;
 
     public FileDetailsPanel() {
         fileDetailsPanel = new JPanel();
         fileDetailsPanel.setLayout(new BoxLayout(fileDetailsPanel, BoxLayout.Y_AXIS));
         fileDetailsPanel.setPreferredSize(new Dimension(400, fileDetailsPanel.getHeight()));
+        fileListRenderer = new FileIconProvider();
     }
 
     /**
@@ -47,14 +51,20 @@ public class FileDetailsPanel {
 
         if (extension == null) {
             imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", panelWidth));
+        } else if (extension.equals("xls")) {
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/xlsIcon.png", panelWidth));
         } else if (extension.equals("xlsx")) {
             imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/xlsxIcon.png", panelWidth));
+        } else if (extension.equals("doc")) {
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docIcon.png", panelWidth));
+        } else if (extension.equals("docx")) {
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docxIcon.png", panelWidth));
+        } else if (extension.equals("ppt") || extension.equals("pptx")) {
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pptIcon.png", panelWidth));
         } else if (extension.equals("txt")) {
             imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/txtIcon.png", panelWidth));
-        } else if (extension.equals("pptx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pptxIcon.png", panelWidth));
-        } else if (extension.equals("docx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docIcon.png", panelWidth));
+        } else if (extension.equals("pdf")) {
+            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pdfIcon.png", panelWidth));
         } else {
             ImageIcon scaledImage = ImageUtils.scaleImage(new ImageIcon(imagePath), panelWidth, 350);
             imageLabel.setIcon(scaledImage);
@@ -67,31 +77,11 @@ public class FileDetailsPanel {
      * Создаёт метку с именем файла и иконкой.
      * 
      * @param fileName  Имя файла.
-     * @param extension Расширение файла.
      */
-    private void createNameLabel(String fileName, String extension) {
+    private void createNameLabel(String fileName) {
         JLabel nameLabel = new JLabel(fileName);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-
-        if (extension == null) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/folderIcon.png", 40));
-        } else if (extension.equals("xlsx")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/xlsxIcon.png", 40));
-        } else if (extension.equals("txt")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/txtIcon.png", 40));
-        } else if (extension.equals("docx")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docxIcon.png", 40));
-        } else if (extension.equals("png")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/pngIcon.png", 40));
-        } else if (extension.equals("jpg") || extension.equals("jpeg")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/jpgIcon.png", 40));
-        } else if (extension.equals("doc")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/docIcon.png", 40));
-        } else if (extension.equals("xls")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/xlsIcon.png", 40));
-        } else if (extension.equals("gif")) {
-            nameLabel.setIcon(ImageUtils.getImageIcon("resources/images/fileIcons/gifIcon.png", 40));
-        }
+        nameLabel.setIcon(fileListRenderer.getIconForFile(fileName));
 
         fileDetailsPanel.add(nameLabel);
     }
@@ -160,7 +150,7 @@ public class FileDetailsPanel {
         fileDetailsPanel.removeAll();
 
         createImageLabel(currentFile.getAbsolutePath(), extension);
-        createNameLabel(currentFile.getName(), extension);
+        createNameLabel(currentFile.getName());
         createExtraDetailsPanel(currentFile);
 
         fileDetailsPanel.revalidate();

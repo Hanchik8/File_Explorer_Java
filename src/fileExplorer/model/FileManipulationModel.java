@@ -153,21 +153,6 @@ public class FileManipulationModel {
       mainView.updateBtnState(false);
    }
 
-   // ======== RENAME FILE ========
-   public boolean renameFile(File file) {
-      Scanner scanner = new Scanner(System.in);
-      // ПОКА ВВОД ИДЕТ В ТЕРМИНАЛ (ИСПРАВЛЮ КОГДА ПОЯВИТСЯ КНОПКА) или же сделаем
-      // мини меню на правую кнопку мыши
-      System.out.println("Enter the new name for the file: ");
-      String newName = scanner.nextLine();
-      File renamedFile = new File(file.getParent(), newName);
-
-      // Проверяем на уникальность имени
-      renamedFile = ensureUniqueFileName(renamedFile);
-
-      return file.renameTo(renamedFile); // Переименование файла
-   }
-
    public enum SortCriteria {
       NAME, DATE, SIZE
    }

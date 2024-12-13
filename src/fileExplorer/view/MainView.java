@@ -2,7 +2,7 @@ package fileExplorer.view;
 
 import fileExplorer.controller.MainController;
 import fileExplorer.view.viewComponents.CenterPanel;
-import fileExplorer.view.viewComponents.EditPanel;
+import fileExplorer.view.viewComponents.ToolbarPanel;
 import fileExplorer.view.viewComponents.FileDetailsPanel;
 import fileExplorer.view.viewComponents.SidebarPanel;
 import fileExplorer.view.viewComponents.TopPanel;
@@ -18,7 +18,7 @@ public class MainView extends JFrame {
     private TopPanel topMenu;
     private CenterPanel centerPanel;
     private FileDetailsPanel fileDetailsPanel;
-    private EditPanel editPanel;
+    private ToolbarPanel toolbarPanel;
     private SidebarPanel sidebarPanel;
 
     public MainView() {
@@ -32,14 +32,14 @@ public class MainView extends JFrame {
         topMenu = new TopPanel();
         topPanelPart.add(topMenu.getTopMenuComponent(), BorderLayout.NORTH);
 
-        editPanel = new EditPanel();
-        topPanelPart.add(editPanel.getEditPanel(), BorderLayout.SOUTH);
+        toolbarPanel = new ToolbarPanel();
+        topPanelPart.add(toolbarPanel.getEditPanel(), BorderLayout.SOUTH);
 
         // Основной explorerPanel, который будет включать остальные панели
         JPanel explorerPanel = new JPanel(new BorderLayout());
 
         // Добавляем боковую панель (sidebar) в левую часть
-        sidebarPanel = new SidebarPanel(this);
+        sidebarPanel = new SidebarPanel();
         explorerPanel.add(sidebarPanel, BorderLayout.WEST);
 
         explorerPanel.add(topPanelPart, BorderLayout.NORTH);
@@ -62,10 +62,9 @@ public class MainView extends JFrame {
     }
 
     public void updateBtnState(boolean isBtnActive) {
-        editPanel.getCutBtn().setEnabled(isBtnActive);
-        editPanel.getCopyBtn().setEnabled(isBtnActive);
-        editPanel.getDeleteBtn().setEnabled(isBtnActive);
-        editPanel.getRenameBtn().setEnabled(isBtnActive);
+        toolbarPanel.getCutBtn().setEnabled(isBtnActive);
+        toolbarPanel.getCopyBtn().setEnabled(isBtnActive);
+        toolbarPanel.getDeleteBtn().setEnabled(isBtnActive);
     }
 
     public void updateFileDetails(File selectedFile, String fileExtension) {
@@ -86,7 +85,11 @@ public class MainView extends JFrame {
         return fileDetailsPanel;
     }
 
-    public EditPanel getEditPanel() {
-        return editPanel;
+    public ToolbarPanel getEditPanel() {
+        return toolbarPanel;
+    }
+
+    public SidebarPanel getSidebarPanel() {
+        return sidebarPanel;
     }
 }

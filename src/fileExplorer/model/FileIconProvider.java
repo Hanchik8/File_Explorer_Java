@@ -9,6 +9,7 @@ import java.util.Map;
 public class FileIconProvider {
     private final Map<String, Icon> fileIcons;
     private final Icon defaultFolderIcon;
+    private Integer iconSize;
 
     public FileIconProvider() {
         fileIcons = new HashMap<>();
@@ -20,6 +21,7 @@ public class FileIconProvider {
     private void loadFileIcons() {
         // Load standard icons for known file types
         fileIcons.put("txt", ImageUtils.getImagePreview("resources/images/fileIcons/txtIcon.png", 25));
+        fileIcons.put("pdf", ImageUtils.getImagePreview("resources/images/fileIcons/pdfIcon.png", 25));
         fileIcons.put("jpg", ImageUtils.getImagePreview("resources/images/fileIcons/jpgIcon.png", 25));
         fileIcons.put("jpeg", ImageUtils.getImagePreview("resources/images/fileIcons/jpgIcon.png", 25));
         fileIcons.put("png", ImageUtils.getImagePreview("resources/images/fileIcons/pngIcon.png", 25));
@@ -28,6 +30,8 @@ public class FileIconProvider {
         fileIcons.put("gif", ImageUtils.getImagePreview("resources/images/fileIcons/gifIcon.png", 25));
         fileIcons.put("xls", ImageUtils.getImagePreview("resources/images/fileIcons/xlsIcon.png", 25));
         fileIcons.put("xlsx", ImageUtils.getImagePreview("resources/images/fileIcons/xlsxIcon.png", 25));
+        fileIcons.put("ppt", ImageUtils.getImagePreview("resources/images/fileIcons/pptIcon.png", 25));
+        fileIcons.put("pptx", ImageUtils.getImagePreview("resources/images/fileIcons/pptIcon.png", 25));
         fileIcons.put("folder", defaultFolderIcon);
     }
 

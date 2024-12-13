@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
-public class EditPanel {
+public class ToolbarPanel {
 
     private JPanel editPanel;
 
@@ -23,7 +23,7 @@ public class EditPanel {
 
     private JComboBox<String> newComboBox;
 
-    public EditPanel() {
+    public ToolbarPanel() {
         editPanel = new JPanel(new BorderLayout());
 
         editPanel.add(createEditWestPart(), BorderLayout.WEST);
@@ -40,7 +40,6 @@ public class EditPanel {
         editWestPartButtons.put("Cut", createButton("resources/images/btnIcons/cutIcon.png"));
         editWestPartButtons.put("Copy", createButton("resources/images/btnIcons/copyIcon.png"));
         editWestPartButtons.put("Paste", createButton("resources/images/btnIcons/pasteIcon.png"));
-        editWestPartButtons.put("Rename", createButton("resources/images/btnIcons/renameIcon.png"));
         editWestPartButtons.put("Delete", createButton("resources/images/btnIcons/deleteIcon.png"));
     }
 
@@ -115,10 +114,6 @@ public class EditPanel {
 
     public JButton getDeleteBtn() {
         return editWestPartButtons.get("Delete");
-    }
-
-    public JButton getRenameBtn() {
-        return editWestPartButtons.get("Rename");
     }
 
     public JCheckBox getDetailsCheckBox() {

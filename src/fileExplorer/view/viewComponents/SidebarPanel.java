@@ -17,15 +17,13 @@ import java.awt.Dimension;
 public class SidebarPanel extends JPanel {
     private JList<String> categoryList;
 
-    public SidebarPanel(MainView mainView) {
+    public SidebarPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(250, getHeight()));
 
         // Create and add the category panel
         JPanel categoryPanel = createCategoryPanel();
         add(categoryPanel, BorderLayout.CENTER);
-
-        new SidebarController(this, mainView);
     }
 
     /**
