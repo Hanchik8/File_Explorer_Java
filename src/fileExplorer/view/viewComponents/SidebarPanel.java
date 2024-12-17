@@ -9,7 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 /**
- * Sidebar panel that displays categories like Downloads, Music, Images, Documents, and Videos.
+ * Sidebar panel that displays categories like Downloads, Music, Images,
+ * Documents, and Videos.
  */
 public class SidebarPanel extends JPanel {
     private JList<String> categoryList;

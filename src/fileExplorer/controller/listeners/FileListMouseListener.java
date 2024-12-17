@@ -16,9 +16,9 @@ public class FileListMouseListener extends MouseAdapter {
     private final MainView mainView;
 
     public FileListMouseListener(FileManipulationController controller,
-                                 DirectoryManagementModel directoryModel,
-                                 FileManipulationModel fileModel,
-                                 MainView mainView) {
+            DirectoryManagementModel directoryModel,
+            FileManipulationModel fileModel,
+            MainView mainView) {
         this.controller = controller;
         this.directoryModel = directoryModel;
         this.fileModel = fileModel;
@@ -28,7 +28,8 @@ public class FileListMouseListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         File selectedFile = controller.getSelectedFile();
-        if (selectedFile == null) return;
+        if (selectedFile == null)
+            return;
 
         mainView.updateBtnState(true);
 

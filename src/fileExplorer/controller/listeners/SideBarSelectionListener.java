@@ -10,10 +10,12 @@ import java.io.File;
 public class SideBarSelectionListener implements ListSelectionListener {
     private final SidebarPanel sidebarPanel;
     private final SidebarController sidebarController;
+
     public SideBarSelectionListener(SidebarPanel sidebarPanel, SidebarController sidebarController) {
         this.sidebarPanel = sidebarPanel;
         this.sidebarController = sidebarController;
     }
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {

@@ -6,6 +6,7 @@ import fileExplorer.view.MainView;
 
 public class MainController {
     private final MainView mainView;
+
     public MainController(MainView mainView) {
         this.mainView = mainView;
 

@@ -39,14 +39,12 @@ public class FileManipulationController {
 
     private void setupFileListListener() {
         mainView.getCenterPanel().getFileList().addMouseListener(
-                new FileListMouseListener(this, directoryModel, fileModel, mainView)
-        );
+                new FileListMouseListener(this, directoryModel, fileModel, mainView));
     }
 
     private void setupNewComboBoxListener() {
         mainView.getToolbarPanel().getNewComboBox().addActionListener(
-                new ViewActionListener(new NewFileCommand(fileModel, mainView, this))
-        );
+                new ViewActionListener(new NewFileCommand(fileModel, mainView, this)));
     }
 
     private void setupToolbarActions() {
@@ -58,8 +56,7 @@ public class FileManipulationController {
 
     private void setupDetailsCheckBox() {
         mainView.getToolbarPanel().getDetailsCheckBox().addActionListener(
-                new ViewActionListener(new DetailCheckBoxCommand(mainView))
-        );
+                new ViewActionListener(new DetailCheckBoxCommand(mainView)));
     }
 
     private void registerToolbarAction(JButton button, Command command) {

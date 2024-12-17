@@ -35,14 +35,17 @@ public class FileIconProvider {
     }
 
     public Icon getIconForFile(String filename) {
-        // If the file name is not provided or doesn't have an extension, return the folder icon by default
+        // If the file name is not provided or doesn't have an extension, return the
+        // folder icon by default
         if (filename == null || filename.isEmpty() || getFileExtension(filename).isEmpty()) {
             return defaultFolderIcon;
         }
 
         String extension = getFileExtension(filename).toLowerCase();
-        // Return the appropriate file icon based on the file extension, or a default unknown icon if not found
-        return fileIcons.getOrDefault(extension, ImageUtils.getImagePreview("resources/images/fileIcons/unknownIcon.png", 25));
+        // Return the appropriate file icon based on the file extension, or a default
+        // unknown icon if not found
+        return fileIcons.getOrDefault(extension,
+                ImageUtils.getImagePreview("resources/images/fileIcons/unknownIcon.png", 25));
     }
 
     private String getFileExtension(String filename) {

@@ -1,6 +1,5 @@
 package fileExplorer.controller.listeners;
 
-import fileExplorer.controller.commands.Command;
 import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.model.enums.SortCriteria;
 
@@ -11,9 +10,11 @@ import java.io.File;
 
 public class SortComboBoxListener implements PopupMenuListener {
     private DirectoryManagementModel directoryModel;
+
     public SortComboBoxListener(DirectoryManagementModel directoryModel) {
         this.directoryModel = directoryModel;
     }
+
     @Override
     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
         JComboBox<String> source = (JComboBox<String>) e.getSource();
