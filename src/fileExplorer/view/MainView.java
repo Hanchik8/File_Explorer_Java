@@ -6,6 +6,7 @@ import fileExplorer.view.viewComponents.ToolbarPanel;
 import fileExplorer.view.viewComponents.FileDetailsPanel;
 import fileExplorer.view.viewComponents.SidebarPanel;
 import fileExplorer.view.viewComponents.TopPanel;
+import fileExplorer.view.viewComponents.PopupToolbarPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class MainView extends JFrame {
     private final FileDetailsPanel fileDetailsPanel;
     private final ToolbarPanel toolbarPanel;
     private final SidebarPanel sidebarPanel;
+    private final PopupToolbarPanel popupToolbarPanel;
 
     public MainView() {
         setTitle("File Explorer Lunar Seekers");
@@ -48,6 +50,8 @@ public class MainView extends JFrame {
 
         fileDetailsPanel = new FileDetailsPanel();
         explorerPanel.add(fileDetailsPanel.getFileDetailsPanel(), BorderLayout.EAST);
+
+        popupToolbarPanel = new PopupToolbarPanel();
 
         add(explorerPanel);
 
@@ -92,4 +96,5 @@ public class MainView extends JFrame {
     public SidebarPanel getSidebarPanel() {
         return sidebarPanel;
     }
+    public PopupToolbarPanel getPopupToolbarPanel() {return popupToolbarPanel;};
 }

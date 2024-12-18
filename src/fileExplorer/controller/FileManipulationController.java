@@ -1,6 +1,12 @@
 package fileExplorer.controller;
 
-import fileExplorer.controller.commands.*;
+import fileExplorer.controller.commands.NewFileCommand;
+import fileExplorer.controller.commands.DetailCheckBoxCommand;
+import fileExplorer.controller.commands.Command;
+import fileExplorer.controller.commands.CopyFileCommand;
+import fileExplorer.controller.commands.PasteFileCommand;
+import fileExplorer.controller.commands.CutFileCommand;
+import fileExplorer.controller.commands.DeleteFileCommand;
 
 import fileExplorer.controller.listeners.FileListMouseListener;
 import fileExplorer.controller.listeners.ViewActionListener;
@@ -40,6 +46,10 @@ public class FileManipulationController {
     private void setupFileListListener() {
         mainView.getCenterPanel().getFileList().addMouseListener(
                 new FileListMouseListener(this, directoryModel, fileModel, mainView));
+
+        mainView.getCenterPanel().getFileList().addMouseListener(
+                new PopupToolbarController(this, mainView.getPopupToolbarPanel(), fileModel)
+        );
     }
 
     private void setupNewComboBoxListener() {

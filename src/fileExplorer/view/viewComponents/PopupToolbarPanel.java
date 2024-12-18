@@ -5,6 +5,7 @@ import fileExplorer.utils.ImageUtils;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 public class PopupToolbarPanel {
@@ -28,5 +29,19 @@ public class PopupToolbarPanel {
         JMenuItem tool = new JMenuItem(toolName, ImageUtils.getImageIcon(iconPath));
         popupToolbar.add(tool);
         return tool;
+    }
+
+    public void updateButtonState(File selectedFile) {
+        for (JMenuItem button : toolsMap.values()) {
+            button.setEnabled(selectedFile != null);
+        }
+    }
+
+    public JPopupMenu getPopup() {
+        return popupToolbar;
+    }
+
+    public LinkedHashMap<String, JMenuItem> getToolsMap() {
+        return toolsMap;
     }
 }
