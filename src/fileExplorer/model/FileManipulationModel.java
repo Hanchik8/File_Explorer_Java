@@ -19,11 +19,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+// ПОДОБНОГО РОДА КОММЕНТАРИИ МНЕ ЗАШЛИ БОЛЬШЕ, ЧЕМ МНОГОЯРУСНЫЕ C БОЛЬШИМ КОЛ-ВО НЕНУЖНОЙ ИНФЫ
+
 public class FileManipulationModel {
 
    private final MainView mainView;
-   private File copiedFile; // локальная копия файла, если вставляем из контекста
-   private boolean cutPressed = false; // режим вырезания
+   private File copiedFile; // Local copy of the file for cut/copy operations
+   private boolean cutPressed = false; // Indicates if "cut" mode is active
 
    public FileManipulationModel(MainView mainView) {
       this.mainView = mainView;
@@ -42,21 +44,14 @@ public class FileManipulationModel {
       }
    }
 
-   /**
-    * Creates a new file or directory.
-    * 
-    * @param parentDirectory the directory in which the file or directory should be
-    *                        created
-    * @param fileName        the name of the file or directory to be created
-    */
+   // ======== CREATE FILE OR DIRECTORY ========
    public void createFile(File parentDirectory, String fileName) {
       File newFile = new File(parentDirectory, fileName);
       try {
+         newFile = ensureUniqueFileName(newFile);
          if (newFile.getName().contains("Directory")) {
-            newFile = ensureUniqueFileName(newFile);
             newFile.mkdir();
          } else {
-            newFile = ensureUniqueFileName(newFile);
             newFile.createNewFile();
          }
       } catch (IOException e) {
@@ -76,31 +71,32 @@ public class FileManipulationModel {
 
    // ======== COPY FILE CONTENT ========
    private void copyFileContent(File source, File target) throws IOException {
-      try (InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(target)) {
-         byte[] buffer = new byte[1024];
-         int length;
-         while ((length = in.read(buffer)) > 0) {
-            out.write(buffer, 0, length);
+      if (source.isDirectory()) {
+         if (!target.exists()) {
+            target.mkdirs();
+         }
+         File[] files = source.listFiles();
+         if (files != null) {
+            for (File child : files) {
+               File newTarget = new File(target, child.getName());
+               copyFileContent(child, newTarget);
+            }
+         }
+      } else {
+         try (InputStream in = new FileInputStream(source);
+               OutputStream out = new FileOutputStream(target)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+               out.write(buffer, 0, length);
+            }
          }
       }
-      mainView.updateBtnState(false);
-      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
-
-   }
-
-   // ======== CUT FILE ========
-   public void cutFile(File file) {
-      copyFile(file);
-      cutPressed = true;
-      mainView.updateBtnState(false);
-      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
    // ======== PASTE FILE ========
    public void pasteFile(File targetDirectory) {
       try {
-         // Получаем содержимое буфера обмена
          Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
          Transferable transferable = clipboard.getContents(null);
 
@@ -112,17 +108,14 @@ public class FileManipulationModel {
                File targetFile = ensureUniqueFileName(new File(targetDirectory, file.getName()));
 
                if (cutPressed) {
-                  // Перемещение файла при режиме вырезания
                   Files.move(file.toPath(), targetFile.toPath());
                   cutPressed = false;
                   mainView.getToolbarPanel().getPasteBtn().setEnabled(false);
                } else {
-                  // Копирование файла
                   copyFileContent(file, targetFile);
                }
             }
          } else if (copiedFile != null) {
-            // Локальная копия файла, если буфер пуст
             File targetFile = ensureUniqueFileName(new File(targetDirectory, copiedFile.getName()));
             if (cutPressed) {
                Files.move(copiedFile.toPath(), targetFile.toPath());
@@ -137,11 +130,19 @@ public class FileManipulationModel {
       }
    }
 
+   // ======== CUT FILE ========
+   public void cutFile(File file) {
+      copyFile(file);
+      cutPressed = true;
+      mainView.updateBtnState(false);
+      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
+   }
+
    // ======== DELETE FILE OR DIRECTORY ========
    public void deleteFile(File fileOrDir) {
       if (fileOrDir.isDirectory()) {
          for (File file : fileOrDir.listFiles()) {
-            deleteFile(file); // Рекурсивное удаление содержимого директории
+            deleteFile(file);
          }
       }
       if (!fileOrDir.delete()) {
@@ -175,12 +176,7 @@ public class FileManipulationModel {
       return null;
    }
 
-   // Хотел перенести в отдельный класс, но тогда весь проект будет выглядеть
-   // слишком
-   // огромным (да и к тому же, что-либо прикрутить к этому классу не
-   // представляется возможным)
-
-   // Реализация Transferable для работы с файлами
+   // ======== FILE TRANSFERABLE CLASS ========
    private static class FileTransferable implements Transferable {
       private final File file;
 

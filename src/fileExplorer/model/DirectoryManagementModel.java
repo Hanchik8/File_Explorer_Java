@@ -72,7 +72,7 @@ public class DirectoryManagementModel {
                 searchedFiles.add(file);
             }
         }
-        File[] files =  searchedFiles.toArray(new File[0]);
+        File[] files = searchedFiles.toArray(new File[0]);
         updateView(files, "Search");
     }
 
@@ -287,7 +287,8 @@ public class DirectoryManagementModel {
     private void updateButtonsState() {
         mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
-        if (isDirectoryChanged) updateSortCriteria();
+        if (isDirectoryChanged)
+            updateSortCriteria();
     }
 
     private void updateSortCriteria() {

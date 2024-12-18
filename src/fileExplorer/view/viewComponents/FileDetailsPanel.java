@@ -68,7 +68,7 @@ public class FileDetailsPanel {
     /**
      * Создаёт метку с именем файла и иконкой.
      * 
-     * @param fileName  Имя файла.
+     * @param fileName Имя файла.
      */
     private void createNameLabel(String fileName) {
         JLabel nameLabel = new JLabel(fileName);

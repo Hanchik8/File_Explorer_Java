@@ -26,10 +26,10 @@ public class FileListRenderer extends DefaultListCellRenderer {
      * Overrides the method to customize how each list item is rendered.
      * Adds an icon to the label if the file name is not null.
      * 
-     * @param list the JList being rendered
-     * @param value the value to be displayed (file name)
-     * @param index the index of the item in the list
-     * @param isSelected whether the item is selected
+     * @param list         the JList being rendered
+     * @param value        the value to be displayed (file name)
+     * @param index        the index of the item in the list
+     * @param isSelected   whether the item is selected
      * @param cellHasFocus whether the cell has focus
      * @return the component used for rendering the list item
      */

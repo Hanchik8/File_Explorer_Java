@@ -22,7 +22,7 @@ public class DirectoryManagementController {
     private final DirectoryManagementModel directoryModel;
 
     public DirectoryManagementController(MainView mainView,
-                                         DirectoryManagementModel directoryModel) {
+            DirectoryManagementModel directoryModel) {
         this.mainView = mainView;
         this.directoryModel = directoryModel;
 
@@ -42,8 +42,7 @@ public class DirectoryManagementController {
 
     private void setupPathFieldListener() {
         mainView.getTopMenu().getDirectoryField().addActionListener(
-                new ViewActionListener(new PathInputCommand(directoryModel, mainView))
-        );
+                new ViewActionListener(new PathInputCommand(directoryModel, mainView)));
     }
 
     private void setupSortListener() {
@@ -59,8 +58,7 @@ public class DirectoryManagementController {
 
     private void setupSearchField() {
         mainView.getTopMenu().getSearchField().addActionListener(
-                new ViewActionListener(new SearchCommand(mainView,directoryModel))
-        );
+                new ViewActionListener(new SearchCommand(mainView, directoryModel)));
     }
 
     private void registerButtonAction(JButton button, Command command) {
