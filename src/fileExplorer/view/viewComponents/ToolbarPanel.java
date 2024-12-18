@@ -23,11 +23,14 @@ public class ToolbarPanel {
 
     private JComboBox<String> newComboBox;
 
+    private JCheckBox showHiddenFilesCheckBox;
+
     public ToolbarPanel() {
         toolbarPanel = new JPanel(new BorderLayout());
 
         toolbarPanel.add(createToolbarWestPart(), BorderLayout.WEST);
         toolbarPanel.add(createDetailsCheckBox(), BorderLayout.EAST);
+        toolbarPanel.add(createShowHiddenFilesCheckBox(), BorderLayout.PAGE_END);
     }
 
     /*
@@ -93,6 +96,13 @@ public class ToolbarPanel {
         return sortComboBox;
     }
 
+    private JCheckBox createShowHiddenFilesCheckBox() {
+        showHiddenFilesCheckBox = new JCheckBox("Show hidden files");
+        showHiddenFilesCheckBox.setSelected(false);
+
+        return showHiddenFilesCheckBox;
+    }
+
     /*
      * getters
      */
@@ -126,5 +136,9 @@ public class ToolbarPanel {
 
     public JComboBox<String> getSortComboBox() {
         return sortComboBox;
+    }
+
+    public JCheckBox getShowHiddenFilesCheckBox() {
+        return showHiddenFilesCheckBox;
     }
 }

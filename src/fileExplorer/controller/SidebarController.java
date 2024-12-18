@@ -7,11 +7,9 @@ import fileExplorer.view.viewComponents.SidebarPanel;
 import java.io.File;
 
 public class SidebarController {
-    private SidebarPanel sidebarPanel;
     private DirectoryManagementModel directoryModel;
 
     public SidebarController(SidebarPanel sidebarPanel, DirectoryManagementModel directoryModel) {
-        this.sidebarPanel = sidebarPanel;
         this.directoryModel = directoryModel;
 
         // Initialize listeners for the components
