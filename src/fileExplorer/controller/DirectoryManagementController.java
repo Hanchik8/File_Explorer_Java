@@ -2,12 +2,7 @@ package fileExplorer.controller;
 
 import javax.swing.JButton;
 
-import fileExplorer.controller.commands.Command;
-import fileExplorer.controller.commands.MoveUpCommand;
-import fileExplorer.controller.commands.PathInputCommand;
-import fileExplorer.controller.commands.RedoCommand;
-import fileExplorer.controller.commands.RefreshCommand;
-import fileExplorer.controller.commands.UndoCommand;
+import fileExplorer.controller.commands.*;
 import fileExplorer.controller.listeners.ButtonClickListener;
 import fileExplorer.controller.listeners.SearchFocusListener;
 import fileExplorer.controller.listeners.SortComboBoxListener;
@@ -56,6 +51,7 @@ public class DirectoryManagementController {
 
     private void setupSearchField() {
         mainView.getTopMenu().getSearchField().addFocusListener(new SearchFocusListener());
+        mainView.getTopMenu().getSearchField().addActionListener(new ViewActionListener(new SearchCommand(mainView, directoryModel)));
     }
 
     private void registerButtonAction(JButton button, Command command) {

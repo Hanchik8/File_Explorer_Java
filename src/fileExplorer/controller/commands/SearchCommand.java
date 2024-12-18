@@ -17,9 +17,13 @@ public class SearchCommand implements Command {
 
     @Override
     public void execute() {
-        String currentDirectory = mainView.getTopMenu().getDirectoryField().getText();
-        ArrayList<File> searchedFiles = new ArrayList<>();
         String fileName = mainView.getTopMenu().getSearchField().getText();
-        directoryModel.searchFileByName(currentDirectory, fileName, searchedFiles);
+        if (!fileName.equals("")) {
+            String currentDirectory = mainView.getTopMenu().getDirectoryField().getText();
+            ArrayList<File> searchedFiles = new ArrayList<>();
+            directoryModel.searchFileByName(currentDirectory, fileName, searchedFiles);
+        } else {
+            directoryModel.updateDirectory();
+        }
     }
 }
