@@ -17,6 +17,7 @@ public class SortComboBoxListener implements PopupMenuListener {
 
     @Override
     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+        @SuppressWarnings("unchecked")
         JComboBox<String> source = (JComboBox<String>) e.getSource();
         String selectedCriteria = (String) source.getSelectedItem();
 

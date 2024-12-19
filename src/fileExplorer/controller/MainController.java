@@ -5,11 +5,7 @@ import fileExplorer.model.FileManipulationModel;
 import fileExplorer.view.MainView;
 
 public class MainController {
-    private final MainView mainView;
-
     public MainController(MainView mainView) {
-        this.mainView = mainView;
-
         DirectoryManagementModel directoryModel = new DirectoryManagementModel(mainView);
         FileManipulationModel fileModel = new FileManipulationModel(mainView);
 

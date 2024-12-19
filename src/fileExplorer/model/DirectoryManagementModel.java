@@ -19,6 +19,7 @@ public class DirectoryManagementModel {
     private Stack<String> undoStack; // Stack for undoing directory navigation
     private Stack<String> redoStack; // Stack for redoing directory navigation
     private boolean isDirectoryChanged = false;
+    private boolean isShowHiddenFiles = false;
 
     /**
      * Constructor initializes the view and stacks for undo/redo functionality.
@@ -40,7 +41,7 @@ public class DirectoryManagementModel {
     public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
         // Фильтруем скрытые файлы
         files = Arrays.stream(files)
-                .filter(file -> !file.isHidden()) // Исключаем скрытые файлы
+                .filter(file -> !file.isHidden() || isShowHiddenFiles) // Исключаем скрытые файлы
                 .toArray(File[]::new);
 
         // Сортируем файлы
@@ -181,7 +182,7 @@ public class DirectoryManagementModel {
         String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx" };
         ArrayList<File> acceptableFiles = new ArrayList<>();
         for (File file : fileList) {
-            if (!file.isHidden()) {
+            if (!file.isHidden() || isShowHiddenFiles) {
                 if (file.isDirectory()) {
                     acceptableFiles.add(file);
                 } else {
@@ -307,5 +308,13 @@ public class DirectoryManagementModel {
      */
     public String getCurrentDirectory() {
         return currentDirectory;
+    }
+
+    /**
+     * @param isSelected boolean showHiddenFilesCheckBox.isSelected() in ToolBarPanel
+     */
+    public void updateShowHiddenFiles(boolean isSelected) {
+        isShowHiddenFiles = isSelected;
+        updateDirectory();
     }
 }
