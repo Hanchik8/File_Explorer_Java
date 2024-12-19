@@ -1,13 +1,16 @@
 package fileExplorer.view.viewComponents;
 
+import fileExplorer.model.SidebarIconProvider;
+import fileExplorer.model.SidebarListRenderer;
+
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
  * Sidebar panel that displays categories like Downloads, Music, Images,
@@ -44,15 +47,24 @@ public class SidebarPanel extends JPanel {
         JPanel categoryPanel = new JPanel();
         categoryPanel.setLayout(new BorderLayout());
 
+        categoryPanel.setBackground(new Color(45, 45, 55));
+        categoryPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Add padding
+
         // Categories for the list
         String[] categories = { "Downloads", "Music", "Images", "Documents", "Videos" };
 
         // Create JList for categories
         categoryList = new JList<>(categories);
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        categoryList.setCellRenderer(new SidebarListRenderer(new SidebarIconProvider()));
 
         // Wrap the list in a JScrollPane
         categoryPanel.add(new JScrollPane(categoryList), BorderLayout.CENTER);
+        categoryList.setBackground(new Color(55, 55, 65));
+        categoryList.setForeground(Color.WHITE);
+        categoryList.setSelectionBackground(new Color(147, 147, 147)); // Highlight color
+        categoryList.setSelectionForeground(Color.WHITE);
+        categoryList.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
         return categoryPanel;
     }
