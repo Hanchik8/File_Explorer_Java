@@ -23,10 +23,12 @@ public class SidebarIconProvider {
 
     private void loadSidebarIcons() {
         // Load standard icons for known sidebar categories
-
+        sidebarIcons.put("Documents", ImageUtils.getImagePreview("resources/images/sidebarIcons/documentsIcon.png", 15));
         sidebarIcons.put("Downloads", ImageUtils.getImagePreview("resources/images/sidebarIcons/downloads.png", 15));
-
-    }
+        sidebarIcons.put("Images", ImageUtils.getImagePreview("resources/images/sidebarIcons/imagesIcon.png", 15));
+        sidebarIcons.put("Music", ImageUtils.getImagePreview("resources/images/sidebarIcons/musicIcon.png", 15));
+        sidebarIcons.put("Videos", ImageUtils.getImagePreview("resources/images/sidebarIcons/videosIcon.png", 15));
+        }
 
     /**
      * Gets the icon associated with a specific category.
