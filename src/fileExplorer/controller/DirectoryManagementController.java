@@ -2,7 +2,14 @@ package fileExplorer.controller;
 
 import javax.swing.JButton;
 
-import fileExplorer.controller.commands.*;
+import fileExplorer.controller.commands.Command;
+import fileExplorer.controller.commands.PathInputCommand;
+import fileExplorer.controller.commands.MoveUpCommand;
+import fileExplorer.controller.commands.UndoCommand;
+import fileExplorer.controller.commands.RedoCommand;
+import fileExplorer.controller.commands.RefreshCommand;
+import fileExplorer.controller.commands.SearchCommand;
+
 import fileExplorer.controller.listeners.ButtonClickListener;
 import fileExplorer.controller.listeners.SearchFocusListener;
 import fileExplorer.controller.listeners.SortComboBoxListener;
@@ -34,7 +41,7 @@ public class DirectoryManagementController {
     }
 
     private void setupPathFieldListener() {
-        mainView.getTopMenu().getDirectoryField().addActionListener(
+        mainView.getNavigationPanel().getDirectoryField().addActionListener(
                 new ViewActionListener(new PathInputCommand(directoryModel, mainView)));
     }
 
@@ -43,15 +50,15 @@ public class DirectoryManagementController {
     }
 
     private void setupNavigationButtons() {
-        registerButtonAction(mainView.getTopMenu().getUpperBtn(), new MoveUpCommand(directoryModel));
-        registerButtonAction(mainView.getTopMenu().getBackBtn(), new UndoCommand(directoryModel));
-        registerButtonAction(mainView.getTopMenu().getForwardBtn(), new RedoCommand(directoryModel));
-        registerButtonAction(mainView.getTopMenu().getRefreshBtn(), new RefreshCommand(directoryModel));
+        registerButtonAction(mainView.getNavigationPanel().getUpperBtn(), new MoveUpCommand(directoryModel));
+        registerButtonAction(mainView.getNavigationPanel().getBackBtn(), new UndoCommand(directoryModel));
+        registerButtonAction(mainView.getNavigationPanel().getForwardBtn(), new RedoCommand(directoryModel));
+        registerButtonAction(mainView.getNavigationPanel().getRefreshBtn(), new RefreshCommand(directoryModel));
     }
 
     private void setupSearchField() {
-        mainView.getTopMenu().getSearchField().addFocusListener(new SearchFocusListener());
-        mainView.getTopMenu().getSearchField().addActionListener(new ViewActionListener(new SearchCommand(mainView, directoryModel)));
+        mainView.getNavigationPanel().getSearchField().addFocusListener(new SearchFocusListener());
+        mainView.getNavigationPanel().getSearchField().addActionListener(new ViewActionListener(new SearchCommand(mainView, directoryModel)));
     }
 
     private void registerButtonAction(JButton button, Command command) {

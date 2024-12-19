@@ -20,7 +20,7 @@ import java.util.Date;
  * Панель, отображающая подробности о файле: имя, размер, дата последнего
  * изменения и иконки.
  */
-public class FileDetailsPanel {
+public class FileDetailsPanel extends JPanel{
     private final JPanel fileDetailsPanel;
     private final FileIconProvider fileListRenderer;
 

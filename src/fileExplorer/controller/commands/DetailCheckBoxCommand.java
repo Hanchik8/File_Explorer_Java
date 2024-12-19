@@ -12,6 +12,6 @@ public class DetailCheckBoxCommand implements Command {
     @Override
     public void execute() {
         boolean isSelected = mainView.getToolbarPanel().getDetailsCheckBox().isSelected();
-        mainView.getFileDetailsPanel().getFileDetailsPanel().setVisible(isSelected);
+        mainView.getFileDetailsPanel().setVisible(isSelected);
     }
 }

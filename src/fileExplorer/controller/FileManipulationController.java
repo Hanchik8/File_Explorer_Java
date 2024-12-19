@@ -74,7 +74,7 @@ public class FileManipulationController {
     }
 
     public File getCurrentDirectory() {
-        String currentPath = mainView.getTopMenu().getCurrentPath();
+        String currentPath = mainView.getNavigationPanel().getCurrentPath();
         return (currentPath != null) ? new File(currentPath) : null;
     }
 

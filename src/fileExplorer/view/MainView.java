@@ -5,23 +5,25 @@ import fileExplorer.view.viewComponents.CenterPanel;
 import fileExplorer.view.viewComponents.ToolbarPanel;
 import fileExplorer.view.viewComponents.FileDetailsPanel;
 import fileExplorer.view.viewComponents.SidebarPanel;
-import fileExplorer.view.viewComponents.TopPanel;
+import fileExplorer.view.viewComponents.NavigationPanel;
 import fileExplorer.view.viewComponents.PopupToolbarPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 import java.awt.BorderLayout;
 
 import java.io.File;
 
 public class MainView extends JFrame {
-    private final TopPanel topMenu;
-    private final CenterPanel centerPanel;
-    private final FileDetailsPanel fileDetailsPanel;
-    private final ToolbarPanel toolbarPanel;
-    private final SidebarPanel sidebarPanel;
-    private final PopupToolbarPanel popupToolbarPanel;
+    private NavigationPanel navigationPanel;
+    private ToolbarPanel toolbarPanel;
+    private CenterPanel centerPanel;
+    private SidebarPanel sidebarPanel;
+    private FileDetailsPanel fileDetailsPanel;
+    private PopupToolbarPanel popupToolbarPanel;
 
     public MainView() {
         setTitle("File Explorer Lunar Seekers");
@@ -31,8 +33,8 @@ public class MainView extends JFrame {
 
         // Настроим topPanelPart, которое будет включать topMenu и editPanel
         JPanel topPanelPart = new JPanel(new BorderLayout());
-        topMenu = new TopPanel();
-        topPanelPart.add(topMenu.getTopMenuComponent(), BorderLayout.NORTH);
+        navigationPanel = new NavigationPanel();
+        topPanelPart.add(navigationPanel.getTopMenuComponent(), BorderLayout.NORTH);
 
         toolbarPanel = new ToolbarPanel();
         topPanelPart.add(toolbarPanel.getEditPanel(), BorderLayout.SOUTH);
@@ -49,7 +51,17 @@ public class MainView extends JFrame {
         explorerPanel.add(centerPanel.getCenterPanel(), BorderLayout.CENTER);
 
         fileDetailsPanel = new FileDetailsPanel();
-        explorerPanel.add(fileDetailsPanel.getFileDetailsPanel(), BorderLayout.EAST);
+        explorerPanel.add(fileDetailsPanel, BorderLayout.EAST);
+
+        JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                new JScrollPane(sidebarPanel), centerPanel.getCenterPanel());
+        splitPane1.setDividerLocation(300);
+
+        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                splitPane1, new JScrollPane(fileDetailsPanel.getFileDetailsPanel()));
+        splitPane2.setDividerLocation(1300);
+
+        explorerPanel.add(splitPane2);
 
         popupToolbarPanel = new PopupToolbarPanel();
 
@@ -61,7 +73,7 @@ public class MainView extends JFrame {
 
     public void updateView(String[] fileNames, String currentPath) {
         centerPanel.updateFileListModel(fileNames);
-        topMenu.setCurrentPath(currentPath);
+        navigationPanel.setCurrentPath(currentPath);
         updateBtnState(false);
     }
 
@@ -77,8 +89,8 @@ public class MainView extends JFrame {
 
     // ======== Геттеры для доступа к компонентам ========
 
-    public TopPanel getTopMenu() {
-        return topMenu;
+    public NavigationPanel getNavigationPanel() {
+        return navigationPanel;
     }
 
     public CenterPanel getCenterPanel() {

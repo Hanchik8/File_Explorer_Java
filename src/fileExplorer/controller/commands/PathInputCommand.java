@@ -15,7 +15,7 @@ public class PathInputCommand implements Command {
     }
     @Override
     public void execute() {
-        File selectedFile = new File(mainView.getTopMenu().getDirectoryField().getText());
+        File selectedFile = new File(mainView.getNavigationPanel().getDirectoryField().getText());
         if (selectedFile.isDirectory()) {
             directoryModel.updateDirectory(selectedFile.getAbsolutePath());
             mainView.updateBtnState(false);

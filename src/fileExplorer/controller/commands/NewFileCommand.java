@@ -19,7 +19,7 @@ public class NewFileCommand implements Command {
     @Override
     public void execute() {
         String newFileType = (String) mainView.getToolbarPanel().getNewComboBox().getSelectedItem();
-        File parentDirectory = new File(mainView.getTopMenu().getCurrentPath());
+        File parentDirectory = new File(mainView.getNavigationPanel().getCurrentPath());
         fileModel.createFile(parentDirectory, newFileType);
         mainView.getToolbarPanel().getNewComboBox().setSelectedIndex(0); // Сбрасываем выбор
         fileController.updateView();

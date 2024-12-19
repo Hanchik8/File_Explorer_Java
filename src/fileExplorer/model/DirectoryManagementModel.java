@@ -121,7 +121,7 @@ public class DirectoryManagementModel {
      * @param newDirectory the directory to move to
      * @return an array of files/directories in the new directory
      */
-    public void updateDirectory(String newDirectory) {
+    public File[] updateDirectory(String newDirectory) {
         redoStack.clear();
         File[] listOfFiles;
         if (isRootDirectory(newDirectory)) {
@@ -135,6 +135,8 @@ public class DirectoryManagementModel {
         }
         isDirectoryChanged = true;
         updateView(listOfFiles, currentDirectory);
+
+        return listOfFiles;
     }
 
     /**
@@ -142,7 +144,7 @@ public class DirectoryManagementModel {
      *
      * @return an array of files/directories in the current directory
      */
-    public void updateDirectory() {
+    public File[] updateDirectory() {
         File[] listOfFiles;
         if (isRootDirectory(currentDirectory)) {
             listOfFiles = getInitialDirectories();
@@ -150,6 +152,8 @@ public class DirectoryManagementModel {
             listOfFiles = filterFiles(listDirectoryContent(new File(currentDirectory)));
         }
         updateView(listOfFiles, currentDirectory);
+
+        return listOfFiles;
     }
 
     /**
@@ -268,12 +272,12 @@ public class DirectoryManagementModel {
                 for (int i = 0; i < files.length; i++) {
                     fileNames[i] = files[i].getAbsolutePath();
                 }
-                mainView.getTopMenu().getUpperBtn().setEnabled(false);
+                mainView.getNavigationPanel().getUpperBtn().setEnabled(false);
             } else {
                 for (int i = 0; i < files.length; i++) {
                     fileNames[i] = files[i].getName();
                 }
-                mainView.getTopMenu().getUpperBtn().setEnabled(true);
+                mainView.getNavigationPanel().getUpperBtn().setEnabled(true);
             }
             mainView.updateView(fileNames, currentDirectory);
 
@@ -285,8 +289,8 @@ public class DirectoryManagementModel {
      * Updates the state of navigation buttons based on undo/redo stacks.
      */
     private void updateButtonsState() {
-        mainView.getTopMenu().getForwardBtn().setEnabled(!redoStack.isEmpty());
-        mainView.getTopMenu().getBackBtn().setEnabled(!undoStack.isEmpty());
+        mainView.getNavigationPanel().getForwardBtn().setEnabled(!redoStack.isEmpty());
+        mainView.getNavigationPanel().getBackBtn().setEnabled(!undoStack.isEmpty());
         if (isDirectoryChanged)
             updateSortCriteria();
     }

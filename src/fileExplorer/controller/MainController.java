@@ -16,6 +16,6 @@ public class MainController {
         // Инициализация дочерних контроллеров
         new FileManipulationController(mainView, directoryModel, fileModel);
         new DirectoryManagementController(mainView, directoryModel);
-        new SidebarController(mainView.getSidebarPanel(), directoryModel);
+        new SidebarController(mainView, directoryModel, fileModel);
     }
 }

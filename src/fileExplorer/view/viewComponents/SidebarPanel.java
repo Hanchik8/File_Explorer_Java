@@ -2,6 +2,7 @@ package fileExplorer.view.viewComponents;
 
 import javax.swing.JPanel;
 import javax.swing.JList;
+import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -14,6 +15,7 @@ import java.awt.Dimension;
  */
 public class SidebarPanel extends JPanel {
     private JList<String> categoryList;
+    private JTreePanel jTreePanel;
 
     public SidebarPanel() {
         setLayout(new BorderLayout());
@@ -21,7 +23,16 @@ public class SidebarPanel extends JPanel {
 
         // Create and add the category panel
         JPanel categoryPanel = createCategoryPanel();
-        add(categoryPanel, BorderLayout.CENTER);
+        add(categoryPanel, BorderLayout.NORTH);
+
+        createJTreePanel();
+        add(jTreePanel.getFileTree(), BorderLayout.CENTER);
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                categoryPanel, new JScrollPane(jTreePanel.getFileTree()));
+        splitPane.setDividerLocation(200);
+
+        add(splitPane);
     }
 
     /**
@@ -46,6 +57,10 @@ public class SidebarPanel extends JPanel {
         return categoryPanel;
     }
 
+    private JTreePanel createJTreePanel() {
+        return jTreePanel = new JTreePanel();
+    }
+
     /**
      * Returns the category list component.
      * 
@@ -53,5 +68,9 @@ public class SidebarPanel extends JPanel {
      */
     public JList<String> getCategoryList() {
         return categoryList;
+    }
+
+    public JTreePanel getjTreePanel() {
+        return jTreePanel;
     }
 }

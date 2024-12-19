@@ -11,7 +11,7 @@ import java.awt.Color;
 
 import java.util.LinkedHashMap;
 
-public class TopPanel {
+public class NavigationPanel {
 
     private JPanel topMenuComponent;
 
@@ -21,7 +21,7 @@ public class TopPanel {
 
     private JTextField searchField;
 
-    public TopPanel() {
+    public NavigationPanel() {
         topMenuComponent = new JPanel(new BorderLayout());
 
         topMenuComponent.add(createBtnPanel(), BorderLayout.WEST);
