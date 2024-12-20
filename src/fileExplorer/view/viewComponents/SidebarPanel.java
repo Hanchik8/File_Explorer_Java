@@ -10,12 +10,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
-/**
- * Sidebar panel that displays categories like Downloads, Music, Images,
- * Documents, and Videos.
- */
 public class SidebarPanel extends JPanel {
     private JList<String> categoryList;
     private JTreePanel jTreePanel;
