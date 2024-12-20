@@ -94,7 +94,7 @@ public class DirectoryManagementModel {
         redoStack.clear();
         File[] listOfFiles;
         if (isRootDirectory(newDirectory)) {
-            listOfFiles = getInitialDirectories();
+            listOfFiles = getRootDirectories();
         } else {
             if (!currentDirectory.equals(newDirectory)) {
                 undoStack.push(currentDirectory);
@@ -111,7 +111,7 @@ public class DirectoryManagementModel {
     public File[] updateDirectory() {
         File[] listOfFiles;
         if (isRootDirectory(currentDirectory)) {
-            listOfFiles = getInitialDirectories();
+            listOfFiles = getRootDirectories();
         } else {
             listOfFiles = filterFiles(listDirectoryContent(new File(currentDirectory)));
         }
@@ -148,7 +148,7 @@ public class DirectoryManagementModel {
         return acceptableFiles.toArray(new File[0]);
     }
 
-    public File[] getInitialDirectories() {
+    public File[] getRootDirectories() {
         currentDirectory = "Root";
 
         String os = System.getProperty("os.name").toLowerCase();

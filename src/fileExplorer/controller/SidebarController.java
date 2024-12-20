@@ -10,14 +10,10 @@ import fileExplorer.view.MainView;
 import java.io.File;
 
 public class SidebarController {
-    private MainView mainView;
     private DirectoryManagementModel directoryModel;
-    private FileManipulationModel fileModel;
 
     public SidebarController(MainView mainView, DirectoryManagementModel directoryModel, FileManipulationModel fileModel) {
-        this.mainView = mainView;
         this.directoryModel = directoryModel;
-        this.fileModel = fileModel;
 
         mainView.getSidebarPanel().getCategoryList().addListSelectionListener(new SideBarSelectionListener(mainView.getSidebarPanel(), this));
         mainView.getSidebarPanel().getjTreePanel().generateRoots(directoryModel.updateDirectory());

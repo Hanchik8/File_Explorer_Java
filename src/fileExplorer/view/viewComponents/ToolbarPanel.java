@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 
 public class ToolbarPanel extends JPanel {
-    private HashMap<String, JComponent> toolbarWestPartButtons;
+    private HashMap<String, JButton> toolbarWestPartButtons;
 
     private JCheckBox detailsCheckBox;
 
@@ -32,10 +32,11 @@ public class ToolbarPanel extends JPanel {
 
     private void createButtons() {
         toolbarWestPartButtons = new HashMap<>();
-        toolbarWestPartButtons.put("Cut", createButton("resources/images/btnIcons/cutIcon.png"));
-        toolbarWestPartButtons.put("Copy", createButton("resources/images/btnIcons/copyIcon.png"));
-        toolbarWestPartButtons.put("Paste", createButton("resources/images/btnIcons/pasteIcon.png"));
-        toolbarWestPartButtons.put("Delete", createButton("resources/images/btnIcons/deleteIcon.png"));
+        toolbarWestPartButtons.put("cut", createButton("resources/images/btnIcons/cutIcon.png"));
+        toolbarWestPartButtons.put("copy", createButton("resources/images/btnIcons/copyIcon.png"));
+        toolbarWestPartButtons.put("paste", createButton("resources/images/btnIcons/pasteIcon.png"));
+        toolbarWestPartButtons.put("delete", createButton("resources/images/btnIcons/deleteIcon.png"));
+        toolbarWestPartButtons.put("rename", createButton("resources/images/btnIcons/renameIcon.png"));
     }
 
     private JPanel createToolbarWestPart() {
@@ -90,20 +91,23 @@ public class ToolbarPanel extends JPanel {
         return showHiddenFilesCheckBox;
     }
 
-    public JComponent getCutBtn() {
-        return toolbarWestPartButtons.get("Cut");
+    public JButton getCutBtn() {
+        return toolbarWestPartButtons.get("cut");
     }
 
-    public JComponent getCopyBtn() {
-        return toolbarWestPartButtons.get("Copy");
+    public JButton getCopyBtn() {
+        return toolbarWestPartButtons.get("copy");
     }
 
-    public JComponent getPasteBtn() {
-        return toolbarWestPartButtons.get("Paste");
+    public JButton getPasteBtn() {
+        return toolbarWestPartButtons.get("paste");
     }
 
-    public JComponent getDeleteBtn() {
-        return toolbarWestPartButtons.get("Delete");
+    public JButton getDeleteBtn() {
+        return toolbarWestPartButtons.get("delete");
+    }
+    public JButton getRenameBtn() {
+        return toolbarWestPartButtons.get("rename");
     }
 
     public JCheckBox getDetailsCheckBox() {

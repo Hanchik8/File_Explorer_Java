@@ -2,6 +2,7 @@ package fileExplorer.controller;
 
 import fileExplorer.controller.commands.Command;
 import fileExplorer.controller.commands.CopyFileCommand;
+import fileExplorer.controller.commands.RenameFileCommand;
 import fileExplorer.controller.commands.PasteFileCommand;
 import fileExplorer.controller.commands.CutFileCommand;
 import fileExplorer.controller.commands.DeleteFileCommand;
@@ -38,17 +39,17 @@ public class PopupToolbarController extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            popupToolbarPanel.updateButtonState(fileController.getSelectedFile());
             popupToolbarPanel.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
     private void setupToolbarActions() {
-        LinkedHashMap<String, JMenuItem> toolbatMenuItems = popupToolbarPanel.getToolsMap();
-        registerToolbarAction(toolbatMenuItems.get("Copy"), new CopyFileCommand(fileModel, fileController));
-        registerToolbarAction(toolbatMenuItems.get("Paste"), new PasteFileCommand(fileModel, fileController));
-        registerToolbarAction(toolbatMenuItems.get("Cut"), new CutFileCommand(fileModel, fileController));
-        registerToolbarAction(toolbatMenuItems.get("Delete"), new DeleteFileCommand(fileModel, fileController));
+        LinkedHashMap<String, JMenuItem> toolbarMenuItems = popupToolbarPanel.getToolsMap();
+        registerToolbarAction(toolbarMenuItems.get("copy"), new CopyFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbarMenuItems.get("rename"), new RenameFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbarMenuItems.get("paste"), new PasteFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbarMenuItems.get("cut"), new CutFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbarMenuItems.get("delete"), new DeleteFileCommand(fileModel, fileController));
     }
 
     private void registerToolbarAction(JMenuItem button, Command command) {

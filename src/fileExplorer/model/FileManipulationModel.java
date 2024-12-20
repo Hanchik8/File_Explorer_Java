@@ -40,18 +40,38 @@ public class FileManipulationModel {
       }
    }
 
-   public void createFile(File parentDirectory, String fileName) {
+   public void createFile(File parentDirectory, String fileName, String fileExtension) {
       File newFile = new File(parentDirectory, fileName);
       try {
-         newFile = ensureUniqueFileName(newFile);
-         if (newFile.getName().contains("Directory")) {
+         if (fileExtension == null) {
+            newFile = ensureUniqueFileName(newFile);
             newFile.mkdir();
          } else {
+            newFile = ensureUniqueFileName(new File(newFile + "." + fileExtension));
             newFile.createNewFile();
          }
       } catch (IOException e) {
          System.err.println("Error! Unable to create file or directory. " + e.getMessage());
       }
+   }
+
+   public void renameFile(File file, String newFileName) {
+      if (newFileName == null || newFileName.isEmpty()) {
+         newFileName = getFileNameWithoutExtension(file.getName());
+      }
+
+      if (getFileExtension(file.getName()) != null) {
+         newFileName = newFileName + '.' + getFileExtension(file.getName());
+      }
+
+      File parentDirectory = file.getParentFile();
+      File newFile = new File(parentDirectory, newFileName);
+
+      if (!file.getName().equals(newFile.getName())) {
+         newFile = ensureUniqueFileName(newFile);
+      }
+
+      file.renameTo(newFile);
    }
 
    public void copyFile(File file) {
@@ -61,6 +81,7 @@ public class FileManipulationModel {
       Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
       mainView.updateBtnState(false);
       mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
+      mainView.getPopupToolbarPanel().enablePasteItem(true);
    }
 
    private void copyFileContent(File source, File target) throws IOException {
@@ -162,6 +183,14 @@ public class FileManipulationModel {
          return fileName.substring(lastDotIndex + 1);
       }
       return null;
+   }
+
+   public String getFileNameWithoutExtension(String fileName) {
+      int lastDotIndex = fileName.lastIndexOf('.');
+      if (lastDotIndex > 0) {
+         return fileName.substring(0, lastDotIndex);
+      }
+      return fileName;
    }
 
    private static class FileTransferable implements Transferable {

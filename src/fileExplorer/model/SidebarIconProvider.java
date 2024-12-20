@@ -22,7 +22,6 @@ public class SidebarIconProvider {
     }
 
     private void loadSidebarIcons() {
-        // Load standard icons for known sidebar categories
         sidebarIcons.put("Desktop", ImageUtils.getImagePreview("resources/images/sidebarIcons/desktop.png", 20));
         sidebarIcons.put("Documents", ImageUtils.getImagePreview("resources/images/sidebarIcons/documentsIcon.png", 20));
         sidebarIcons.put("Downloads", ImageUtils.getImagePreview("resources/images/sidebarIcons/downloads.png", 20));
@@ -30,7 +29,7 @@ public class SidebarIconProvider {
         sidebarIcons.put("Music", ImageUtils.getImagePreview("resources/images/sidebarIcons/musicIcon.png", 20));
         sidebarIcons.put("Videos", ImageUtils.getImagePreview("resources/images/sidebarIcons/videosIcon.png", 20));
         sidebarIcons.put("My Computer", ImageUtils.getImagePreview("resources/images/sidebarIcons/myComputer.png", 20));
-        }
+    }
 
     /**
      * Gets the icon associated with a specific category.

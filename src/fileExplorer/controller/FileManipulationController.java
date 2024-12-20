@@ -1,13 +1,6 @@
 package fileExplorer.controller;
 
-import fileExplorer.controller.commands.NewFileCommand;
-import fileExplorer.controller.commands.DetailCheckBoxCommand;
-import fileExplorer.controller.commands.Command;
-import fileExplorer.controller.commands.CopyFileCommand;
-import fileExplorer.controller.commands.PasteFileCommand;
-import fileExplorer.controller.commands.ShowHiddenFilesCommand;
-import fileExplorer.controller.commands.CutFileCommand;
-import fileExplorer.controller.commands.DeleteFileCommand;
+import fileExplorer.controller.commands.*;
 
 import fileExplorer.controller.listeners.FileListMouseListener;
 import fileExplorer.controller.listeners.ViewActionListener;
@@ -17,7 +10,7 @@ import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.model.FileManipulationModel;
 import fileExplorer.view.MainView;
 
-import javax.swing.JComponent;
+import javax.swing.JButton;
 import java.io.File;
 
 public class FileManipulationController {
@@ -62,6 +55,7 @@ public class FileManipulationController {
         registerToolbarAction(mainView.getToolbarPanel().getPasteBtn(), new PasteFileCommand(fileModel, this));
         registerToolbarAction(mainView.getToolbarPanel().getCutBtn(), new CutFileCommand(fileModel, this));
         registerToolbarAction(mainView.getToolbarPanel().getDeleteBtn(), new DeleteFileCommand(fileModel, this));
+        registerToolbarAction(mainView.getToolbarPanel().getRenameBtn(), new RenameFileCommand(fileModel, this));
     }
 
     private void setupDetailsCheckBox() {
@@ -74,7 +68,7 @@ public class FileManipulationController {
                 new ViewActionListener(new ShowHiddenFilesCommand(mainView, directoryModel)));
     }
 
-    private void registerToolbarAction(JComponent button, Command command) {
+    private void registerToolbarAction(JButton button, Command command) {
         button.addMouseListener(new ButtonClickListener(command));
     }
 

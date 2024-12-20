@@ -18,7 +18,7 @@ public class SearchCommand implements Command {
     @Override
     public void execute() {
         String fileName = mainView.getNavigationPanel().getSearchField().getText();
-        if (!fileName.equals("")) {
+        if (!fileName.isEmpty()) {
             String currentDirectory = mainView.getNavigationPanel().getDirectoryField().getText();
             ArrayList<File> searchedFiles = new ArrayList<>();
             directoryModel.searchFileByName(currentDirectory, fileName, searchedFiles);

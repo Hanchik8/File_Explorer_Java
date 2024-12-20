@@ -89,6 +89,10 @@ public class MainView extends JFrame {
         toolbarPanel.getCutBtn().setEnabled(isBtnActive);
         toolbarPanel.getCopyBtn().setEnabled(isBtnActive);
         toolbarPanel.getDeleteBtn().setEnabled(isBtnActive);
+        toolbarPanel.getRenameBtn().setEnabled(isBtnActive);
+
+        PopupToolbarPanel popupToolbarPanel = (PopupToolbarPanel) viewPanels.get("popupToolbar");
+        popupToolbarPanel.updateJItemState(isBtnActive);
     }
 
     public void updateFileDetails(File selectedFile, String fileExtension) {
@@ -123,5 +127,6 @@ public class MainView extends JFrame {
     public SidebarPanel getSidebarPanel() {
         return (SidebarPanel) viewPanels.get("sidebar");
     }
+    public FileDetailsPanel getFileDetailsPanel() { return (FileDetailsPanel) viewPanels.get("fileDetails");}
     public PopupToolbarPanel getPopupToolbarPanel() { return (PopupToolbarPanel) viewPanels.get("popupToolbar");};
 }

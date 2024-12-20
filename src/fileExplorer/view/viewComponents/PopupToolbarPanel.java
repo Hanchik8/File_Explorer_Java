@@ -5,7 +5,6 @@ import fileExplorer.utils.ImageUtils;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 
-import java.io.File;
 import java.util.LinkedHashMap;
 
 public class PopupToolbarPanel extends JPopupMenu {
@@ -17,23 +16,29 @@ public class PopupToolbarPanel extends JPopupMenu {
 
     private void setupItems() {
         toolsMap = new LinkedHashMap<>();
-        toolsMap.put("Cut", createButton("Cut","resources/images/btnIcons/cutIcon.png"));
-        toolsMap.put("Copy", createButton("Copy", "resources/images/btnIcons/copyIcon.png"));
-        toolsMap.put("Paste", createButton("Paste", "resources/images/btnIcons/pasteIcon.png"));
-        toolsMap.put("Delete", createButton("Delete","resources/images/btnIcons/deleteIcon.png"));
+        toolsMap.put("cut", createJMenuItem("Cut","resources/images/btnIcons/cutIcon.png"));
+        toolsMap.put("rename", createJMenuItem("Rename","resources/images/btnIcons/renameIcon.png"));
+        toolsMap.put("copy", createJMenuItem("Copy", "resources/images/btnIcons/copyIcon.png"));
+        toolsMap.put("paste", createJMenuItem("Paste", "resources/images/btnIcons/pasteIcon.png"));
+        toolsMap.put("delete", createJMenuItem("Delete","resources/images/btnIcons/deleteIcon.png"));
     }
 
-    private JMenuItem createButton(String toolName, String iconPath) {
+    private JMenuItem createJMenuItem(String toolName, String iconPath) {
         JMenuItem tool = new JMenuItem(toolName, ImageUtils.getImageIcon(iconPath));
 
         add(tool);
         return tool;
     }
 
-    public void updateButtonState(File selectedFile) {
-        for (JMenuItem button : toolsMap.values()) {
-            button.setEnabled(selectedFile != null);
+    public void updateJItemState(Boolean isActive) {
+        for (JMenuItem item : toolsMap.values()) {
+            if (!item.getText().equals("paste"))
+                item.setEnabled(isActive);
         }
+    }
+
+    public void enablePasteItem(Boolean isActive) {
+        toolsMap.get("paste").setEnabled(isActive);
     }
 
     public LinkedHashMap<String, JMenuItem> getToolsMap() {

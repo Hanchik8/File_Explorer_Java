@@ -3,7 +3,7 @@ package fileExplorer.controller.listeners;
 import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.model.enums.SortCriteria;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import java.io.File;
