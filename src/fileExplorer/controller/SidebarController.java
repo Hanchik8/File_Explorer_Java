@@ -22,7 +22,7 @@ public class SidebarController {
         mainView.getSidebarPanel().getCategoryList().addListSelectionListener(new SideBarSelectionListener(mainView.getSidebarPanel(), this));
         mainView.getSidebarPanel().getjTreePanel().generateRoots(directoryModel.updateDirectory());
         mainView.getSidebarPanel().getjTreePanel().getFileTree().addTreeExpansionListener(new JTreeExpansionListener(mainView, directoryModel));
-        mainView.getSidebarPanel().getjTreePanel().getFileTree().addTreeSelectionListener(new JTreeMouseListener(mainView, fileModel));
+        mainView.getSidebarPanel().getjTreePanel().getFileTree().addTreeSelectionListener(new JTreeMouseListener(mainView, fileModel, directoryModel));
     }
 
     public void updateMainPanel(File directory) {

@@ -57,7 +57,7 @@ public class NavigationPanel extends JPanel{
 
     private JTextField createDirectoryField() {
         directoryField = new JTextField();
-        directoryField.setEditable(false);
+        directoryField.setEditable(true);
         return directoryField;
     }
 

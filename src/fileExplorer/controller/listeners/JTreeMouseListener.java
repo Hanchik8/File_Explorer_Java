@@ -1,5 +1,6 @@
 package fileExplorer.controller.listeners;
 
+import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.model.FileManipulationModel;
 import fileExplorer.view.MainView;
 
@@ -13,9 +14,11 @@ import java.io.File;
 public class JTreeMouseListener implements TreeSelectionListener {
     private MainView mainView;
     private FileManipulationModel fileModel;
-    public JTreeMouseListener(MainView mainView, FileManipulationModel fileModel) {
+    DirectoryManagementModel directoryModel;
+    public JTreeMouseListener(MainView mainView, FileManipulationModel fileModel, DirectoryManagementModel directoryModel) {
         this.mainView = mainView;
         this.fileModel = fileModel;
+        this.directoryModel = directoryModel;
     }
 
     @Override
@@ -31,6 +34,8 @@ public class JTreeMouseListener implements TreeSelectionListener {
 
         if (node.isLeaf()) {
             fileModel.openFile(selectedFile);
+        } else {
+            directoryModel.updateDirectory(selectedFile.getAbsolutePath());
         }
     }
 }
