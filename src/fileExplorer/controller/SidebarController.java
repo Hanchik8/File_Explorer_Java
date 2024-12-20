@@ -28,4 +28,5 @@ public class SidebarController {
     public void updateMainPanel(File directory) {
         directoryModel.updateDirectory(directory.getAbsolutePath());
     }
+    public void updateMainPanel(String directory) {directoryModel.updateDirectory(directory);}
 }

@@ -1,14 +1,18 @@
 package fileExplorer.model;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.Icon;
+
+import java.awt.Component;
 
 /**
  * This class provides custom rendering for sidebar items.
  * It associates appropriate icons with item names using a SidebarIconProvider.
  */
 public class SidebarListRenderer extends DefaultListCellRenderer {
-    private final SidebarIconProvider sidebarIconProvider; // Provides icons for sidebar items
+    private final SidebarIconProvider sidebarIconProvider;
 
     /**
      * Constructor for initializing the sidebar list renderer with an icon provider.
@@ -34,18 +38,16 @@ public class SidebarListRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(
             JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
-        // Call the superclass to get the default rendering component
         JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-        // Check if the item name is not null before proceeding
         if (value != null) {
-            String itemName = value.toString(); // Convert the object to a string
-            Icon icon = sidebarIconProvider.getIconForCategory(itemName); // Get icon based on item name
-            label.setIcon(icon); // Set the icon for the label
+            String itemName = value.toString();
+            Icon icon = sidebarIconProvider.getIconForCategory(itemName);
+            label.setIcon(icon);
         } else {
-            label.setIcon(null); // If the value is null, clear the icon
+            label.setIcon(null);
         }
 
-        return label; // Return the customized label for rendering
+        return label;
     }
 }

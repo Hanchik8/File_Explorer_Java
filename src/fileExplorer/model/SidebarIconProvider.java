@@ -2,7 +2,7 @@ package fileExplorer.model;
 
 import fileExplorer.utils.ImageUtils;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,11 +23,13 @@ public class SidebarIconProvider {
 
     private void loadSidebarIcons() {
         // Load standard icons for known sidebar categories
-        sidebarIcons.put("Documents", ImageUtils.getImagePreview("resources/images/sidebarIcons/documentsIcon.png", 15));
-        sidebarIcons.put("Downloads", ImageUtils.getImagePreview("resources/images/sidebarIcons/downloads.png", 15));
-        sidebarIcons.put("Images", ImageUtils.getImagePreview("resources/images/sidebarIcons/imagesIcon.png", 15));
-        sidebarIcons.put("Music", ImageUtils.getImagePreview("resources/images/sidebarIcons/musicIcon.png", 15));
-        sidebarIcons.put("Videos", ImageUtils.getImagePreview("resources/images/sidebarIcons/videosIcon.png", 15));
+        sidebarIcons.put("Desktop", ImageUtils.getImagePreview("resources/images/sidebarIcons/desktop.png", 20));
+        sidebarIcons.put("Documents", ImageUtils.getImagePreview("resources/images/sidebarIcons/documentsIcon.png", 20));
+        sidebarIcons.put("Downloads", ImageUtils.getImagePreview("resources/images/sidebarIcons/downloads.png", 20));
+        sidebarIcons.put("Pictures", ImageUtils.getImagePreview("resources/images/sidebarIcons/picturesIcon.png", 20));
+        sidebarIcons.put("Music", ImageUtils.getImagePreview("resources/images/sidebarIcons/musicIcon.png", 20));
+        sidebarIcons.put("Videos", ImageUtils.getImagePreview("resources/images/sidebarIcons/videosIcon.png", 20));
+        sidebarIcons.put("My Computer", ImageUtils.getImagePreview("resources/images/sidebarIcons/myComputer.png", 20));
         }
 
     /**
@@ -38,6 +40,6 @@ public class SidebarIconProvider {
      */
     public Icon getIconForCategory(String category) {
         return sidebarIcons.getOrDefault(category,
-                sidebarIcons.get("Default")); // Return default icon if category not found
+                sidebarIcons.get("Default"));
     }
 }

@@ -13,6 +13,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SidebarPanel extends JPanel {
     private JList<String> categoryList;
@@ -38,9 +41,12 @@ public class SidebarPanel extends JPanel {
         categoryPanel.setBackground(new Color(45, 45, 55));
         categoryPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        String[] categories = { "Downloads", "Music", "Images", "Documents", "Videos" };
+        ArrayList<String> categories = new ArrayList<>(List.of("Desktop", "Downloads", "Music", "Pictures", "Documents", "Videos"));
 
-        categoryList = new JList<>(categories);
+        categories.removeIf(category -> !new File(System.getProperty("user.home"), category).exists());
+        categories.add("My Computer");
+
+        categoryList = new JList<>(categories.toArray(new String[0]));
         categoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         categoryList.setCellRenderer(new SidebarListRenderer(new SidebarIconProvider()));
 
