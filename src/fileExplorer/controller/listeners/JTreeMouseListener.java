@@ -3,29 +3,34 @@ package fileExplorer.controller.listeners;
 import fileExplorer.model.FileManipulationModel;
 import fileExplorer.view.MainView;
 
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.tree.TreePath;
+
 import java.io.File;
 
-public class JTreeMouseListener extends MouseAdapter {
+public class JTreeMouseListener implements TreeSelectionListener {
     private MainView mainView;
     private FileManipulationModel fileModel;
     public JTreeMouseListener(MainView mainView, FileManipulationModel fileModel) {
         this.mainView = mainView;
         this.fileModel = fileModel;
     }
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int row = mainView.getSidebarPanel().getjTreePanel().getFileTree().getClosestRowForLocation(e.getX(), e.getY());
-        if (row == -1) return;
 
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) mainView.getSidebarPanel().getjTreePanel().getFileTree().getPathForRow(row).getLastPathComponent();
+    @Override
+    public void valueChanged(TreeSelectionEvent event) {
+        TreePath selectedPath = event.getPath();
+
+        if (selectedPath == null) return;
+
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
         File selectedFile = new File(String.valueOf(node.getUserObject()));
-        if (node.isLeaf() && e.getClickCount() == 2) {
-            fileModel.openFile(selectedFile);
-        }
 
         mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile.getName()));
+
+        if (node.isLeaf()) {
+            fileModel.openFile(selectedFile);
+        }
     }
 }

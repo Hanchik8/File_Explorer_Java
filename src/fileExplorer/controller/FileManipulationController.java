@@ -5,7 +5,7 @@ import fileExplorer.controller.commands.DetailCheckBoxCommand;
 import fileExplorer.controller.commands.Command;
 import fileExplorer.controller.commands.CopyFileCommand;
 import fileExplorer.controller.commands.PasteFileCommand;
-import fileExplorer.controller.commands.ShowHiddenFilesCheckBoxCommand;
+import fileExplorer.controller.commands.ShowHiddenFilesCommand;
 import fileExplorer.controller.commands.CutFileCommand;
 import fileExplorer.controller.commands.DeleteFileCommand;
 
@@ -17,8 +17,8 @@ import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.model.FileManipulationModel;
 import fileExplorer.view.MainView;
 
+import javax.swing.JComponent;
 import java.io.File;
-import javax.swing.JButton;
 
 public class FileManipulationController {
     private final MainView mainView;
@@ -36,7 +36,6 @@ public class FileManipulationController {
         initialize();
     }
 
-    // Инициализация обработчиков
     private void initialize() {
         setupFileListListener();
         setupNewComboBoxListener();
@@ -72,10 +71,10 @@ public class FileManipulationController {
 
     private void setupShowHiddenFilesCheckBox() {
         mainView.getToolbarPanel().getShowHiddenFilesCheckBox().addActionListener(
-                new ViewActionListener(new ShowHiddenFilesCheckBoxCommand(mainView, directoryModel)));
+                new ViewActionListener(new ShowHiddenFilesCommand(mainView, directoryModel)));
     }
 
-    private void registerToolbarAction(JButton button, Command command) {
+    private void registerToolbarAction(JComponent button, Command command) {
         button.addMouseListener(new ButtonClickListener(command));
     }
 

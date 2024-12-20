@@ -26,9 +26,8 @@ public class SortComboBoxListener implements PopupMenuListener {
         String currentPath = directoryModel.getCurrentDirectory();
         File[] files = directoryModel.listDirectoryContent(new File(currentPath));
         if (files != null) {
-            // Сортируем и обновляем список
             File[] sortedFiles = directoryModel.updateAndSortFileList(files, criteria);
-            directoryModel.updateView(sortedFiles, currentPath); // Обновляем представление
+            directoryModel.updateView(sortedFiles, currentPath);
         }
     }
 

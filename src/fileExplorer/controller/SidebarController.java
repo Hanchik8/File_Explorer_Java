@@ -19,14 +19,12 @@ public class SidebarController {
         this.directoryModel = directoryModel;
         this.fileModel = fileModel;
 
-        // Initialize listeners for the components
         mainView.getSidebarPanel().getCategoryList().addListSelectionListener(new SideBarSelectionListener(mainView.getSidebarPanel(), this));
         mainView.getSidebarPanel().getjTreePanel().generateRoots(directoryModel.updateDirectory());
         mainView.getSidebarPanel().getjTreePanel().getFileTree().addTreeExpansionListener(new JTreeExpansionListener(mainView, directoryModel));
-        mainView.getSidebarPanel().getjTreePanel().getFileTree().addMouseListener(new JTreeMouseListener(mainView, fileModel));
+        mainView.getSidebarPanel().getjTreePanel().getFileTree().addTreeSelectionListener(new JTreeMouseListener(mainView, fileModel));
     }
 
-    // Update the main panel with the contents of the selected directory
     public void updateMainPanel(File directory) {
         directoryModel.updateDirectory(directory.getAbsolutePath());
     }

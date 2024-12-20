@@ -6,30 +6,20 @@ import fileExplorer.model.FileListRenderer;
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 
-/**
- * Центральная панель для отображения списка файлов.
- */
-public class CenterPanel {
-    private final JPanel centerPanel; // Панель для всего содержимого
-    private DefaultListModel<String> fileListModel; // Модель данных для списка файлов
-    private JList<String> fileList; // Список файлов
-    private final FileListRenderer fileListRenderer; // Кастомный рендерер для иконок
+public class CenterPanel extends JPanel {
+    private DefaultListModel<String> fileListModel;
+    private JList<String> fileList;
+    private final FileListRenderer fileListRenderer;
 
     public CenterPanel() {
-        centerPanel = new JPanel(new BorderLayout());
+        setLayout(new BorderLayout());
         fileListRenderer = new FileListRenderer(new FileIconProvider());
-        centerPanel.add(new JScrollPane(createFileList()), BorderLayout.CENTER);
+        add(createFileList());
     }
 
-    /**
-     * Создаёт JList для отображения файлов.
-     * 
-     * @return JList для отображения списка файлов.
-     */
     private JList<String> createFileList() {
         fileListModel = new DefaultListModel<>();
         fileList = new JList<>(fileListModel);
@@ -37,29 +27,17 @@ public class CenterPanel {
         return fileList;
     }
 
-    /**
-     * Обновляет список файлов в модели с новыми данными.
-     * 
-     * @param fileNamesList массив имен файлов для обновления.
-     */
     public void updateFileListModel(String[] fileNamesList) {
-        fileListModel.clear(); // Очищаем старые данные
+        fileListModel.clear();
         for (String filename : fileNamesList) {
-            fileListModel.addElement(filename); // Добавляем новые файлы
+            fileListModel.addElement(filename);
         }
 
-        // После обновления данных обновляем отображение
-        fileList.revalidate(); // Обновление компонента
-        fileList.repaint(); // Перерисовка компонента
+        fileList.revalidate();
+        fileList.repaint();
     }
-
-    // ======== Геттеры для доступа к компонентам ========
 
     public JList<String> getFileList() {
         return fileList;
-    }
-
-    public JPanel getCenterPanel() {
-        return centerPanel;
     }
 }

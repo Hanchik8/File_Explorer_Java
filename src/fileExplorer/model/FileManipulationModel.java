@@ -19,19 +19,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-// ПОДОБНОГО РОДА КОММЕНТАРИИ МНЕ ЗАШЛИ БОЛЬШЕ, ЧЕМ МНОГОЯРУСНЫЕ C БОЛЬШИМ КОЛ-ВО НЕНУЖНОЙ ИНФЫ
-
 public class FileManipulationModel {
-
    private final MainView mainView;
-   private File copiedFile; // Local copy of the file for cut/copy operations
-   private boolean cutPressed = false; // Indicates if "cut" mode is active
+   private File copiedFile;
+   private boolean cutPressed = false;
 
    public FileManipulationModel(MainView mainView) {
       this.mainView = mainView;
    }
 
-   // ======== OPEN FILE ========
    public void openFile(File file) {
       if (Desktop.isDesktopSupported()) {
          try {
@@ -44,7 +40,6 @@ public class FileManipulationModel {
       }
    }
 
-   // ======== CREATE FILE OR DIRECTORY ========
    public void createFile(File parentDirectory, String fileName) {
       File newFile = new File(parentDirectory, fileName);
       try {
@@ -59,7 +54,6 @@ public class FileManipulationModel {
       }
    }
 
-   // ======== COPY FILE ========
    public void copyFile(File file) {
       copiedFile = file;
       cutPressed = false;
@@ -69,7 +63,6 @@ public class FileManipulationModel {
       mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
-   // ======== COPY FILE CONTENT ========
    private void copyFileContent(File source, File target) throws IOException {
       if (source.isDirectory()) {
          if (!target.exists()) {
@@ -94,7 +87,6 @@ public class FileManipulationModel {
       }
    }
 
-   // ======== PASTE FILE ========
    public void pasteFile(File targetDirectory) {
       try {
          Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -130,7 +122,6 @@ public class FileManipulationModel {
       }
    }
 
-   // ======== CUT FILE ========
    public void cutFile(File file) {
       copyFile(file);
       cutPressed = true;
@@ -138,7 +129,6 @@ public class FileManipulationModel {
       mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
-   // ======== DELETE FILE OR DIRECTORY ========
    public void deleteFile(File fileOrDir) {
       if (fileOrDir.isDirectory()) {
          for (File file : fileOrDir.listFiles()) {
@@ -151,7 +141,6 @@ public class FileManipulationModel {
       mainView.updateBtnState(false);
    }
 
-   // ======== ENSURE UNIQUE FILE NAME ========
    private File ensureUniqueFileName(File file) {
       String name = file.getName();
       String baseName = name.contains(".") ? name.substring(0, name.lastIndexOf('.')) : name;
@@ -167,7 +156,6 @@ public class FileManipulationModel {
       return file;
    }
 
-   // ======== GET FILE EXTENSION ========
    public String getFileExtension(String fileName) {
       int lastDotIndex = fileName.lastIndexOf('.');
       if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
@@ -176,7 +164,6 @@ public class FileManipulationModel {
       return null;
    }
 
-   // ======== FILE TRANSFERABLE CLASS ========
    private static class FileTransferable implements Transferable {
       private final File file;
 

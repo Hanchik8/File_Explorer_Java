@@ -1,7 +1,5 @@
 package fileExplorer.controller;
 
-import javax.swing.JButton;
-
 import fileExplorer.controller.commands.Command;
 import fileExplorer.controller.commands.PathInputCommand;
 import fileExplorer.controller.commands.MoveUpCommand;
@@ -17,6 +15,8 @@ import fileExplorer.controller.listeners.ViewActionListener;
 import fileExplorer.model.DirectoryManagementModel;
 import fileExplorer.view.MainView;
 
+import javax.swing.JComponent;
+
 public class DirectoryManagementController {
     private final MainView mainView;
     private final DirectoryManagementModel directoryModel;
@@ -30,10 +30,8 @@ public class DirectoryManagementController {
     }
 
     private void initialize() {
-        // Обновление начального состояния
         directoryModel.updateDirectory();
 
-        // Настройка обработчиков событий
         setupPathFieldListener();
         setupNavigationButtons();
         setupSearchField();
@@ -61,7 +59,7 @@ public class DirectoryManagementController {
         mainView.getNavigationPanel().getSearchField().addActionListener(new ViewActionListener(new SearchCommand(mainView, directoryModel)));
     }
 
-    private void registerButtonAction(JButton button, Command command) {
+    private void registerButtonAction(JComponent button, Command command) {
         button.addMouseListener(new ButtonClickListener(command));
     }
 }

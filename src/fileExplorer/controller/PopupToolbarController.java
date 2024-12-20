@@ -31,7 +31,7 @@ public class PopupToolbarController extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            popupToolbarPanel.getPopup().show(e.getComponent(), e.getX(), e.getY());
+            popupToolbarPanel.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
@@ -39,16 +39,16 @@ public class PopupToolbarController extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger()) {
             popupToolbarPanel.updateButtonState(fileController.getSelectedFile());
-            popupToolbarPanel.getPopup().show(e.getComponent(), e.getX(), e.getY());
+            popupToolbarPanel.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
     private void setupToolbarActions() {
-        LinkedHashMap<String, JMenuItem> tollbatMenuItems = popupToolbarPanel.getToolsMap();
-        registerToolbarAction(tollbatMenuItems.get("Copy"), new CopyFileCommand(fileModel, fileController));
-        registerToolbarAction(tollbatMenuItems.get("Paste"), new PasteFileCommand(fileModel, fileController));
-        registerToolbarAction(tollbatMenuItems.get("Cut"), new CutFileCommand(fileModel, fileController));
-        registerToolbarAction(tollbatMenuItems.get("Delete"), new DeleteFileCommand(fileModel, fileController));
+        LinkedHashMap<String, JMenuItem> toolbatMenuItems = popupToolbarPanel.getToolsMap();
+        registerToolbarAction(toolbatMenuItems.get("Copy"), new CopyFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbatMenuItems.get("Paste"), new PasteFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbatMenuItems.get("Cut"), new CutFileCommand(fileModel, fileController));
+        registerToolbarAction(toolbatMenuItems.get("Delete"), new DeleteFileCommand(fileModel, fileController));
     }
 
     private void registerToolbarAction(JMenuItem button, Command command) {

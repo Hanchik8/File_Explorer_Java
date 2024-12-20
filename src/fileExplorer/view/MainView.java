@@ -1,6 +1,7 @@
 package fileExplorer.view;
 
 import fileExplorer.controller.MainController;
+
 import fileExplorer.view.viewComponents.CenterPanel;
 import fileExplorer.view.viewComponents.ToolbarPanel;
 import fileExplorer.view.viewComponents.FileDetailsPanel;
@@ -10,20 +11,19 @@ import fileExplorer.view.viewComponents.PopupToolbarPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JComponent;
 import javax.swing.JSplitPane;
+import javax.swing.JScrollPane;
+import javax.swing.JPopupMenu;
 
 import java.awt.BorderLayout;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class MainView extends JFrame {
-    private NavigationPanel navigationPanel;
-    private ToolbarPanel toolbarPanel;
-    private CenterPanel centerPanel;
-    private SidebarPanel sidebarPanel;
-    private FileDetailsPanel fileDetailsPanel;
-    private PopupToolbarPanel popupToolbarPanel;
+    private HashMap<String, JComponent> viewPanels = new HashMap<>();
+    private JSplitPane splitPane2;
 
     public MainView() {
         setTitle("File Explorer Lunar Seekers");
@@ -31,82 +31,97 @@ public class MainView extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
-        // Настроим topPanelPart, которое будет включать topMenu и editPanel
+        add(setupExplorerView());
+
+        new MainController(this);
+    }
+
+    public JPanel setupExplorerView() {
         JPanel topPanelPart = new JPanel(new BorderLayout());
-        navigationPanel = new NavigationPanel();
-        topPanelPart.add(navigationPanel.getTopMenuComponent(), BorderLayout.NORTH);
+        NavigationPanel navigationPanel = new NavigationPanel();
+        topPanelPart.add(navigationPanel, BorderLayout.NORTH);
+        viewPanels.put("navigation", navigationPanel);
 
-        toolbarPanel = new ToolbarPanel();
-        topPanelPart.add(toolbarPanel.getEditPanel(), BorderLayout.SOUTH);
+        ToolbarPanel toolbarPanel = new ToolbarPanel();
+        topPanelPart.add(toolbarPanel, BorderLayout.SOUTH);
+        viewPanels.put("toolbar", toolbarPanel);
 
-        // Основной explorerPanel, который будет включать остальные панели
         JPanel explorerPanel = new JPanel(new BorderLayout());
 
-        // Добавляем боковую панель (sidebar) в левую часть
-        sidebarPanel = new SidebarPanel();
-        explorerPanel.add(sidebarPanel, BorderLayout.WEST);
-
         explorerPanel.add(topPanelPart, BorderLayout.NORTH);
-        centerPanel = new CenterPanel();
-        explorerPanel.add(centerPanel.getCenterPanel(), BorderLayout.CENTER);
+        CenterPanel centerPanel = new CenterPanel();
+        viewPanels.put("center", centerPanel);
+        SidebarPanel sidebarPanel = new SidebarPanel();
+        viewPanels.put("sidebar", sidebarPanel);
+        FileDetailsPanel fileDetailsPanel = new FileDetailsPanel();
+        viewPanels.put("fileDetails", fileDetailsPanel);
 
-        fileDetailsPanel = new FileDetailsPanel();
-        explorerPanel.add(fileDetailsPanel, BorderLayout.EAST);
+        getToolbarPanel();
 
         JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                new JScrollPane(sidebarPanel), centerPanel.getCenterPanel());
+                new JScrollPane(sidebarPanel),
+                new JScrollPane(centerPanel));
         splitPane1.setDividerLocation(300);
 
-        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                splitPane1, new JScrollPane(fileDetailsPanel.getFileDetailsPanel()));
+        splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                splitPane1, new JScrollPane(fileDetailsPanel));
         splitPane2.setDividerLocation(1300);
 
         explorerPanel.add(splitPane2);
 
-        popupToolbarPanel = new PopupToolbarPanel();
+        JPopupMenu popupToolbarPanel = new PopupToolbarPanel();
+        viewPanels.put("popupToolbar", popupToolbarPanel);
 
-        add(explorerPanel);
-
-        // Инициализируем контроллер
-        new MainController(this);
+        return explorerPanel;
     }
 
     public void updateView(String[] fileNames, String currentPath) {
+        CenterPanel centerPanel = (CenterPanel) viewPanels.get("center");
         centerPanel.updateFileListModel(fileNames);
+
+        NavigationPanel navigationPanel = (NavigationPanel) viewPanels.get("navigation");
         navigationPanel.setCurrentPath(currentPath);
         updateBtnState(false);
     }
 
     public void updateBtnState(boolean isBtnActive) {
+        ToolbarPanel toolbarPanel = (ToolbarPanel) viewPanels.get("toolbar");
         toolbarPanel.getCutBtn().setEnabled(isBtnActive);
         toolbarPanel.getCopyBtn().setEnabled(isBtnActive);
         toolbarPanel.getDeleteBtn().setEnabled(isBtnActive);
     }
 
     public void updateFileDetails(File selectedFile, String fileExtension) {
+        FileDetailsPanel fileDetailsPanel = (FileDetailsPanel) viewPanels.get("fileDetails");
         fileDetailsPanel.updateFileDetailsPanel(selectedFile, fileExtension);
     }
 
-    // ======== Геттеры для доступа к компонентам ========
+    public void showHideFileDetailsPanel(boolean showDetails) {
+        if (showDetails) {
+            FileDetailsPanel fileDetailsPanel = (FileDetailsPanel) viewPanels.get("fileDetails");
+            splitPane2.setRightComponent(new JScrollPane(fileDetailsPanel));
+            splitPane2.setDividerLocation(1300);
+        } else {
+            splitPane2.setRightComponent(null);
+        }
+        splitPane2.revalidate();
+        splitPane2.repaint();
+    }
 
     public NavigationPanel getNavigationPanel() {
-        return navigationPanel;
+        return (NavigationPanel) viewPanels.get("navigation");
     }
 
     public CenterPanel getCenterPanel() {
-        return centerPanel;
-    }
-
-    public FileDetailsPanel getFileDetailsPanel() {
-        return fileDetailsPanel;
+        return (CenterPanel) viewPanels.get("center");
     }
 
     public ToolbarPanel getToolbarPanel() {
-        return toolbarPanel;
+        return (ToolbarPanel) viewPanels.get("toolbar");
     }
 
     public SidebarPanel getSidebarPanel() {
-        return sidebarPanel;
+        return (SidebarPanel) viewPanels.get("sidebar");
     }
-    public PopupToolbarPanel getPopupToolbarPanel() {return popupToolbarPanel;};
+    public PopupToolbarPanel getPopupToolbarPanel() { return (PopupToolbarPanel) viewPanels.get("popupToolbar");};
 }

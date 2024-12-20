@@ -8,38 +8,23 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
 
-import java.awt.Dimension;
 import java.awt.Font;
 
 import java.io.File;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Панель, отображающая подробности о файле: имя, размер, дата последнего
- * изменения и иконки.
- */
-public class FileDetailsPanel extends JPanel{
-    private final JPanel fileDetailsPanel;
+public class FileDetailsPanel extends JPanel {
     private final FileIconProvider fileListRenderer;
 
     public FileDetailsPanel() {
-        fileDetailsPanel = new JPanel();
-        fileDetailsPanel.setLayout(new BoxLayout(fileDetailsPanel, BoxLayout.Y_AXIS));
-        fileDetailsPanel.setPreferredSize(new Dimension(400, fileDetailsPanel.getHeight()));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         fileListRenderer = new FileIconProvider();
     }
 
-    /**
-     * Создаёт метку с иконкой в зависимости от расширения файла.
-     * 
-     * @param imagePath Путь к изображению для отображения.
-     * @param extension Расширение файла.
-     */
     private void createImageLabel(String imagePath, String extension) {
         JLabel imageLabel = new JLabel();
-        int panelWidth = fileDetailsPanel.getWidth();
+        int panelWidth = getWidth();
 
         if (extension == null) {
             imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", panelWidth));
@@ -62,33 +47,27 @@ public class FileDetailsPanel extends JPanel{
             imageLabel.setIcon(scaledImage);
         }
 
-        fileDetailsPanel.add(imageLabel);
+        add(imageLabel);
     }
 
-    /**
-     * Создаёт метку с именем файла и иконкой.
-     * 
-     * @param fileName Имя файла.
-     */
-    private void createNameLabel(String fileName) {
+    private void createNameLabel(File currentFile) {
+        String fileName = currentFile.getName();
+        if (fileName.isEmpty())
+            fileName = currentFile.getAbsolutePath();
+
         JLabel nameLabel = new JLabel(fileName);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
         nameLabel.setIcon(fileListRenderer.getIconForFile(fileName));
 
-        fileDetailsPanel.add(nameLabel);
+        add(nameLabel);
     }
 
-    /**
-     * Создаёт панель с дополнительной информацией о файле (путь, размер, дата
-     * последнего изменения).
-     * 
-     * @param currentFile Файл, о котором нужно вывести информацию.
-     */
     private void createExtraDetailsPanel(File currentFile) {
         JPanel extraDetailsPanel = new JPanel();
         extraDetailsPanel.setLayout(new BoxLayout(extraDetailsPanel, BoxLayout.Y_AXIS));
 
-        extraDetailsPanel.add(new JLabel("Path: " + currentFile.getParent()));
+        if (!(currentFile.getParent() == null))
+            extraDetailsPanel.add(new JLabel("Path: " + currentFile.getParent()));
 
         if (currentFile.isFile())
             extraDetailsPanel
@@ -98,27 +77,17 @@ public class FileDetailsPanel extends JPanel{
         SimpleDateFormat formattedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         extraDetailsPanel.add(new JLabel("Last Modified: " + formattedDate.format(lastModifiedDate)));
 
-        fileDetailsPanel.add(extraDetailsPanel);
+        add(extraDetailsPanel);
     }
 
-    /**
-     * Обновляет панель с деталями о файле.
-     * 
-     * @param currentFile Файл, для которого обновляются детали.
-     * @param extension   Расширение файла.
-     */
     public void updateFileDetailsPanel(File currentFile, String extension) {
-        fileDetailsPanel.removeAll();
+        removeAll();
 
         createImageLabel(currentFile.getAbsolutePath(), extension);
-        createNameLabel(currentFile.getName());
+        createNameLabel(currentFile);
         createExtraDetailsPanel(currentFile);
 
-        fileDetailsPanel.revalidate();
-        fileDetailsPanel.repaint();
-    }
-
-    public JPanel getFileDetailsPanel() {
-        return fileDetailsPanel;
+        revalidate();
+        repaint();
     }
 }

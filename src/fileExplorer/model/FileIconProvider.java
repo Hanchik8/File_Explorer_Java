@@ -13,12 +13,10 @@ public class FileIconProvider {
     public FileIconProvider() {
         fileIcons = new HashMap<>();
         loadFileIcons();
-        // Default folder icon is preloaded to avoid repeated calls to ImageUtils
         defaultFolderIcon = ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", 25);
     }
 
     private void loadFileIcons() {
-        // Load standard icons for known file types
         fileIcons.put("txt", ImageUtils.getImagePreview("resources/images/fileIcons/txtIcon.png", 25));
         fileIcons.put("pdf", ImageUtils.getImagePreview("resources/images/fileIcons/pdfIcon.png", 25));
         fileIcons.put("jpg", ImageUtils.getImagePreview("resources/images/fileIcons/jpgIcon.png", 25));
@@ -35,22 +33,17 @@ public class FileIconProvider {
     }
 
     public Icon getIconForFile(String filename) {
-        // If the file name is not provided or doesn't have an extension, return the
-        // folder icon by default
         if (filename == null || filename.isEmpty() || getFileExtension(filename).isEmpty()) {
             return defaultFolderIcon;
         }
 
         String extension = getFileExtension(filename).toLowerCase();
-        // Return the appropriate file icon based on the file extension, or a default
-        // unknown icon if not found
         return fileIcons.getOrDefault(extension,
-                ImageUtils.getImagePreview("resources/images/fileIcons/unknownIcon.png", 25));
+                ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", 25));
     }
 
     private String getFileExtension(String filename) {
         int dotIndex = filename.lastIndexOf('.');
-        // Return an empty string if no extension is found
         return (dotIndex > 0 && dotIndex < filename.length() - 1) ? filename.substring(dotIndex + 1) : "";
     }
 }

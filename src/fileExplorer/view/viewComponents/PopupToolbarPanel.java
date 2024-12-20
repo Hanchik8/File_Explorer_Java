@@ -8,12 +8,10 @@ import javax.swing.JMenuItem;
 import java.io.File;
 import java.util.LinkedHashMap;
 
-public class PopupToolbarPanel {
-    private final JPopupMenu popupToolbar;
+public class PopupToolbarPanel extends JPopupMenu {
     private LinkedHashMap<String, JMenuItem> toolsMap;
 
     public PopupToolbarPanel() {
-        popupToolbar = new JPopupMenu();
         setupItems();
     }
 
@@ -27,7 +25,8 @@ public class PopupToolbarPanel {
 
     private JMenuItem createButton(String toolName, String iconPath) {
         JMenuItem tool = new JMenuItem(toolName, ImageUtils.getImageIcon(iconPath));
-        popupToolbar.add(tool);
+
+        add(tool);
         return tool;
     }
 
@@ -35,10 +34,6 @@ public class PopupToolbarPanel {
         for (JMenuItem button : toolsMap.values()) {
             button.setEnabled(selectedFile != null);
         }
-    }
-
-    public JPopupMenu getPopup() {
-        return popupToolbar;
     }
 
     public LinkedHashMap<String, JMenuItem> getToolsMap() {

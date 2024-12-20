@@ -9,42 +9,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 
-/**
- * This class manages directory navigation and undo/redo/moveToParent operations
- * for a file explorer.
- */
 public class DirectoryManagementModel {
-    private MainView mainView; // Reference to the view component for updating view
-    private String currentDirectory = "Root"; // Tracks the current directory
-    private Stack<String> undoStack; // Stack for undoing directory navigation
-    private Stack<String> redoStack; // Stack for redoing directory navigation
+    private MainView mainView;
+    private String currentDirectory = "Root";
+    private Stack<String> undoStack;
+    private Stack<String> redoStack;
     private boolean isDirectoryChanged = false;
     private boolean isShowHiddenFiles = false;
 
-    /**
-     * Constructor initializes the view and stacks for undo/redo functionality.
-     *
-     * @param explorerView the view component for updating the view
-     */
     public DirectoryManagementModel(MainView explorerView) {
         this.mainView = explorerView;
         undoStack = new Stack<>();
         redoStack = new Stack<>();
     }
 
-    /**
-     * Обновляет и сортирует список файлов по выбранному критерию.
-     *
-     * @param files    массив файлов для отображения.
-     * @param criteria критерий сортировки.
-     */
     public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
-        // Фильтруем скрытые файлы
         files = Arrays.stream(files)
-                .filter(file -> !file.isHidden() || isShowHiddenFiles) // Исключаем скрытые файлы
+                .filter(file -> !file.isHidden() || isShowHiddenFiles)
                 .toArray(File[]::new);
 
-        // Сортируем файлы
         Arrays.sort(files, (file1, file2) -> {
             switch (criteria) {
                 case NAME:
@@ -58,7 +41,7 @@ public class DirectoryManagementModel {
             }
         });
 
-        return files; // Возвращаем отсортированный список без скрытых файлов
+        return files;
     }
 
     public void searchFileByName(String directory, String fileName, ArrayList<File> searchedFiles) {
@@ -77,9 +60,6 @@ public class DirectoryManagementModel {
         updateView(files, "Search");
     }
 
-    /**
-     * Navigates to the previous directory in the undo stack.
-     */
     public void undo() {
         if (!undoStack.isEmpty()) {
             redoStack.push(currentDirectory);
@@ -90,9 +70,6 @@ public class DirectoryManagementModel {
         }
     }
 
-    /**
-     * Navigates to the next directory in the redo stack.
-     */
     public void redo() {
         if (!redoStack.isEmpty()) {
             undoStack.push(currentDirectory);
@@ -103,9 +80,6 @@ public class DirectoryManagementModel {
         }
     }
 
-    /**
-     * Moves to the parent directory of the current directory.
-     */
     public void moveToParentDirectory() {
         File current = new File(currentDirectory);
         if (current.getParent() != null) {
@@ -116,12 +90,6 @@ public class DirectoryManagementModel {
         }
     }
 
-    /**
-     * Updates the current directory and retrieves its contents.
-     *
-     * @param newDirectory the directory to move to
-     * @return an array of files/directories in the new directory
-     */
     public File[] updateDirectory(String newDirectory) {
         redoStack.clear();
         File[] listOfFiles;
@@ -140,11 +108,6 @@ public class DirectoryManagementModel {
         return listOfFiles;
     }
 
-    /**
-     * Refreshes the current directory and retrieves its contents.
-     *
-     * @return an array of files/directories in the current directory
-     */
     public File[] updateDirectory() {
         File[] listOfFiles;
         if (isRootDirectory(currentDirectory)) {
@@ -157,12 +120,6 @@ public class DirectoryManagementModel {
         return listOfFiles;
     }
 
-    /**
-     * Lists the contents of a directory.
-     *
-     * @param directory the directory whose contents are to be listed
-     * @return an array of files/directories in the directory
-     */
     public File[] listDirectoryContent(File directory) {
         File[] contents = directory.listFiles();
         if (contents != null)
@@ -171,13 +128,6 @@ public class DirectoryManagementModel {
             return new File[0];
     }
 
-    /**
-     * Filters the provided file list to include only acceptable files and
-     * directories.
-     *
-     * @param fileList array of files to filter
-     * @return filtered array of files
-     */
     private File[] filterFiles(File[] fileList) {
         String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx" };
         ArrayList<File> acceptableFiles = new ArrayList<>();
@@ -198,11 +148,6 @@ public class DirectoryManagementModel {
         return acceptableFiles.toArray(new File[0]);
     }
 
-    /**
-     * Retrieves the initial set of directories based on the operating system.
-     *
-     * @return an array of files representing the root directories
-     */
     public File[] getInitialDirectories() {
         currentDirectory = "Root";
 
@@ -236,12 +181,6 @@ public class DirectoryManagementModel {
         return new File[0];
     }
 
-    /**
-     * Retrieves the file extension of the provided file name.
-     *
-     * @param fileName the name of the file
-     * @return the file extension as a string
-     */
     public String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf('.');
         if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
@@ -250,22 +189,10 @@ public class DirectoryManagementModel {
         return null;
     }
 
-    /**
-     * Checks if the given directory represents the root.
-     *
-     * @param directory the directory to check
-     * @return true if the directory is the root, false otherwise
-     */
     private boolean isRootDirectory(String directory) {
         return directory == null || directory.equals("Root");
     }
 
-    /**
-     * Updates the view with the provided files and path.
-     *
-     * @param files   array of files to display
-     * @param newPath the new path for the directory
-     */
     public void updateView(File[] files, String newPath) {
         if (files != null) {
             String[] fileNames = new String[files.length];
@@ -286,9 +213,6 @@ public class DirectoryManagementModel {
         }
     }
 
-    /**
-     * Updates the state of navigation buttons based on undo/redo stacks.
-     */
     private void updateButtonsState() {
         mainView.getNavigationPanel().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getNavigationPanel().getBackBtn().setEnabled(!undoStack.isEmpty());
@@ -301,18 +225,10 @@ public class DirectoryManagementModel {
         isDirectoryChanged = false;
     }
 
-    /**
-     * Retrieves the current directory being viewed.
-     *
-     * @return the current directory as a string
-     */
     public String getCurrentDirectory() {
         return currentDirectory;
     }
 
-    /**
-     * @param isSelected boolean showHiddenFilesCheckBox.isSelected() in ToolBarPanel
-     */
     public void updateShowHiddenFiles(boolean isSelected) {
         isShowHiddenFiles = isSelected;
         updateDirectory();

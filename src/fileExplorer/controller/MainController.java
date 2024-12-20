@@ -9,7 +9,6 @@ public class MainController {
         DirectoryManagementModel directoryModel = new DirectoryManagementModel(mainView);
         FileManipulationModel fileModel = new FileManipulationModel(mainView);
 
-        // Инициализация дочерних контроллеров
         new FileManipulationController(mainView, directoryModel, fileModel);
         new DirectoryManagementController(mainView, directoryModel);
         new SidebarController(mainView, directoryModel, fileModel);

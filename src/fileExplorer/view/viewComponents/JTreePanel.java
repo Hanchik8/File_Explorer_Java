@@ -17,8 +17,8 @@ public class JTreePanel {
         fileTree = new JTree(treeModel);
     }
 
-    public void generateRoots(File[] inisialDirectories) {
-        for (File directory : inisialDirectories) {
+    public void generateRoots(File[] initialDirectories) {
+        for (File directory : initialDirectories) {
             DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(directory.getAbsoluteFile());
             mainRoot.add(rootNode);
 
