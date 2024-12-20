@@ -1,6 +1,6 @@
 package fileExplorer.view.viewComponents;
 
-import fileExplorer.model.FileIconProvider;
+import fileExplorer.utils.iconProviders.FileIconProvider;
 import fileExplorer.utils.ImageUtils;
 
 import javax.swing.JPanel;

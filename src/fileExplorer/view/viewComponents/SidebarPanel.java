@@ -1,7 +1,7 @@
 package fileExplorer.view.viewComponents;
 
-import fileExplorer.model.SidebarIconProvider;
-import fileExplorer.model.SidebarListRenderer;
+import fileExplorer.utils.iconProviders.SidebarIconProvider;
+import fileExplorer.utils.iconRenderers.SidebarListRenderer;
 
 import javax.swing.JPanel;
 import javax.swing.JList;

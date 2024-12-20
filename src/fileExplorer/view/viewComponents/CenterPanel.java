@@ -1,7 +1,7 @@
 package fileExplorer.view.viewComponents;
 
-import fileExplorer.model.FileIconProvider;
-import fileExplorer.model.FileListRenderer;
+import fileExplorer.utils.iconProviders.FileIconProvider;
+import fileExplorer.utils.iconRenderers.FileListRenderer;
 
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;

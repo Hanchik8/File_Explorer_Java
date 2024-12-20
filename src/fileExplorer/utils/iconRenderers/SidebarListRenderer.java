@@ -1,4 +1,6 @@
-package fileExplorer.model;
+package fileExplorer.utils.iconRenderers;
+
+import fileExplorer.utils.iconProviders.SidebarIconProvider;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;

@@ -1,4 +1,6 @@
-package fileExplorer.model;
+package fileExplorer.utils.iconRenderers;
+
+import fileExplorer.utils.iconProviders.FileIconProvider;
 
 import javax.swing.JLabel;
 import javax.swing.JList;

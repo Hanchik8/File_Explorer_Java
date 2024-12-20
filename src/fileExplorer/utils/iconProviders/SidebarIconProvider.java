@@ -1,4 +1,4 @@
-package fileExplorer.model;
+package fileExplorer.utils.iconProviders;
 
 import fileExplorer.utils.ImageUtils;
 
