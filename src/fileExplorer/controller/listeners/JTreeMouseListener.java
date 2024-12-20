@@ -35,7 +35,12 @@ public class JTreeMouseListener implements TreeSelectionListener {
         if (node.isLeaf()) {
             fileModel.openFile(selectedFile);
         } else {
-            directoryModel.updateDirectory(selectedFile.getAbsolutePath());
+            if (selectedFile.getName().equals("Root")) {
+                directoryModel.updateDirectory("Root");
+            }
+            else {
+                directoryModel.updateDirectory(selectedFile.getAbsolutePath());
+            }
         }
     }
 }
