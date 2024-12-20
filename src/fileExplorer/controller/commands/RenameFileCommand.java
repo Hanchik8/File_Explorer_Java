@@ -29,5 +29,6 @@ public class RenameFileCommand implements Command{
         );
         fileModel.renameFile(originFile, newName);
         fileController.updateView();
+        fileController.updateJTree();
     }
 }

@@ -1,6 +1,14 @@
 package fileExplorer.controller;
 
-import fileExplorer.controller.commands.*;
+import fileExplorer.controller.commands.Command;
+import fileExplorer.controller.commands.NewFileCommand;
+import fileExplorer.controller.commands.CopyFileCommand;
+import fileExplorer.controller.commands.PasteFileCommand;
+import fileExplorer.controller.commands.CutFileCommand;
+import fileExplorer.controller.commands.DeleteFileCommand;
+import fileExplorer.controller.commands.RenameFileCommand;
+import fileExplorer.controller.commands.DetailCheckBoxCommand;
+import fileExplorer.controller.commands.ShowHiddenFilesCommand;
 
 import fileExplorer.controller.listeners.FileListMouseListener;
 import fileExplorer.controller.listeners.ViewActionListener;
@@ -91,5 +99,10 @@ public class FileManipulationController {
     public void updateView() {
         directoryModel.updateDirectory();
         mainView.getToolbarPanel().getSortComboBox().setSelectedItem("Name");
+    }
+
+    public void updateJTree() {
+        File[] directoryContent = directoryModel.listDirectoryContent(getCurrentDirectory());
+        mainView.getSidebarPanel().getjTreePanel().updateDirectoryNode(getCurrentDirectory(), directoryContent);
     }
 }

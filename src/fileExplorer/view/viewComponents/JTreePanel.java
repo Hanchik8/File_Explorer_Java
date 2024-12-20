@@ -39,6 +39,30 @@ public class JTreePanel {
         treeModel.reload(parentNode);
     }
 
+    public void updateDirectoryNode(File directory, File[] fileList) {
+        DefaultMutableTreeNode targetNode = findNode(mainRoot, directory);
+        if (targetNode != null) {
+            targetNode.removeAllChildren();
+            addFilesToNode(targetNode, fileList);
+        }
+    }
+
+    private DefaultMutableTreeNode findNode(DefaultMutableTreeNode rootNode, File directory) {
+        if (rootNode.getUserObject().equals(directory.getAbsolutePath())) {
+            return rootNode;
+        }
+
+        for (int i = 0; i < rootNode.getChildCount(); i++) {
+            DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
+            DefaultMutableTreeNode result = findNode(childNode, directory);
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
     public JTree getFileTree() {
         return fileTree;
     }

@@ -16,5 +16,6 @@ public class PasteFileCommand implements Command {
     public void execute() {
         fileModel.pasteFile(fileController.getCurrentDirectory());
         fileController.updateView();
+        fileController.updateJTree();
     }
 }

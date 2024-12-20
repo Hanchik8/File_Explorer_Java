@@ -35,5 +35,6 @@ public class NewFileCommand implements Command {
         fileModel.createFile(parentDirectory, fileName, fileModel.getFileExtension(newFileType));
         mainView.getToolbarPanel().getNewComboBox().setSelectedIndex(0);
         fileController.updateView();
+        fileController.updateJTree();
     }
 }

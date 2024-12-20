@@ -16,5 +16,6 @@ public class DeleteFileCommand implements Command {
     public void execute() {
         fileModel.deleteFile(fileController.getSelectedFile());
         fileController.updateView();
+        fileController.updateJTree();
     }
 }
