@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 
 public class ToolbarPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private HashMap<String, JButton> toolbarWestPartButtons;
 
     private JCheckBox detailsCheckBox;
@@ -20,14 +21,11 @@ public class ToolbarPanel extends JPanel {
 
     private JComboBox<String> newComboBox;
 
-    private JCheckBox showHiddenFilesCheckBox;
-
     public ToolbarPanel() {
         super(new BorderLayout());
 
         add(createToolbarWestPart(), BorderLayout.WEST);
         add(createDetailsCheckBox(), BorderLayout.EAST);
-        add(createShowHiddenFilesCheckBox(), BorderLayout.PAGE_END);
     }
 
     private void createButtons() {
@@ -84,13 +82,6 @@ public class ToolbarPanel extends JPanel {
         return sortComboBox;
     }
 
-    private JCheckBox createShowHiddenFilesCheckBox() {
-        showHiddenFilesCheckBox = new JCheckBox("Show hidden files");
-        showHiddenFilesCheckBox.setSelected(false);
-
-        return showHiddenFilesCheckBox;
-    }
-
     public JButton getCutBtn() {
         return toolbarWestPartButtons.get("cut");
     }
@@ -120,9 +111,5 @@ public class ToolbarPanel extends JPanel {
 
     public JComboBox<String> getSortComboBox() {
         return sortComboBox;
-    }
-
-    public JCheckBox getShowHiddenFilesCheckBox() {
-        return showHiddenFilesCheckBox;
     }
 }

@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import java.util.LinkedHashMap;
 
 public class PopupToolbarPanel extends JPopupMenu {
+    private static final long serialVersionUID = 1L;
     private LinkedHashMap<String, JMenuItem> toolsMap;
 
     public PopupToolbarPanel() {
@@ -26,13 +27,16 @@ public class PopupToolbarPanel extends JPopupMenu {
     private JMenuItem createJMenuItem(String toolName, String iconPath) {
         JMenuItem tool = new JMenuItem(toolName, ImageUtils.getImageIcon(iconPath));
 
+        if (toolName.equals("Paste"))
+            tool.setEnabled(false);
+
         add(tool);
         return tool;
     }
 
     public void updateJItemState(Boolean isActive) {
         for (JMenuItem item : toolsMap.values()) {
-            if (!item.getText().equals("paste"))
+            if (!item.getText().equals("Paste"))
                 item.setEnabled(isActive);
         }
     }

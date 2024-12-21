@@ -14,7 +14,8 @@ import java.awt.Component;
  * It associates appropriate icons with item names using a SidebarIconProvider.
  */
 public class SidebarListRenderer extends DefaultListCellRenderer {
-    private final SidebarIconProvider sidebarIconProvider;
+    private static final long serialVersionUID = 1L;
+    private transient final SidebarIconProvider sidebarIconProvider;
 
     /**
      * Constructor for initializing the sidebar list renderer with an icon provider.

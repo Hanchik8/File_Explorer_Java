@@ -9,7 +9,8 @@ import javax.swing.DefaultListCellRenderer;
 import java.awt.Component;
 
 public class FileListRenderer extends DefaultListCellRenderer {
-    private final FileIconProvider fileIconProvider;
+    private static final long serialVersionUID = 1L;
+    private transient final FileIconProvider fileIconProvider;
 
     public FileListRenderer(FileIconProvider iconProvider) {
         this.fileIconProvider = iconProvider;

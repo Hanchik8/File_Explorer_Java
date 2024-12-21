@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class MainView extends JFrame {
+    private static final long serialVersionUID = 1L;
     private HashMap<String, JComponent> viewPanels = new HashMap<>();
     private JSplitPane splitPane2;
 

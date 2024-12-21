@@ -8,7 +8,6 @@ import fileExplorer.controller.commands.CutFileCommand;
 import fileExplorer.controller.commands.DeleteFileCommand;
 import fileExplorer.controller.commands.RenameFileCommand;
 import fileExplorer.controller.commands.DetailCheckBoxCommand;
-import fileExplorer.controller.commands.ShowHiddenFilesCommand;
 
 import fileExplorer.controller.listeners.FileListMouseListener;
 import fileExplorer.controller.listeners.ViewActionListener;
@@ -42,7 +41,6 @@ public class FileManipulationController {
         setupNewComboBoxListener();
         setupToolbarActions();
         setupDetailsCheckBox();
-        setupShowHiddenFilesCheckBox();
     }
 
     private void setupFileListListener() {
@@ -69,11 +67,6 @@ public class FileManipulationController {
     private void setupDetailsCheckBox() {
         mainView.getToolbarPanel().getDetailsCheckBox().addActionListener(
                 new ViewActionListener(new DetailCheckBoxCommand(mainView)));
-    }
-
-    private void setupShowHiddenFilesCheckBox() {
-        mainView.getToolbarPanel().getShowHiddenFilesCheckBox().addActionListener(
-                new ViewActionListener(new ShowHiddenFilesCommand(mainView, directoryModel)));
     }
 
     private void registerToolbarAction(JButton button, Command command) {

@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileDetailsPanel extends JPanel {
-    private final FileIconProvider fileListRenderer;
+    private static final long serialVersionUID = 1L;
+    private transient final FileIconProvider fileListRenderer;
 
     public FileDetailsPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

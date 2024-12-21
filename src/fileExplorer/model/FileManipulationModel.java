@@ -146,8 +146,6 @@ public class FileManipulationModel {
    public void cutFile(File file) {
       copyFile(file);
       cutPressed = true;
-      mainView.updateBtnState(false);
-      mainView.getToolbarPanel().getPasteBtn().setEnabled(true);
    }
 
    public void deleteFile(File fileOrDir) {

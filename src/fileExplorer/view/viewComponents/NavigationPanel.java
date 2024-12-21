@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.util.LinkedHashMap;
 
 public class NavigationPanel extends JPanel{
+    private static final long serialVersionUID = 1L;
     private LinkedHashMap<String, JComponent> topMenuButtons;
     private JTextField directoryField;
     private JTextField searchField;
@@ -27,10 +28,10 @@ public class NavigationPanel extends JPanel{
 
     private void createButtons() {
         topMenuButtons = new LinkedHashMap<>();
-        topMenuButtons.put("Back", createButton("resources/images/btnIcons/backBtnIcon.png"));
-        topMenuButtons.put("Forward", createButton("resources/images/btnIcons/forwardBtnIcon.png"));
-        topMenuButtons.put("Up", createButton("resources/images/btnIcons/upperBtnIcon.png"));
-        topMenuButtons.put("Refresh", createButton("resources/images/btnIcons/refreshBtnIcon.png"));
+        topMenuButtons.put("back", createButton("resources/images/btnIcons/backBtnIcon.png"));
+        topMenuButtons.put("forward", createButton("resources/images/btnIcons/forwardBtnIcon.png"));
+        topMenuButtons.put("up", createButton("resources/images/btnIcons/upperBtnIcon.png"));
+        topMenuButtons.put("refresh", createButton("resources/images/btnIcons/refreshBtnIcon.png"));
     }
 
     private JPanel createBtnPanel() {
@@ -78,19 +79,19 @@ public class NavigationPanel extends JPanel{
     }
 
     public JComponent getBackBtn() {
-        return topMenuButtons.get("Back");
+        return topMenuButtons.get("back");
     }
 
     public JComponent getForwardBtn() {
-        return topMenuButtons.get("Forward");
+        return topMenuButtons.get("forward");
     }
 
     public JComponent getUpperBtn() {
-        return topMenuButtons.get("Up");
+        return topMenuButtons.get("up");
     }
 
     public JComponent getRefreshBtn() {
-        return topMenuButtons.get("Refresh");
+        return topMenuButtons.get("refresh");
     }
 
     public JTextField getDirectoryField() {

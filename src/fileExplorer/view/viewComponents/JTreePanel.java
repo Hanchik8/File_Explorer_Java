@@ -5,8 +5,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class JTreePanel {
+public class JTreePanel implements Serializable {
+    private static final long serialVersionUID = 1L;
     private JTree fileTree;
     private DefaultTreeModel treeModel;
     private DefaultMutableTreeNode mainRoot;

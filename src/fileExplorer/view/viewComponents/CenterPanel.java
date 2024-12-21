@@ -10,6 +10,7 @@ import javax.swing.JList;
 import java.awt.BorderLayout;
 
 public class CenterPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private DefaultListModel<String> fileListModel;
     private JList<String> fileList;
     private final FileListRenderer fileListRenderer;

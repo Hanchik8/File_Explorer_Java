@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SidebarPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private JList<String> categoryList;
     private JTreePanel jTreePanel;
 

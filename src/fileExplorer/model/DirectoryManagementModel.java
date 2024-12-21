@@ -15,7 +15,6 @@ public class DirectoryManagementModel {
     private Stack<String> undoStack;
     private Stack<String> redoStack;
     private boolean isDirectoryChanged = false;
-    private boolean isShowHiddenFiles = false;
 
     public DirectoryManagementModel(MainView explorerView) {
         this.mainView = explorerView;
@@ -24,10 +23,6 @@ public class DirectoryManagementModel {
     }
 
     public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
-        files = Arrays.stream(files)
-                .filter(file -> !file.isHidden() || isShowHiddenFiles)
-                .toArray(File[]::new);
-
         Arrays.sort(files, (file1, file2) -> {
             switch (criteria) {
                 case NAME:
@@ -129,10 +124,10 @@ public class DirectoryManagementModel {
     }
 
     private File[] filterFiles(File[] fileList) {
-        String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx" };
+        String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx", "pdf"};
         ArrayList<File> acceptableFiles = new ArrayList<>();
         for (File file : fileList) {
-            if (!file.isHidden() || isShowHiddenFiles) {
+            if (!file.isHidden()) {
                 if (file.isDirectory()) {
                     acceptableFiles.add(file);
                 } else {
@@ -227,10 +222,5 @@ public class DirectoryManagementModel {
 
     public String getCurrentDirectory() {
         return currentDirectory;
-    }
-
-    public void updateShowHiddenFiles(boolean isSelected) {
-        isShowHiddenFiles = isSelected;
-        updateDirectory();
     }
 }
