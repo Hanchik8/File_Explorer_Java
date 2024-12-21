@@ -60,8 +60,8 @@ public class FileManipulationModel {
          newFileName = getFileNameWithoutExtension(file.getName());
       }
 
-      if (getFileExtension(file.getName()) != null) {
-         newFileName = newFileName + '.' + getFileExtension(file.getName());
+      if (getFileExtension(file) != null) {
+         newFileName = newFileName + '.' + getFileExtension(file);
       }
 
       File parentDirectory = file.getParentFile();
@@ -175,10 +175,13 @@ public class FileManipulationModel {
       return file;
    }
 
-   public String getFileExtension(String fileName) {
-      int lastDotIndex = fileName.lastIndexOf('.');
-      if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
-         return fileName.substring(lastDotIndex + 1);
+   public String getFileExtension(File file) {
+      if (file.isFile()) {
+         String fileName = file.getName();
+         int lastDotIndex = fileName.lastIndexOf('.');
+         if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+            return fileName.substring(lastDotIndex + 1);
+         }
       }
       return null;
    }

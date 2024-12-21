@@ -32,7 +32,7 @@ public class NewFileCommand implements Command {
                 fileModel.getFileNameWithoutExtension(newFileType)
         );
 
-        fileModel.createFile(parentDirectory, fileName, fileModel.getFileExtension(newFileType));
+        fileModel.createFile(parentDirectory, fileName, fileModel.getFileExtension(new File(newFileType)));
         mainView.getToolbarPanel().getNewComboBox().setSelectedIndex(0);
         fileController.updateView();
         fileController.updateJTree();

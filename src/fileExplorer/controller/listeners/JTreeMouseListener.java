@@ -30,7 +30,7 @@ public class JTreeMouseListener implements TreeSelectionListener {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
         File selectedFile = new File(String.valueOf(node.getUserObject()));
 
-        mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile.getName()));
+        mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile));
 
         if (node.isLeaf()) {
             fileModel.openFile(selectedFile);

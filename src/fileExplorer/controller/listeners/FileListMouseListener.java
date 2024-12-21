@@ -42,6 +42,6 @@ public class FileListMouseListener extends MouseAdapter {
             }
         }
 
-        mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile.getName()));
+        mainView.updateFileDetails(selectedFile, fileModel.getFileExtension(selectedFile));
     }
 }
