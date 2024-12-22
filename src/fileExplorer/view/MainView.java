@@ -24,6 +24,7 @@ import java.util.HashMap;
 public class MainView extends JFrame {
     private static final long serialVersionUID = 1L;
     private HashMap<String, JComponent> viewPanels = new HashMap<>();
+    private JSplitPane splitPane1;
     private JSplitPane splitPane2;
 
     public MainView() {
@@ -59,14 +60,12 @@ public class MainView extends JFrame {
 
         getToolbarPanel();
 
-        JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+        splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(sidebarPanel),
                 new JScrollPane(centerPanel));
-        splitPane1.setDividerLocation(300);
 
         splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 splitPane1, new JScrollPane(fileDetailsPanel));
-        splitPane2.setDividerLocation(1300);
 
         explorerPanel.add(splitPane2);
 
@@ -105,12 +104,17 @@ public class MainView extends JFrame {
         if (showDetails) {
             FileDetailsPanel fileDetailsPanel = (FileDetailsPanel) viewPanels.get("fileDetails");
             splitPane2.setRightComponent(new JScrollPane(fileDetailsPanel));
-            splitPane2.setDividerLocation(1300);
+            updateComponentSize();
         } else {
             splitPane2.setRightComponent(null);
         }
         splitPane2.revalidate();
         splitPane2.repaint();
+    }
+
+    public void updateComponentSize() {
+        splitPane1.setDividerLocation(getWidth() / 5);
+        splitPane2.setDividerLocation(getWidth() / 4 * 3);
     }
 
     public NavigationPanel getNavigationPanel() {
@@ -128,6 +132,5 @@ public class MainView extends JFrame {
     public SidebarPanel getSidebarPanel() {
         return (SidebarPanel) viewPanels.get("sidebar");
     }
-    public FileDetailsPanel getFileDetailsPanel() { return (FileDetailsPanel) viewPanels.get("fileDetails");}
     public PopupToolbarPanel getPopupToolbarPanel() { return (PopupToolbarPanel) viewPanels.get("popupToolbar");};
 }

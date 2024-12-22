@@ -14,7 +14,7 @@ public class JTreePanel implements Serializable {
     private DefaultMutableTreeNode mainRoot;
 
     public JTreePanel() {
-        mainRoot = new DefaultMutableTreeNode("Root");
+        mainRoot = new DefaultMutableTreeNode("My Computer");
         treeModel = new DefaultTreeModel(mainRoot);
         fileTree = new JTree(treeModel);
     }

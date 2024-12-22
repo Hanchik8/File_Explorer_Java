@@ -11,11 +11,11 @@ import javax.swing.tree.TreePath;
 
 import java.io.File;
 
-public class JTreeMouseListener implements TreeSelectionListener {
+public class JTreeSelectionListener implements TreeSelectionListener {
     private MainView mainView;
     private FileManipulationModel fileModel;
     DirectoryManagementModel directoryModel;
-    public JTreeMouseListener(MainView mainView, FileManipulationModel fileModel, DirectoryManagementModel directoryModel) {
+    public JTreeSelectionListener(MainView mainView, FileManipulationModel fileModel, DirectoryManagementModel directoryModel) {
         this.mainView = mainView;
         this.fileModel = fileModel;
         this.directoryModel = directoryModel;
@@ -35,7 +35,7 @@ public class JTreeMouseListener implements TreeSelectionListener {
         if (node.isLeaf()) {
             fileModel.openFile(selectedFile);
         } else {
-            if (selectedFile.getName().equals("Root")) {
+            if (selectedFile.getName().equals("My Computer")) {
                 directoryModel.updateDirectory("Root");
             }
             else {
