@@ -7,10 +7,10 @@ import java.awt.Image;
 import java.net.URL;
 
 public class ImageUtils {
-    public static ImageIcon getImagePreview(String imagePath, int panelWidth) {
+    public static ImageIcon getImagePreview(String imagePath) {
         URL imageUrl = getResource(imagePath);
         if (imageUrl != null) {
-            return scaleImage(new ImageIcon(imageUrl), panelWidth, 350);
+            return new ImageIcon(imageUrl);
         }
         System.err.println("Image not found: " + imagePath);
         return null;

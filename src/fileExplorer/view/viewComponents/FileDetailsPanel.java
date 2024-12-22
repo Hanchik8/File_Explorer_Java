@@ -23,29 +23,15 @@ public class FileDetailsPanel extends JPanel {
         fileListRenderer = new FileIconProvider();
     }
 
-    private void createImageLabel(String imagePath, String extension) {
+    private void createImageLabel(String imagePath, File currentFile, String extension) {
         JLabel imageLabel = new JLabel();
         int panelWidth = getWidth();
 
-        if (extension == null) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/folderIcon.png", panelWidth));
-        } else if (extension.equals("xls")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/xlsIcon.png", panelWidth));
-        } else if (extension.equals("xlsx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/xlsxIcon.png", panelWidth));
-        } else if (extension.equals("doc")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docIcon.png", panelWidth));
-        } else if (extension.equals("docx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/docxIcon.png", panelWidth));
-        } else if (extension.equals("ppt") || extension.equals("pptx")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pptIcon.png", panelWidth));
-        } else if (extension.equals("txt")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/txtIcon.png", panelWidth));
-        } else if (extension.equals("pdf")) {
-            imageLabel.setIcon(ImageUtils.getImagePreview("resources/images/fileIcons/pdfIcon.png", panelWidth));
-        } else {
+        if (extension != null && (extension.equals("png") || extension.equals("jpeg") || extension.equals("jpg"))) {
             ImageIcon scaledImage = ImageUtils.scaleImage(new ImageIcon(imagePath), panelWidth, 350);
             imageLabel.setIcon(scaledImage);
+        } else {
+            imageLabel.setIcon(fileListRenderer.getIconForFile(currentFile.getName(), panelWidth));
         }
 
         add(imageLabel);
@@ -84,7 +70,7 @@ public class FileDetailsPanel extends JPanel {
     public void updateFileDetailsPanel(File currentFile, String extension) {
         removeAll();
 
-        createImageLabel(currentFile.getAbsolutePath(), extension);
+        createImageLabel(currentFile.getAbsolutePath(), currentFile, extension);
         createNameLabel(currentFile);
         createExtraDetailsPanel(currentFile);
 

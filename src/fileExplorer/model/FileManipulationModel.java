@@ -7,7 +7,6 @@ import java.awt.Desktop;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -176,12 +175,10 @@ public class FileManipulationModel {
    }
 
    public String getFileExtension(File file) {
-      if (file.isFile()) {
-         String fileName = file.getName();
-         int lastDotIndex = fileName.lastIndexOf('.');
-         if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
-            return fileName.substring(lastDotIndex + 1);
-         }
+      String fileName = file.getName();
+      int lastDotIndex = fileName.lastIndexOf('.');
+      if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+         return fileName.substring(lastDotIndex + 1);
       }
       return null;
    }
@@ -192,31 +189,5 @@ public class FileManipulationModel {
          return fileName.substring(0, lastDotIndex);
       }
       return fileName;
-   }
-
-   private static class FileTransferable implements Transferable {
-      private final File file;
-
-      public FileTransferable(File file) {
-         this.file = file;
-      }
-
-      @Override
-      public DataFlavor[] getTransferDataFlavors() {
-         return new DataFlavor[] { DataFlavor.javaFileListFlavor };
-      }
-
-      @Override
-      public boolean isDataFlavorSupported(DataFlavor flavor) {
-         return DataFlavor.javaFileListFlavor.equals(flavor);
-      }
-
-      @Override
-      public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
-         if (!isDataFlavorSupported(flavor)) {
-            throw new UnsupportedFlavorException(flavor);
-         }
-         return List.of(file);
-      }
    }
 }

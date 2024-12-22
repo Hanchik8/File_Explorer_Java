@@ -54,7 +54,7 @@ public class SidebarPanel extends JPanel {
         categoryPanel.add(new JScrollPane(categoryList), BorderLayout.CENTER);
         categoryList.setBackground(new Color(55, 55, 65));
         categoryList.setForeground(Color.WHITE);
-        categoryList.setSelectionBackground(new Color(147, 147, 147)); // Highlight color
+        categoryList.setSelectionBackground(new Color(147, 147, 147));
         categoryList.setSelectionForeground(Color.WHITE);
         categoryList.setFont(new Font("SansSerif", Font.PLAIN, 14));
 

@@ -145,8 +145,8 @@ public class DirectoryManagementModel {
 
     public File[] getRootDirectories() {
         currentDirectory = "Root";
-
         String os = System.getProperty("os.name").toLowerCase();
+
         if (os.contains("win")) {
             return File.listRoots();
         } else if (os.contains("mac")) {
@@ -154,7 +154,8 @@ public class DirectoryManagementModel {
         } else if (os.contains("linux")) {
             File[] mntPathFiles = new File("/mnt").listFiles();
             File[] mediaPathFiles = new File("/media").listFiles();
-            File[] linuxDisks = new File[mntPathFiles.length + mediaPathFiles.length];
+            File[] linuxDisks = new File[(mntPathFiles != null ? mntPathFiles.length : 0)
+                    + (mediaPathFiles != null ? mediaPathFiles.length : 0)];
 
             int index = 0;
             if (mntPathFiles != null) {
