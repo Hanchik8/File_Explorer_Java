@@ -17,11 +17,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Панель бокового меню, которая отображает категории, такие как "Desktop", "Downloads", "Music" и т.д.,
+ * а также дерево файловой системы.
+ */
 public class SidebarPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JList<String> categoryList;
     private JTreePanel jTreePanel;
 
+    /**
+     * Конструктор класса. Создаёт панель бокового меню, состоящую из категории и дерева файлов.
+     */
     public SidebarPanel() {
         setLayout(new BorderLayout());
 
@@ -35,6 +42,13 @@ public class SidebarPanel extends JPanel {
         add(splitPane);
     }
 
+    /**
+     * Создаёт панель категорий.
+     * Включает такие категории, как "Desktop", "Downloads", "Music", "Pictures", "Documents", "Videos".
+     * Категория "My Computer" всегда присутствует.
+     * Только существующие директории добавляются в список.
+     * @return панель с категориями
+     */
     private JPanel createCategoryPanel() {
         JPanel categoryPanel = new JPanel();
         categoryPanel.setLayout(new BorderLayout());
@@ -61,14 +75,26 @@ public class SidebarPanel extends JPanel {
         return categoryPanel;
     }
 
+    /**
+     * Создаёт панель с деревом файлов.
+     * @return панель с деревом файлов
+     */
     private JTreePanel createJTreePanel() {
         return jTreePanel = new JTreePanel();
     }
 
+    /**
+     * Возвращает список категорий.
+     * @return список категорий
+     */
     public JList<String> getCategoryList() {
         return categoryList;
     }
 
+    /**
+     * Возвращает панель с деревом файлов.
+     * @return панель с деревом файлов
+     */
     public JTreePanel getjTreePanel() {
         return jTreePanel;
     }

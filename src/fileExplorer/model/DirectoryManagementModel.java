@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * Класс DirectoryManagementModel управляет директориями,
+ * предоставляя функционал для работы с файловой системой.
+ * Включает функции сортировки, фильтрации, навигации и поиска файлов.
+ */
 public class DirectoryManagementModel {
     private MainView mainView;
     private String currentDirectory = "Root";
@@ -16,12 +21,22 @@ public class DirectoryManagementModel {
     private Stack<String> redoStack;
     private boolean isDirectoryChanged = false;
 
+    /**
+     * Конструктор инициализирует модель управления директориями.
+     * @param explorerView объект представления для взаимодействия с интерфейсом.
+     */
     public DirectoryManagementModel(MainView explorerView) {
         this.mainView = explorerView;
         undoStack = new Stack<>();
         redoStack = new Stack<>();
     }
 
+    /**
+     * Сортирует список файлов по заданному критерию.
+     * @param files массив файлов для сортировки.
+     * @param criteria критерий сортировки (имя, размер, дата).
+     * @return отсортированный массив файлов.
+     */
     public File[] updateAndSortFileList(File[] files, SortCriteria criteria) {
         Arrays.sort(files, (file1, file2) -> {
             switch (criteria) {
@@ -39,6 +54,12 @@ public class DirectoryManagementModel {
         return files;
     }
 
+    /**
+     * Ищет файлы по имени в указанной директории и её поддиректориях.
+     * @param directory директория для поиска.
+     * @param fileName имя файла для поиска.
+     * @param searchedFiles список найденных файлов.
+     */
     public void searchFileByName(String directory, String fileName, ArrayList<File> searchedFiles) {
         File[] fileList = listDirectoryContent(new File(directory));
         for (File file : fileList) {
@@ -55,6 +76,9 @@ public class DirectoryManagementModel {
         updateView(files, "Search");
     }
 
+    /**
+     * Возвращает на шаг назад в истории директорий.
+     */
     public void undo() {
         if (!undoStack.isEmpty()) {
             redoStack.push(currentDirectory);
@@ -65,6 +89,9 @@ public class DirectoryManagementModel {
         }
     }
 
+    /**
+     * Перемещает на шаг вперёд в истории директорий.
+     */
     public void redo() {
         if (!redoStack.isEmpty()) {
             undoStack.push(currentDirectory);
@@ -75,6 +102,9 @@ public class DirectoryManagementModel {
         }
     }
 
+    /**
+     * Перемещается в родительскую директорию.
+     */
     public void moveToParentDirectory() {
         File current = new File(currentDirectory);
         if (current.getParent() != null) {
@@ -85,6 +115,11 @@ public class DirectoryManagementModel {
         }
     }
 
+    /**
+     * Обновляет текущую директорию на указанную.
+     * @param newDirectory новая директория.
+     * @return список файлов в новой директории.
+     */
     public File[] updateDirectory(String newDirectory) {
         redoStack.clear();
         File[] listOfFiles;
@@ -103,6 +138,10 @@ public class DirectoryManagementModel {
         return listOfFiles;
     }
 
+    /**
+     * Обновляет текущее состояние директории.
+     * @return список файлов в текущей директории.
+     */
     public File[] updateDirectory() {
         File[] listOfFiles;
         if (isRootDirectory(currentDirectory)) {
@@ -115,6 +154,11 @@ public class DirectoryManagementModel {
         return listOfFiles;
     }
 
+    /**
+     * Возвращает список файлов и поддиректорий в указанной директории.
+     * @param directory директория для получения содержимого.
+     * @return массив файлов и директорий, прошедших фильтрацию.
+     */
     public File[] listDirectoryContent(File directory) {
         File[] contents = directory.listFiles();
         if (contents != null)
@@ -123,6 +167,11 @@ public class DirectoryManagementModel {
             return new File[0];
     }
 
+    /**
+     * Фильтрует файлы по разрешённым форматам и исключает скрытые файлы.
+     * @param fileList массив файлов для фильтрации.
+     * @return массив отфильтрованных файлов.
+     */
     private File[] filterFiles(File[] fileList) {
         String[] listOfFormats = { "txt", "png", "jpg", "jpeg", "ppt", "pptx", "docx", "doc", "xls", "xlsx", "pdf"};
         ArrayList<File> acceptableFiles = new ArrayList<>();
@@ -143,6 +192,10 @@ public class DirectoryManagementModel {
         return acceptableFiles.toArray(new File[0]);
     }
 
+    /**
+     * Получает список корневых директорий в зависимости от операционной системы.
+     * @return массив корневых директорий.
+     */
     public File[] getRootDirectories() {
         currentDirectory = "Root";
         String os = System.getProperty("os.name").toLowerCase();
@@ -177,6 +230,11 @@ public class DirectoryManagementModel {
         return new File[0];
     }
 
+    /**
+     * Получает расширение файла.
+     * @param fileName имя файла.
+     * @return строка с расширением файла или null, если расширение отсутствует.
+     */
     public String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf('.');
         if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
@@ -185,10 +243,20 @@ public class DirectoryManagementModel {
         return null;
     }
 
+    /**
+     * Проверяет, является ли указанная директория корневой.
+     * @param directory строка с путём директории.
+     * @return true, если директория корневая, иначе false.
+     */
     private boolean isRootDirectory(String directory) {
         return directory == null || directory.equals("Root");
     }
 
+    /**
+     * Обновляет представление на основе текущей директории и списка файлов.
+     * @param files массив файлов для отображения.
+     * @param newPath путь к директории, которую нужно отобразить.
+     */
     public void updateView(File[] files, String newPath) {
         if (files != null) {
             String[] fileNames = new String[files.length];
@@ -209,6 +277,9 @@ public class DirectoryManagementModel {
         }
     }
 
+    /**
+     * Обновляет состояние кнопок навигации на панели.
+     */
     private void updateButtonsState() {
         mainView.getNavigationPanel().getForwardBtn().setEnabled(!redoStack.isEmpty());
         mainView.getNavigationPanel().getBackBtn().setEnabled(!undoStack.isEmpty());
@@ -216,11 +287,18 @@ public class DirectoryManagementModel {
             updateSortCriteria();
     }
 
+    /**
+     * Обновляет критерий сортировки на панели инструментов.
+     */
     private void updateSortCriteria() {
         mainView.getToolbarPanel().getSortComboBox().setSelectedItem("Name");
         isDirectoryChanged = false;
     }
 
+    /**
+     * Получает текущую директорию.
+     * @return строка с текущей директорией.
+     */
     public String getCurrentDirectory() {
         return currentDirectory;
     }

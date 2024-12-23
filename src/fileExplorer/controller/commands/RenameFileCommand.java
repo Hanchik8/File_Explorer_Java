@@ -6,15 +6,28 @@ import fileExplorer.model.FileManipulationModel;
 import javax.swing.JOptionPane;
 import java.io.File;
 
+/**
+ * Реализация команды для переименования файла.
+ * Эта команда используется для изменения имени выбранного файла.
+ */
 public class RenameFileCommand implements Command{
     private final FileManipulationModel fileModel;
     private final FileManipulationController fileController;
 
+    /**
+     * Конструктор для создания команды "Переименовать файл" (Rename).
+     * @param fileModel модель, отвечающая за управление операциями с файлами.
+     * @param fileController контроллер, отвечающий за выбор и обработку файлов.
+     */
     public RenameFileCommand(FileManipulationModel fileModel, FileManipulationController fileController) {
         this.fileModel = fileModel;
         this.fileController = fileController;
     }
 
+    /**
+     * Выполняет команду "Переименовать файл", запрашивая новое имя файла у пользователя и
+     * переименовывая выбранный файл.
+     */
     @Override
     public void execute() {
         File originFile = fileController.getSelectedFile();

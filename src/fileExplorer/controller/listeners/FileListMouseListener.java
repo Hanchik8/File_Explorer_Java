@@ -10,12 +10,23 @@ import java.awt.event.MouseEvent;
 
 import java.io.File;
 
+/**
+ * Слушатель для кликов по файлам в списке.
+ * Обрабатывает двойной клик для открытия файлов или перехода в директорию.
+ */
 public class FileListMouseListener extends MouseAdapter {
     private final FileManipulationController controller;
     private final DirectoryManagementModel directoryModel;
     private final FileManipulationModel fileModel;
     private final MainView mainView;
 
+    /**
+     * Конструктор для создания слушателя, который обрабатывает клики по файлам.
+     * @param controller     контроллер манипуляций с файлами.
+     * @param directoryModel модель управления директориями.
+     * @param fileModel      модель манипуляций с файлами.
+     * @param mainView       основное окно приложения.
+     */
     public FileListMouseListener(FileManipulationController controller,
             DirectoryManagementModel directoryModel,
             FileManipulationModel fileModel,
@@ -26,6 +37,12 @@ public class FileListMouseListener extends MouseAdapter {
         this.mainView = mainView;
     }
 
+    /**
+     * Метод, вызываемый при клике на файл в списке.
+     * Обрабатывает двойной клик для открытия директории или файла.
+     * Также обновляет панель с деталями выбранного файла.
+     * @param e событие клика мышью.
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         File selectedFile = controller.getSelectedFile();

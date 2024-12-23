@@ -8,15 +8,29 @@ import javax.swing.event.ListSelectionListener;
 import java.io.File;
 import java.nio.file.Paths;
 
+/**
+ * Слушатель для обработки выбора категории в боковой панели (Sidebar).
+ * При выборе категории обновляется основная панель с соответствующей директорией.
+ */
 public class SideBarSelectionListener implements ListSelectionListener {
     private final SidebarPanel sidebarPanel;
     private final SidebarController sidebarController;
 
+    /**
+     * Конструктор класса.
+     * @param sidebarPanel    панель бокового меню.
+     * @param sidebarController контроллер для обновления основной панели.
+     */
     public SideBarSelectionListener(SidebarPanel sidebarPanel, SidebarController sidebarController) {
         this.sidebarPanel = sidebarPanel;
         this.sidebarController = sidebarController;
     }
 
+    /**
+     * Метод, вызываемый при изменении выбора категории в боковой панели.
+     * Обновляет основную панель в зависимости от выбранной категории.
+     * @param e событие изменения выбора.
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {

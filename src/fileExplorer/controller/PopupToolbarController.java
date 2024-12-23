@@ -16,11 +16,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedHashMap;
 
+/**
+ * Контроллер для обработки действий в контекстном меню панели инструментов.
+ * Управляет отображением и выполнением операций с файлами через контекстное меню.
+ */
 public class PopupToolbarController extends MouseAdapter {
     private final FileManipulationController fileController;
     private final FileManipulationModel fileModel;
     private final PopupToolbarPanel popupToolbarPanel;
 
+    /**
+     * Конструктор класса.
+     * Инициализирует контроллер, устанавливает панель инструментов и модель работы с файлами.
+     * @param fileController  Контроллер для работы с файлами.
+     * @param popupToolbarPanel  Панель с контекстным меню.
+     * @param fileModel Модель для манипуляций с файлами.
+     */
     public PopupToolbarController(FileManipulationController fileController, PopupToolbarPanel popupToolbarPanel, FileManipulationModel fileModel) {
         this.fileController = fileController;
         this.popupToolbarPanel = popupToolbarPanel;
@@ -29,6 +40,11 @@ public class PopupToolbarController extends MouseAdapter {
         setupToolbarActions();
     }
 
+    /**
+     * Обработчик события при нажатии кнопки мыши.
+     * Отображает контекстное меню, если это правый клик.
+     * @param e Событие нажатия кнопки мыши.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.isPopupTrigger()) {
@@ -36,6 +52,11 @@ public class PopupToolbarController extends MouseAdapter {
         }
     }
 
+    /**
+     * Обработчик события при отпускании кнопки мыши.
+     * Отображает контекстное меню, если это правый клик.
+     * @param e Событие отпускания кнопки мыши.
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger()) {
@@ -43,6 +64,10 @@ public class PopupToolbarController extends MouseAdapter {
         }
     }
 
+    /**
+     * Настройка действий для каждого элемента контекстного меню.
+     * Регистрируются команды, выполняющиеся при выборе действий в контекстном меню.
+     */
     private void setupToolbarActions() {
         LinkedHashMap<String, JMenuItem> toolbarMenuItems = popupToolbarPanel.getToolsMap();
         registerToolbarAction(toolbarMenuItems.get("copy"), new CopyFileCommand(fileModel, fileController));
@@ -52,7 +77,13 @@ public class PopupToolbarController extends MouseAdapter {
         registerToolbarAction(toolbarMenuItems.get("delete"), new DeleteFileCommand(fileModel, fileController));
     }
 
-    private void registerToolbarAction(JMenuItem button, Command command) {
-        button.addActionListener(new ViewActionListener(command));
+    /**
+     * Регистрирует действие для кнопки в контекстном меню.
+     * Привязывает команду к кнопке и добавляет слушателя для выполнения команды.
+     * @param item Кнопка меню.
+     * @param command Команда, которая будет выполнена при выборе кнопки.
+     */
+    private void registerToolbarAction(JMenuItem item, Command command) {
+        item.addActionListener(new ViewActionListener(command));
     }
 }

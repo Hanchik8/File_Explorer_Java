@@ -18,15 +18,28 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+/**
+ * Класс для выполнения операций с файлами.
+ * Предоставляет методы для открытия, создания, переименования, копирования, вырезания, вставки и удаления файлов.
+ * Поддерживает работу с буфером обмена для операций копирования и вырезания файлов.
+ */
 public class FileManipulationModel {
    private final MainView mainView;
    private File copiedFile;
    private boolean cutPressed = false;
 
+   /**
+    * Конструктор класса.
+    * @param mainView Главное окно, через которое обновляются элементы интерфейса.
+    */
    public FileManipulationModel(MainView mainView) {
       this.mainView = mainView;
    }
 
+   /**
+    * Открывает указанный файл с помощью системного приложения.
+    * @param file Файл, который нужно открыть.
+    */
    public void openFile(File file) {
       if (Desktop.isDesktopSupported()) {
          try {
@@ -39,6 +52,12 @@ public class FileManipulationModel {
       }
    }
 
+   /**
+    * Создает новый файл или директорию в указанной родительской директории.
+    * @param parentDirectory Родительская директория, в которой будет создан новый файл/директория.
+    * @param fileName Имя нового файла/директории.
+    * @param fileExtension Расширение файла (если создается файл).
+    */
    public void createFile(File parentDirectory, String fileName, String fileExtension) {
       File newFile = new File(parentDirectory, fileName);
       try {
@@ -54,6 +73,11 @@ public class FileManipulationModel {
       }
    }
 
+   /**
+    * Переименовывает файл или директорию.
+    * @param file Файл или директория, которую нужно переименовать.
+    * @param newFileName Новое имя для файла или директории.
+    */
    public void renameFile(File file, String newFileName) {
       if (newFileName == null || newFileName.isEmpty()) {
          newFileName = getFileNameWithoutExtension(file.getName());
@@ -73,6 +97,10 @@ public class FileManipulationModel {
       file.renameTo(newFile);
    }
 
+   /**
+    * Копирует файл в буфер обмена для дальнейшей операции вставки.
+    * @param file Файл, который нужно скопировать.
+    */
    public void copyFile(File file) {
       copiedFile = file;
       cutPressed = false;
@@ -83,6 +111,12 @@ public class FileManipulationModel {
       mainView.getPopupToolbarPanel().enablePasteItem(true);
    }
 
+   /**
+    * Копирует содержимое исходного файла или директории в целевой файл или директорию.
+    * @param source Исходный файл или директория.
+    * @param target Целевой файл или директория.
+    * @throws IOException Если произошла ошибка при копировании данных.
+    */
    private void copyFileContent(File source, File target) throws IOException {
       if (source.isDirectory()) {
          if (!target.exists()) {
@@ -107,6 +141,10 @@ public class FileManipulationModel {
       }
    }
 
+   /**
+    * Вставляет скопированные или вырезанные файлы в целевую директорию.
+    * @param targetDirectory Целевая директория, куда будут вставлены файлы.
+    */
    public void pasteFile(File targetDirectory) {
       try {
          Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -142,11 +180,19 @@ public class FileManipulationModel {
       }
    }
 
+   /**
+    * Подготавливает файл для вырезания, копируя его в буфер обмена и устанавливая флаг cutPressed.
+    * @param file Файл, который нужно вырезать.
+    */
    public void cutFile(File file) {
       copyFile(file);
       cutPressed = true;
    }
 
+   /**
+    * Удаляет файл или директорию.
+    * @param fileOrDir Файл или директория, которые нужно удалить.
+    */
    public void deleteFile(File fileOrDir) {
       if (fileOrDir.isDirectory()) {
          for (File file : fileOrDir.listFiles()) {
@@ -159,6 +205,11 @@ public class FileManipulationModel {
       mainView.updateBtnState(false);
    }
 
+   /**
+    * Обеспечивает уникальность имени файла, добавляя номер в случае существования файла с таким именем.
+    * @param file Файл, для которого нужно обеспечить уникальность имени.
+    * @return Файл с уникальным именем.
+    */
    private File ensureUniqueFileName(File file) {
       String name = file.getName();
       String baseName = name.contains(".") ? name.substring(0, name.lastIndexOf('.')) : name;
@@ -174,6 +225,11 @@ public class FileManipulationModel {
       return file;
    }
 
+   /**
+    * Возвращает расширение файла.
+    * @param file Файл, для которого нужно получить расширение.
+    * @return Расширение файла (без точки) или null, если расширение отсутствует.
+    */
    public String getFileExtension(File file) {
       String fileName = file.getName();
       int lastDotIndex = fileName.lastIndexOf('.');
@@ -183,6 +239,11 @@ public class FileManipulationModel {
       return null;
    }
 
+   /**
+    * Возвращает имя файла без расширения.
+    * @param fileName Имя файла с расширением.
+    * @return Имя файла без расширения.
+    */
    public String getFileNameWithoutExtension(String fileName) {
       int lastDotIndex = fileName.lastIndexOf('.');
       if (lastDotIndex > 0) {
